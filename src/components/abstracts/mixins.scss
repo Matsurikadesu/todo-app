@@ -1,0 +1,73 @@
+@import "variables.scss";
+
+@mixin heading($font-size, $line-height, $color: $black){
+    font-weight: bold;
+    font-size: $font-size;
+    line-height: $line-height;
+    color: $color;
+}
+
+@mixin text($font-weight, $font-size, $line-height) {
+    font-size: $font-size;
+    font-weight: $font-weight;
+    line-height: $line-height;
+}
+
+@mixin heading-xl{
+    @include heading(24px, 30px);
+}
+
+@mixin heading-l{
+    @include heading(18px, 23px);
+}
+
+@mixin heading-m{
+    @include heading(15px, 19px);
+}
+
+@mixin heading-s{
+    @include heading(12px, 15px, $medium-grey);
+
+    letter-spacing: 2.4px;
+}
+
+@mixin text-l{
+    @include text(medium, 13px, 23px);
+}
+
+@mixin text-m{
+    @include text(bold, 12px, 15px);
+}
+
+@mixin button($border, $bg-color, $bg-color-hover, $color: white){
+    background-color: $bg-color;
+    color: $color;
+    border-radius: $border;
+    border: none;
+
+    &:hover{
+        background-color: $bg-color-hover;
+    }
+}
+
+@mixin button-light-l{
+    @include button(24px, $main-purple, $main-purple-hover);
+}
+
+@mixin button-light-s{
+    @include button(20px, $main-purple, $main-purple-hover);
+}
+
+@mixin button-light-secondary{
+    @include button(20px, $main-purple, $main-purple, $main-purple);
+
+    opacity: .25;
+
+    &:hover{
+        opacity: .5;
+    }
+}
+
+@mixin button-light-dest{
+    @include button(20px, $red, $red-hover);
+}

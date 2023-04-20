@@ -1,0 +1,15 @@
+@import './components/abstracts/variables.scss';
+
+*{
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html{
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  min-width: 375px;
+  max-width: 1440px;
+  background-color: $light-grey-bg;
+  margin: 0 auto;
+}
