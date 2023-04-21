@@ -1,4 +1,5 @@
 import { Component } from "react";
+import Button from '../app-button/app-button';
 import './app-header.scss';
 
 class AppHeader extends Component{
@@ -13,7 +14,7 @@ class AppHeader extends Component{
                     </div>
                     <div className="header__logo-text">
                         <svg width="114" height="26" viewBox="0 0 114 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.56001 25V19.656L7.48001 17.544L11.928 25H17.368L11.064 
+                            <path fillRule="evenodd" clipRule="evenodd" d="M5.56001 25V19.656L7.48001 17.544L11.928 25H17.368L11.064 
                             14.568L17.4 7.528H11.48L5.56001 13.832V0.776001H0.76001V25H5.56001ZM24.92 25.384C27.096 25.384 28.8453 24.712 
                             30.168 23.368V25H34.648V13.48C34.648 12.2213 34.3333 11.1173 33.704 10.168C33.0747 9.21867 32.1947 8.47733 
                             31.064 7.944C29.9333 7.41067 28.632 7.144 27.16 7.144C25.304 7.144 23.6773 7.57067 22.28 8.424C20.8827 
@@ -40,12 +41,7 @@ class AppHeader extends Component{
                 <div className="header__container">
                     <h2 className="header__info">Platform Launch</h2>
                     <div className="header__buttons">
-                        <button className="header__btn">
-                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M7.368 12V7.344H12V4.632H7.368V0H4.656V4.632H0V7.344H4.656V12H7.368Z" fill="white"/>
-                            </svg>
-                            <span className="header__btn-text">+ Add New Task</span>
-                        </button>
+                        <Button></Button>
                         <button className="header__btn-menu">
                             <div className="header__btn-menu-comp"></div>
                             <div className="header__btn-menu-comp"></div>

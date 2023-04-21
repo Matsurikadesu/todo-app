@@ -1,0 +1,14 @@
+@import '../abstracts/mixins.scss';
+
+.btn{
+    @include button-light-l;
+    cursor: pointer;
+
+    padding: 10px 18px;
+    
+    &-text{
+        @include heading-m;
+
+        color: white;
+    }
+}

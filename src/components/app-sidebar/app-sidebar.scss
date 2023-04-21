@@ -1,0 +1,31 @@
+@import '../abstracts/mixins.scss';
+
+.sidebar{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    width: 260px;
+    flex-shrink: 0;
+    border-right: 1px solid $lines-light;
+
+    @media screen and (max-width: 767px) {
+        display: none;
+    }
+
+    @media screen and (min-width: 1440px) {
+        width: 300px;
+    }
+
+    &__boards-count{
+        @include heading-s;
+
+        margin-top: 15px;
+        margin-left: 32px;
+        margin-bottom: 19px;
+    }
+
+    &__boards-container{
+        display: flex;
+        flex-direction: column;
+    }
+}

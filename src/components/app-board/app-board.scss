@@ -1,0 +1,27 @@
+@import '../abstracts/mixins.scss';
+
+.board{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    gap: 25px;
+    padding: 0 16px;
+    text-align: center;
+
+    &__empty-text{
+        @include heading-l;
+        
+        margin-top: 211px;
+        color: $medium-grey;
+
+        @media screen and (min-width: 768px) {
+            margin-top: 328px;
+        }
+
+        @media screen and (min-width: 1440px) {
+            margin-top: 364px;
+        }
+    }
+}

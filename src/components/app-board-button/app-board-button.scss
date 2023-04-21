@@ -1,0 +1,47 @@
+@import '../abstracts/mixins.scss';
+
+.board-btn{
+    @include heading-m;
+
+    display: flex;
+    width: 240px;
+    text-align: left;
+    background-color: transparent;
+    color: $medium-grey;
+    cursor: pointer;
+    border: none;
+    border-radius: 0 100px 100px 0;
+    gap: 12px;
+    padding: 15px 0;
+    padding-left: 24px;
+    transition: .3s all;
+
+    &:hover:not(:last-child){
+        background-color: rgba($main-purple, .1);
+    }
+
+    &.board-btn_active{
+        background-color: $main-purple;
+        color: white;
+
+        .board-btn__img path{
+            fill: white;
+        }
+
+        &:hover{
+            background-color: $main-purple-hover;
+        }
+    }
+
+    &.board-btn_add{
+        color: $main-purple;
+
+        .board-btn__img path{
+            fill: $main-purple;
+        }
+        
+        &:hover{
+            color: $main-purple-hover;
+        }
+    }
+}

@@ -1,0 +1,16 @@
+@import '../abstracts/mixins.scss';
+
+.hide-sidebar-btn{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+}
+
+.hide-sidebar-text{
+    @include heading-m;
+
+    color: $medium-grey;
+    margin-left: 10px;
+}
