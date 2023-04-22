@@ -1,0 +1,26 @@
+@import '../abstracts/mixins.scss';
+
+.column__tasks{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.column__task{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 8px;
+    gap: 8px;
+    padding: 23px 16px;
+    text-align: left;
+
+    &-title{
+        @include heading-m;
+    }
+
+    &-subtitle{
+        @include text-m;
+        color: $medium-grey;
+    }
+}

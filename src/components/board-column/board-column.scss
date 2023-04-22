@@ -1,0 +1,42 @@
+@import '../abstracts/mixins.scss';
+
+.board__column{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 280px;
+    
+        &:first-child{
+            .column__header-status{
+                background-color: #49C4E5;
+            }
+        }
+    
+        &:nth-child(2){
+            .column__header-status{
+                background-color: $main-purple;
+            }
+        }
+
+        &:nth-child(3){
+            .column__header-status{
+                background-color: #67E2AE;
+            }
+        }
+}
+
+.column__header{
+    display: flex;
+    gap: 12px;
+
+    &-status{
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background-color: white;
+    }
+
+    &-text{
+        @include heading-s;
+    }
+}

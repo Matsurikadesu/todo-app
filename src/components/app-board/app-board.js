@@ -15,7 +15,7 @@ const Board = ({boards}) =>{
 
     if(currentBoard.columns === []){
         return (
-            <section className="board">
+            <section className="board board_empty">
                 <p className="board__empty-text">This board is empty. Create a new column to get started.</p>
                 <Button />
             </section>

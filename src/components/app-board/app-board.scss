@@ -2,13 +2,17 @@
 
 .board{
     height: 100%;
+    flex-grow: 1;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
-    gap: 25px;
-    padding: 0 16px;
     text-align: center;
+    column-gap: 24px;
+    padding: 24px;
+
+    &_empty{
+        flex-direction: column;
+        align-items: center;
+        margin: 0 auto;
+    }
 
     &__empty-text{
         @include heading-l;
