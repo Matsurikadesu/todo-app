@@ -16,6 +16,10 @@
     padding-left: 24px;
     transition: .3s all;
 
+    *{
+        pointer-events: none;
+    }
+
     &:hover:not(:last-child){
         background-color: rgba($main-purple, .1);
     }

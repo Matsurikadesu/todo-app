@@ -4,8 +4,6 @@ import SidebarTools from "../sidebar-tools/sidebar-tools";
 import SidebarButtons from "../sidebar-buttons/sidebar-buttons";
 import HideSidebarBtn from '../sidebar-hide-btn/sidebar-hide';
 
-//const Sidebar = ({boards}) =>{
-
 class Sidebar extends Component{
     constructor(props){
         super(props);
@@ -22,9 +20,8 @@ class Sidebar extends Component{
         })
     }
 
-
     render(){
-        const {boards} = this.props;
+        const {boards, onBoardSelect, currentBoard} = this.props;
 
         if(this.state.isHidden){
             return(
@@ -38,14 +35,15 @@ class Sidebar extends Component{
                 <div className="sidebar">
                     <p className="sidebar__boards-count">All Boards ({this.state.boardCount})</p>
                     <SidebarButtons 
-                        boards={boards}/>
+                        boards={boards}
+                        currentBoard={currentBoard}
+                        onBoardSelect={onBoardSelect}/>
                     <SidebarTools 
                         hidden={false} 
                         onToggleState={this.onToggleState}/>
                 </div>
             );
         }
-
     }
 }
 

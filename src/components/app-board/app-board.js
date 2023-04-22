@@ -2,10 +2,10 @@ import './app-board.scss';
 import Button from "../app-button/app-button";
 import BoardColumn from '../board-column/board-column';
 
-const Board = ({boards}) =>{
-    const currentBoard = boards[0].columns; 
+const Board = ({boards, currentBoard}) =>{
+    const current = boards[currentBoard].columns; 
 
-    const elements = currentBoard
+    const elements = current
         .map((item, index) => {
 
             return(
@@ -13,7 +13,7 @@ const Board = ({boards}) =>{
             )
         })
 
-    if(currentBoard.columns === []){
+    if(current.columns === []){
         return (
             <section className="board board_empty">
                 <p className="board__empty-text">This board is empty. Create a new column to get started.</p>

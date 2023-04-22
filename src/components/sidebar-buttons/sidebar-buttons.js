@@ -1,16 +1,16 @@
 import BoardBtn from "../app-board-button/app-board-button";
 
-const SidebarButtons = ({boards}) =>{
+const SidebarButtons = ({boards, onBoardSelect, currentBoard}) =>{
     
     const elements = boards.map((item, index) => {
         let isActive = false;
-        
-        if (index === 0){
+
+        if (index === +currentBoard){
             isActive = true;
         }
 
         return(
-            <BoardBtn {...item} state={isActive} key={index}/>
+            <BoardBtn {...item} onBoardSelect={(e) => onBoardSelect(e)} state={isActive} key={index} id={index}/>
         )
     })
 
