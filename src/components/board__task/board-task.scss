@@ -14,13 +14,28 @@
     gap: 8px;
     padding: 23px 16px;
     text-align: left;
+    transition: background-color .4s;
 
     &-title{
+        transition: color .4s;
+
         @include heading-m;
     }
 
     &-subtitle{
         @include text-m;
         color: $medium-grey;
+    }
+}
+
+//dark theme
+
+.body.dark{
+    .column__task{
+        background-color: $dark-grey;
+
+        &-title{
+            color: white;
+        }
     }
 }

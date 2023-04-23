@@ -5,7 +5,8 @@
     display: flex;
     align-items: center;
     padding: 0 16px;
-    background-color: $white;
+    background-color: white;
+    transition: background-color .4s;
     
     @media screen and (min-width: 768px) {
         padding: 0 24px 0 26px;
@@ -23,14 +24,19 @@
         padding: 20px 0;
         padding-left: 16px;
 
+        transition: border-color .4s;
+
         @media screen and (min-width: 768px) {
             border-left: 1px solid $lines-light;
+            border-bottom: 1px solid $lines-light;
             padding-left: 24px;
         }
     }
 
     &__info{
         @include heading-l;
+
+        transition: color .4s;
 
         @media screen and (min-width: 768px) {
             @include heading-xl;
@@ -53,6 +59,9 @@
         }
 
         &-text{
+            path{
+                transition: fill .4s;
+            }
             @media screen and (max-width: 767px) {
                 display: none;
             }
@@ -119,4 +128,25 @@
             border-radius: 50%;
         }
     }
+}
+
+//dark theme
+
+.body.dark{
+    .header{
+        background-color: $dark-grey;
+
+        &__info{
+            color: white;
+        }
+
+        &__logo-text path{
+            fill: white;
+        }
+
+        &__container{
+            border-color: $lines-dark;
+        }
+    }
+
 }

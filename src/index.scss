@@ -9,25 +9,3 @@
 html{
   background-color: #f2f2f2;
 }
-
-#root{
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  height: 1024px;
-  min-width: 375px;
-  max-width: 1440px;
-  background-color: $light-grey-bg;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.header{
-  flex-shrink: 0;
-}
-
-.main{
-  position: relative;
-  display: flex;
-  flex-grow: 1;
-  flex-shrink: 0;
-}

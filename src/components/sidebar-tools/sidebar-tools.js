@@ -2,12 +2,12 @@ import './sidebar-tools.scss';
 import ChooseThemeElement from "../sidebar-theme/sidebar-theme";
 import HideSidebarBtn from '../sidebar-hide-btn/sidebar-hide';
 
-const SidebarTools = ({onToggleState, chooseTheme}) => {
+const SidebarTools = ({onToggleState, onThemeChange}) => {
 
     return(
         <div className='sidebar__tools'>
             <ChooseThemeElement 
-                onChooseTheme={chooseTheme}/>
+                onThemeChange={onThemeChange}/>
             <HideSidebarBtn 
                 onToggleState={() => onToggleState()}/>
         </div>

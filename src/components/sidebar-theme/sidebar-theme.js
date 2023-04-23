@@ -1,6 +1,6 @@
 import './sidebar-theme.scss';
 
-const ChooseThemeElement = () =>{
+const ChooseThemeElement = ({onThemeChange}) =>{
     return(
         <div className='choose-theme'>
             <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -9,7 +9,7 @@ const ChooseThemeElement = () =>{
 
 
             <label className="theme-switch">
-                <input type="checkbox" />
+                <input type="checkbox" onChange={onThemeChange}/>
                 <span className="slider round"></span>
             </label>
 

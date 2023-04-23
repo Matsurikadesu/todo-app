@@ -7,6 +7,7 @@
     background-color: $light-grey-bg;
     padding: 14px 0;
     justify-content: center;
+    transition: background-color .4s;
 }
 
 .theme-switch {
@@ -38,6 +39,10 @@
         -webkit-transition: .4s;
         transition: .4s;
 
+        &:hover{
+            background-color: $main-purple-hover;
+        }
+
         &.round {
             border-radius: 12px;
         }
@@ -57,5 +62,13 @@
             -webkit-transition: .4s;
             transition: .4s;
         }
+    }
+}
+
+//dark theme
+
+.body.dark{
+    .choose-theme{
+        background-color: $dark-grey-bg;
     }
 }

@@ -21,7 +21,7 @@ class Sidebar extends Component{
     }
 
     render(){
-        const {boards, onBoardSelect, currentBoard} = this.props;
+        const {boards, onBoardSelect, currentBoard, onThemeChange} = this.props;
 
         if(this.state.isHidden){
             return(
@@ -40,7 +40,8 @@ class Sidebar extends Component{
                         onBoardSelect={onBoardSelect}/>
                     <SidebarTools 
                         hidden={false} 
-                        onToggleState={this.onToggleState}/>
+                        onToggleState={this.onToggleState}
+                        onThemeChange={onThemeChange}/>
                 </div>
             );
         }

@@ -7,6 +7,7 @@
     width: 261px;
     flex-shrink: 0;
     border-right: 1px solid $lines-light;
+    transition: background-color .4s, border-color .4s;
 
     @media screen and (max-width: 767px) {
         display: none;
@@ -33,5 +34,14 @@
     &__boards-container{
         display: flex;
         flex-direction: column;
+    }
+}
+
+//dark theme
+
+.body.dark{
+    .sidebar{
+        background-color: $dark-grey;
+        border-color: $lines-dark;
     }
 }

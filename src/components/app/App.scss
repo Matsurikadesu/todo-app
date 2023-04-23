@@ -1,0 +1,63 @@
+@import '../abstracts/mixins.scss';
+
+.body{
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    height: 1024px;
+    min-width: 375px;
+    max-width: 1440px;
+    background-color: $light-grey-bg;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    transition: background-color .4s;
+}
+
+.header{
+    flex-shrink: 0;
+}
+
+.main{
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 0;
+}
+
+.edit-menu{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    top: 74px;
+    right: 24px;
+    width: 192px;
+    border-radius: 8px;
+    background-color: white;
+    padding: 16px;
+    transition: background-color .4s;
+}
+
+.edit-btn{
+    @include text-l;
+    border: none;
+    background-color: transparent;
+    text-align: left;
+
+    cursor: pointer;
+
+    &:first-child{
+        color: $medium-grey;
+    }
+
+    &:last-child{
+        color: $red;
+    }
+}
+
+.body.dark{
+    background-color: $dark-grey-bg;
+
+    .edit-menu{
+        background-color: $dark-grey-bg;
+    }
+}

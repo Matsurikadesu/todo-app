@@ -1,7 +1,8 @@
+//import { Component } from 'react';
 import Button from '../app-button/app-button';
 import './app-header.scss';
 
-const AppHeader = ({boards, currentBoard}) => {
+const AppHeader = ({boards, currentBoard, onEditMenuOpen}) => {
     return (
         <header className="header">
             <div className="header__logo">
@@ -40,7 +41,7 @@ const AppHeader = ({boards, currentBoard}) => {
                 <h2 className="header__info">{boards[currentBoard].name}</h2>
                 <div className="header__buttons">
                     <Button></Button>
-                    <button className="header__btn-menu">
+                    <button className="header__btn-menu" onClick={onEditMenuOpen}>
                         <div className="header__btn-menu-comp"></div>
                         <div className="header__btn-menu-comp"></div>
                         <div className="header__btn-menu-comp"></div>
