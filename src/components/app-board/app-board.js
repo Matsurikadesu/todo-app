@@ -2,14 +2,18 @@ import './app-board.scss';
 import Button from "../app-button/app-button";
 import BoardColumn from '../board-column/board-column';
 
-const Board = ({boards, currentBoard}) =>{
+const Board = ({boards, currentBoard, onSelectTask}) =>{
     const current = boards[currentBoard].columns; 
 
     const elements = current
         .map((item, index) => {
 
             return(
-                <BoardColumn column={item} key={index}/>
+                <BoardColumn 
+                    column={item} 
+                    key={index}
+                    id={index}
+                    onSelectTask={onSelectTask}/>
             )
         })
 

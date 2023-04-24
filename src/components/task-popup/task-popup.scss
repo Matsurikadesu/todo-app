@@ -15,9 +15,90 @@
         position: relative;
         display: flex;
         flex-direction: column;
+        background-color: white;
+        border-radius: 6px;
         gap: 24px;
         width: min(91.5%, 480px);
         padding: 24px;
+    }
 
+    .card{
+        &__title{
+            @include heading-l;
+        }
+
+        &__subtitle{
+            @include text-l;
+
+            color: $medium-grey;
+        }
+
+        &__subtasks{
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+
+            &-count{
+                @include text-m;
+
+                color: $medium-grey;
+            }
+
+            &-list{
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                list-style: none;
+            }
+
+            &-item{
+                display: flex;
+                gap: 16px;
+                border-radius: 4px;
+                background-color: $light-grey-bg;
+                padding: 13px 16px 13px 12px;
+            }
+
+            &-checkbox:checked{
+                accent-color: $main-purple;
+
+                & + .card__subtasks-label{
+                    text-decoration: line-through;
+                    color: $medium-grey;
+                }
+            }
+
+            &-label{
+                @include text-m;
+            }
+        }
+
+        &__status{
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
+            &-text{
+                @include text-m;
+
+                color: $medium-grey;
+            }
+
+            &-select{
+                @include text-l;
+
+                width: 100%;
+                background-color: transparent;
+                border: 1px solid rgba(130, 143, 163, 0.25);
+                border-radius: 4px;
+                padding: 9px 16px;
+                accent-color: $main-purple;
+
+                appearance: none;
+                background: url('../../../public/selectArrow.svg');
+                background-position: calc(100% - 20px) 17px;
+                background-repeat: no-repeat;
+            }
+        }
     }
 }

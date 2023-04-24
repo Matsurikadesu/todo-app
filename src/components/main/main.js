@@ -2,7 +2,7 @@ import Board from '../app-board/app-board';
 import Sidebar from '../app-sidebar/app-sidebar';
 
 
-const Main = ({data, onBoardSelect, currentBoard, onThemeChange}) => {
+const Main = ({data, onBoardSelect, currentBoard, onThemeChange, onSelectTask}) => {
     return(
         <main className='main'>
             <Sidebar 
@@ -12,7 +12,8 @@ const Main = ({data, onBoardSelect, currentBoard, onThemeChange}) => {
                 onBoardSelect={(e) => onBoardSelect(e)}/>
             <Board 
                 {...data} 
-                currentBoard={currentBoard}/>
+                currentBoard={currentBoard}
+                onSelectTask={onSelectTask}/>
         </main>
     )
 }

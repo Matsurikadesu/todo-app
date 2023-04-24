@@ -2,6 +2,7 @@ import { Component } from 'react';
 import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
 import data from '../../data';
+import TaskPopup from '../task-popup/task-popup';
 import './App.scss';
 
 class App extends Component{
@@ -11,7 +12,8 @@ class App extends Component{
         this.state = {
             currentBoard: '0',
             darkTheme: false,
-            isEditBoardMenuOpened: false
+            isEditBoardMenuOpened: false,
+            shownTask: null
         }
     }
 
@@ -35,6 +37,30 @@ class App extends Component{
         this.setState({
             currentBoard: e.target.id
         })
+    }
+
+    onSelectTask = (e) => {
+        const title = e.target.closest('.column__task').children[0].textContent;
+        const column = e.target.closest('.board__column').getAttribute('data-id')
+        const columnTasks = data.boards[this.state.currentBoard].columns[column].tasks;
+
+        const task = columnTasks.filter(element => {
+            if(element.title === title){
+                return element;
+            }
+        })[0];
+
+        this.setState({
+            shownTask: task
+        })
+    }
+
+    onPopupExit = (e) => {
+        if(e.target.classList.contains('popup')){
+            this.setState({
+                shownTask: null
+            })
+        }
     }
 
     render(){
@@ -66,6 +92,9 @@ class App extends Component{
                         onBoardSelect={this.onBoardSelect} 
                         onThemeChange={this.onThemeChange}/>
                     <EditMenu/>
+                    <TaskPopup
+                        shownTask={this.state.shownTask}
+                        onPopupExit={this.onPopupExit}/>
                 </div>
             )
         }else{
@@ -79,7 +108,11 @@ class App extends Component{
                         data={data} 
                         currentBoard={this.state.currentBoard} 
                         onBoardSelect={this.onBoardSelect} 
-                        onThemeChange={this.onThemeChange}/>
+                        onThemeChange={this.onThemeChange}
+                        onSelectTask={this.onSelectTask}/>
+                    <TaskPopup 
+                        shownTask={this.state.shownTask}
+                        onPopupExit={this.onPopupExit}/>
                 </div>
             )
         }

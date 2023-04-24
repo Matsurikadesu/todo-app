@@ -1,6 +1,7 @@
 @import '../abstracts/mixins.scss';
 
 .body{
+    position: relative;
     font-family: 'Plus Jakarta Sans', sans-serif;
     height: 1024px;
     min-width: 375px;

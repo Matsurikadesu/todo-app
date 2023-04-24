@@ -6,23 +6,23 @@
     gap: 24px;
     width: 280px;
     
-        &:first-child{
-            .column__header-status{
-                background-color: #49C4E5;
-            }
+    &:first-child{
+        .column__header-status{
+            background-color: #49C4E5;
         }
-    
-        &:nth-child(2){
-            .column__header-status{
-                background-color: $main-purple;
-            }
-        }
+    }
 
-        &:nth-child(3){
-            .column__header-status{
-                background-color: #67E2AE;
-            }
+    &:nth-child(2){
+        .column__header-status{
+            background-color: $main-purple;
         }
+    }
+
+    &:nth-child(3){
+        .column__header-status{
+            background-color: #67E2AE;
+        }
+    }
 }
 
 .column__header{
