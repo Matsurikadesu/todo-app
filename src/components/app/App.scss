@@ -36,6 +36,10 @@
     background-color: white;
     padding: 16px;
     transition: background-color .4s;
+
+    @media screen and (max-width: 767px) {
+        top: 56px;
+    }
 }
 
 .edit-btn{

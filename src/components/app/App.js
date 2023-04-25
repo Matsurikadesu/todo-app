@@ -3,6 +3,7 @@ import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
 import data from '../../data';
 import TaskPopup from '../task-popup/task-popup';
+import EditPopup from '../edit-popup/edit-popup';
 import './App.scss';
 
 class App extends Component{
@@ -12,17 +13,11 @@ class App extends Component{
         this.state = {
             currentBoard: '0',
             darkTheme: false,
-            isEditBoardMenuOpened: false,
-            shownTask: null
+            isEditMenuOpened: false,
+            shownTask: null,
+            menuTarget: null,
+            edit: null 
         }
-    }
-
-    onEditMenuOpen = () => {
-        const current = this.state.isEditBoardMenuOpened;
-
-        this.setState({
-            isEditBoardMenuOpened: !current
-        })
     }
 
     onThemeChange = () => {
@@ -47,20 +42,42 @@ class App extends Component{
         const task = columnTasks.filter(element => {
             if(element.title === title){
                 return element;
+            }else{
+                return null;
             }
         })[0];
 
         this.setState({
-            shownTask: task
+            shownTask: task,
         })
     }
 
     onPopupExit = (e) => {
         if(e.target.classList.contains('popup')){
             this.setState({
-                shownTask: null
+                shownTask: null,
+                edit: null,
+                menuTarget: null,
+                isEditMenuOpened: false
             })
         }
+    }
+    
+    onEditMenuOpen = (e) => {
+        const current = this.state.isEditMenuOpened;
+        const openMenuTarget = e.target.closest('button[data-menu-target]').getAttribute('data-menu-target');
+
+        this.setState({
+            isEditMenuOpened: !current,
+            menuTarget: openMenuTarget
+        })
+    }
+
+    onOpenEdit = () =>{
+        this.setState({
+            edit: this.state.menuTarget,
+            isEditMenuOpened: false
+        })
     }
 
     render(){
@@ -70,53 +87,46 @@ class App extends Component{
             classNames += ' dark'; 
         }
 
-        const EditMenu = () => {
-            return(
-                <div className='edit-menu'>
-                    <button className='edit-btn'>Edit Board</button>
-                    <button className='edit-btn'>Delete Board</button>
-                </div>
-            )
+        const EditMenu = ({menuTarget}) => {
+            if(this.state.isEditMenuOpened){
+                return(
+                    <div className={`edit-menu edit-menu_${menuTarget}`}>
+                        <button className='edit-btn' onClick={this.onOpenEdit}>Edit {menuTarget}</button>
+                        <button className='edit-btn'>Delete {menuTarget}</button>
+                    </div>
+                )
+            }else{
+                return <></>;
+            }
         }
 
-        if(this.state.isEditBoardMenuOpened){
-            return(
-                <div className={classNames}>
-                    <AppHeader 
-                        {...data} 
-                        onEditMenuOpen={this.onEditMenuOpen}
-                        currentBoard={this.state.currentBoard}/>
-                    <Main 
-                        data={data} 
-                        currentBoard={this.state.currentBoard} 
-                        onBoardSelect={this.onBoardSelect} 
-                        onThemeChange={this.onThemeChange}/>
-                    <EditMenu/>
-                    <TaskPopup
-                        shownTask={this.state.shownTask}
-                        onPopupExit={this.onPopupExit}/>
-                </div>
-            )
-        }else{
-            return(
-                <div className={classNames}>
-                    <AppHeader 
-                        {...data} 
-                        onEditMenuOpen={this.onEditMenuOpen}
-                        currentBoard={this.state.currentBoard}/>
-                    <Main 
-                        data={data} 
-                        currentBoard={this.state.currentBoard} 
-                        onBoardSelect={this.onBoardSelect} 
-                        onThemeChange={this.onThemeChange}
-                        onSelectTask={this.onSelectTask}/>
-                    <TaskPopup 
-                        shownTask={this.state.shownTask}
-                        onPopupExit={this.onPopupExit}/>
-                </div>
-            )
-        }
-
+        return(
+            <div className={classNames}>
+                <AppHeader 
+                    {...data} 
+                    onEditMenuOpen={this.onEditMenuOpen}
+                    currentBoard={this.state.currentBoard}/>
+                <Main 
+                    data={data} 
+                    currentBoard={this.state.currentBoard} 
+                    onBoardSelect={this.onBoardSelect} 
+                    onThemeChange={this.onThemeChange}
+                    onSelectTask={this.onSelectTask}/>
+                <EditPopup
+                    onEdit={this.onEdit}
+                    edit={this.state.edit}
+                    onPopupExit={this.onPopupExit}
+                    shownTask={this.state.shownTask}
+                    currentBoard={data.boards[this.state.currentBoard]}/>
+                <TaskPopup 
+                    shownTask={this.state.shownTask}
+                    onEditMenuOpen={this.onEditMenuOpen}
+                    onOpenEdit={this.onOpenEdit}
+                    onPopupExit={this.onPopupExit}/>
+                <EditMenu 
+                    menuTarget={this.state.menuTarget}/>
+            </div>
+        )
     }
 }
 

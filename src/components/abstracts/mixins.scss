@@ -32,7 +32,7 @@
 }
 
 @mixin text-l{
-    @include text(medium, 13px, 23px);
+    @include text(500, 13px, 23px);
 }
 
 @mixin text-m{

@@ -11,6 +11,22 @@
     height: 100vh;
     background-color: rgba(black, .5);
     
+    .card__header{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+
+        button{
+            padding: 10px;
+            pointer-events: all;
+        }
+    }
+
+    &__title{
+        @include heading-l;
+    }
+
     .popup__card{
         position: relative;
         display: flex;
@@ -101,4 +117,8 @@
             }
         }
     }
+}
+
+.popup + .popup{
+    display: none;
 }

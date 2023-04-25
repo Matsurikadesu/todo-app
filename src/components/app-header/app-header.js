@@ -1,4 +1,3 @@
-//import { Component } from 'react';
 import Button from '../app-button/app-button';
 import './app-header.scss';
 
@@ -41,7 +40,7 @@ const AppHeader = ({boards, currentBoard, onEditMenuOpen}) => {
                 <h2 className="header__info">{boards[currentBoard].name}</h2>
                 <div className="header__buttons">
                     <Button></Button>
-                    <button className="header__btn-menu" onClick={onEditMenuOpen}>
+                    <button className="header__btn-menu" data-menu-target='Board' onClick={onEditMenuOpen}>
                         <div className="header__btn-menu-comp"></div>
                         <div className="header__btn-menu-comp"></div>
                         <div className="header__btn-menu-comp"></div>

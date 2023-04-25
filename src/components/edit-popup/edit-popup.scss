@@ -1,0 +1,69 @@
+@import '../abstracts/mixins.scss';
+
+.text-m{
+    @include text-m;
+    
+    color: $medium-grey;
+}
+
+.popup__input{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    &-field{
+        @include text-l;
+
+        font-family: "Plus Jakarta Sans", sans-serif;
+        border: 1px solid rgba(130, 143, 163, 0.25);
+        border-radius: 4px;
+        padding: 8px 16px;
+        resize: none;
+    }
+}
+
+.card__subtask-input{
+    display: flex;
+    gap: 16px;
+
+    .popup__input-field{
+        flex-grow: 1;
+    }
+}
+
+.card__subtask-delete{
+    border: none;
+    background-color: transparent;
+}
+
+.exit-btn-comp{
+    display: inline-block;
+    width: 3px;
+    height: 18px;
+    background-color: $medium-grey;
+
+    &:first-child{
+        transform: rotate(-45deg) translateX(1.5px);
+    }
+
+    &:last-child{
+        transform: rotate(45deg) translateX(-1.5px);
+    }
+}
+
+.popup__btn{
+    @include button-light-s;
+    
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 23px;
+    font-weight: bold;
+    padding: 8px 0;
+    color: $main-purple;
+    background-color: rgba($main-purple, .1);
+}
+
+.submit-btn{
+    background-color: $main-purple;
+    color: white;
+}

@@ -1,6 +1,7 @@
 import './task-popup.scss';
+import '../app-header/app-header.scss';
 
-const TaskPopup = ({shownTask, onPopupExit}) => {
+const TaskPopup = ({onEditMenuOpen, shownTask, onPopupExit}) => {
     if(shownTask != null){
         const {title, description, status, subtasks} = shownTask;
         let completedSubtasksCount = 0;
@@ -27,7 +28,14 @@ const TaskPopup = ({shownTask, onPopupExit}) => {
         return(
             <div className='popup' onClick={onPopupExit}>
                 <div className="popup__card">
-                    <h3 className='card__title'>{title}</h3>
+                    <div className='card__header'>
+                        <h3 className='card__title'>{title}</h3>
+                        <button className="header__btn-menu" data-menu-target='Task' onClick={onEditMenuOpen}>
+                            <div className="header__btn-menu-comp"></div>
+                            <div className="header__btn-menu-comp"></div>
+                            <div className="header__btn-menu-comp"></div>
+                        </button>
+                    </div>
                     <h4 className='card__subtitle' hidden={isHidden}>{description}</h4>
                     <div className='card__subtasks'>
                         <p className='card__subtasks-count'>Subtasks ({completedSubtasksCount} of {subtasks.length})</p>
