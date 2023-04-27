@@ -56,7 +56,7 @@ const EditPopup = ({onEditSubmit, edit, onPopupExit, shownTask, currentBoard}) =
         const elements = columns.map((item, index) =>{
             return (
                 <div className='card__subtask-input' key={index}>
-                    <input className='popup__input-field' type="text" defaultValue={item.name}/>
+                    <input className='popup__input-field' data-dd='true' type="text" defaultValue={item.name}/>
                     <button className='card__subtask-delete'>
                         <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect x="12.7275" width="3" height="18" transform="rotate(45 12.7275 0)" fill="#828FA3"/>
@@ -69,7 +69,7 @@ const EditPopup = ({onEditSubmit, edit, onPopupExit, shownTask, currentBoard}) =
 
         return (
             <div className='popup' onClick={onPopupExit}>
-                <form className='popup__card'>
+                <form className='popup__card' onSubmit={onEditSubmit}>
                     <h3 className='popup__title'>Edit {edit}</h3>
                     <div className='popup__input'>
                         <label htmlFor="title" className='text-m'>Title</label>
@@ -79,7 +79,7 @@ const EditPopup = ({onEditSubmit, edit, onPopupExit, shownTask, currentBoard}) =
                         {elements}
                         <button className='popup__btn'>+ Add New Column</button>
                     </div>
-                    <button type='submit' className='popup__btn submit-btn' onClick={onEditSubmit}>Save Changes?</button>
+                    <button type='submit' className='popup__btn submit-btn'>Save Changes?</button>
                 </form>
             </div>
         )

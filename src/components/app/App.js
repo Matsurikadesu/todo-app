@@ -99,8 +99,6 @@ class App extends Component{
                 return item;
             })
         }else if (this.state.menuTarget === 'Task'){
-            const column = this.state.shownTask.status;
-
             boards = {
                 boards: []
             }
@@ -108,21 +106,19 @@ class App extends Component{
             oldData.boards.forEach((item, index)=>{
                 if(String(index) === this.state.currentBoard){
                     item.columns.forEach((item) => {
-                        if(item.name === column){
-                            item.tasks = item.tasks.filter(item => {
-                                if(item.title === this.state.shownTask.title){
-                                    return null;
-                                }
-                                return item;
-                            })
-                        }
+                        item.tasks = item.tasks.filter(item => {
+                            if(item.title === this.state.shownTask.title){
+                                return null;
+                            }
+                            return item;
+                        })
                     })
                 }
 
                 boards.boards.push(item);
             })
         }
-        console.log(this.state.data.boards)
+
         this.setState({
             data: boards,
             isEditMenuOpened: false,
@@ -132,12 +128,18 @@ class App extends Component{
 
     onEditSubmit = (e) => {
         e.preventDefault();
-
+        const form = e.target;
         const oldData = this.state.data;
         if(this.state.menuTarget === 'Board'){
             const boards = oldData.boards.map((item, index) => {
                 if(String(index) === this.state.currentBoard){
-                    item.name = 'test';
+                    item.name = form[0].value;
+
+                    let index = 1;
+                    item.columns.forEach((item) => {
+                        item.name = form[index].value;
+                        index = index + 2;
+                    })
                 }
                 return item;
             })
