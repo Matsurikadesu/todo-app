@@ -9,8 +9,7 @@ class Sidebar extends Component{
         super(props);
 
         this.state = {
-            isHidden: false,
-            boardCount: this.props.boards.length
+            isHidden: false
         }
     }
 
@@ -22,6 +21,7 @@ class Sidebar extends Component{
 
     render(){
         const {boards, onBoardSelect, currentBoard, onThemeChange} = this.props;
+        const boardCount = boards.length;
 
         if(this.state.isHidden){
             return(
@@ -33,7 +33,7 @@ class Sidebar extends Component{
         }else{
             return(
                 <div className="sidebar">
-                    <p className="sidebar__boards-count">All Boards ({this.state.boardCount})</p>
+                    <p className="sidebar__boards-count">All Boards ({boardCount})</p>
                     <SidebarButtons 
                         boards={boards}
                         currentBoard={currentBoard}

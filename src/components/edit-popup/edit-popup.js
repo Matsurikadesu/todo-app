@@ -1,7 +1,7 @@
 import '../task-popup/task-popup.scss';
 import './edit-popup.scss';
 
-const EditPopup = ({edit, onPopupExit, shownTask, currentBoard}) => {
+const EditPopup = ({onEditSubmit, edit, onPopupExit, shownTask, currentBoard}) => {
     if(edit === 'Task'){
         const {title, description, subtasks} = shownTask;
 
@@ -46,7 +46,7 @@ const EditPopup = ({edit, onPopupExit, shownTask, currentBoard}) => {
                             <option value="3">Done</option>
                         </select>
                     </div>
-                    <button className='popup__btn submit-btn'>Save Changes</button>
+                    <button type='submit' className='popup__btn submit-btn' onSubmit={onEditSubmit}>Save Changes</button>
                 </form>
             </div>
         )
@@ -79,7 +79,7 @@ const EditPopup = ({edit, onPopupExit, shownTask, currentBoard}) => {
                         {elements}
                         <button className='popup__btn'>+ Add New Column</button>
                     </div>
-                    <button className='popup__btn submit-btn'>Save Changes</button>
+                    <button type='submit' className='popup__btn submit-btn' onClick={onEditSubmit}>Save Changes?</button>
                 </form>
             </div>
         )

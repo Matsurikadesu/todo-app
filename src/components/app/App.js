@@ -16,7 +16,9 @@ class App extends Component{
             isEditMenuOpened: false,
             shownTask: null,
             menuTarget: null,
-            edit: null 
+            currentColumn: '0',
+            edit: null,
+            data: data 
         }
     }
 
@@ -37,7 +39,7 @@ class App extends Component{
     onSelectTask = (e) => {
         const title = e.target.closest('.column__task').children[0].textContent;
         const column = e.target.closest('.board__column').getAttribute('data-id')
-        const columnTasks = data.boards[this.state.currentBoard].columns[column].tasks;
+        const columnTasks = this.state.data.boards[this.state.currentBoard].columns[column].tasks;
 
         const task = columnTasks.filter(element => {
             if(element.title === title){
@@ -49,6 +51,7 @@ class App extends Component{
 
         this.setState({
             shownTask: task,
+            isEditMenuOpened: false
         })
     }
 
@@ -80,9 +83,75 @@ class App extends Component{
         })
     }
 
+    onDelete = () =>{
+        const oldData = this.state.data;
+        let boards = oldData;
+
+        if(this.state.menuTarget === 'Board'){
+            if(oldData.boards.length === 1){
+                return;
+            }
+    
+            boards.boards = oldData.boards.filter((item) =>{
+                if(item === oldData.boards[this.state.currentBoard]){
+                    return null;
+                }
+                return item;
+            })
+        }else if (this.state.menuTarget === 'Task'){
+            const column = this.state.shownTask.status;
+
+            boards = {
+                boards: []
+            }
+
+            oldData.boards.forEach((item, index)=>{
+                if(String(index) === this.state.currentBoard){
+                    item.columns.forEach((item) => {
+                        if(item.name === column){
+                            item.tasks = item.tasks.filter(item => {
+                                if(item.title === this.state.shownTask.title){
+                                    return null;
+                                }
+                                return item;
+                            })
+                        }
+                    })
+                }
+
+                boards.boards.push(item);
+            })
+        }
+        console.log(this.state.data.boards)
+        this.setState({
+            data: boards,
+            isEditMenuOpened: false,
+            shownTask: null
+        })
+    }   
+
+    onEditSubmit = (e) => {
+        e.preventDefault();
+
+        const oldData = this.state.data;
+        if(this.state.menuTarget === 'Board'){
+            const boards = oldData.boards.map((item, index) => {
+                if(String(index) === this.state.currentBoard){
+                    item.name = 'test';
+                }
+                return item;
+            })
+
+            this.setState({
+                data: {boards},
+                edit: null
+            })
+        }
+
+    }
+
     render(){
         let classNames = 'body';
-
         if(this.state.darkTheme){
             classNames += ' dark'; 
         }
@@ -92,7 +161,7 @@ class App extends Component{
                 return(
                     <div className={`edit-menu edit-menu_${menuTarget}`}>
                         <button className='edit-btn' onClick={this.onOpenEdit}>Edit {menuTarget}</button>
-                        <button className='edit-btn'>Delete {menuTarget}</button>
+                        <button className='edit-btn' onClick={this.onDelete}>Delete {menuTarget}</button>
                     </div>
                 )
             }else{
@@ -103,21 +172,22 @@ class App extends Component{
         return(
             <div className={classNames}>
                 <AppHeader 
-                    {...data} 
+                    {...this.state.data} 
                     onEditMenuOpen={this.onEditMenuOpen}
                     currentBoard={this.state.currentBoard}/>
                 <Main 
-                    data={data} 
+                    data={this.state.data} 
                     currentBoard={this.state.currentBoard} 
                     onBoardSelect={this.onBoardSelect} 
                     onThemeChange={this.onThemeChange}
                     onSelectTask={this.onSelectTask}/>
                 <EditPopup
+                    onEditSubmit={this.onEditSubmit}
                     onEdit={this.onEdit}
                     edit={this.state.edit}
                     onPopupExit={this.onPopupExit}
                     shownTask={this.state.shownTask}
-                    currentBoard={data.boards[this.state.currentBoard]}/>
+                    currentBoard={this.state.data.boards[this.state.currentBoard]}/>
                 <TaskPopup 
                     shownTask={this.state.shownTask}
                     onEditMenuOpen={this.onEditMenuOpen}
