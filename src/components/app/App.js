@@ -129,6 +129,7 @@ class App extends Component{
     onEditSubmit = (e) => {
         e.preventDefault();
         const form = e.target;
+        console.log(form)
         const oldData = this.state.data;
         if(this.state.menuTarget === 'Board'){
             const boards = oldData.boards.map((item, index) => {
@@ -139,6 +140,28 @@ class App extends Component{
                     item.columns.forEach((item) => {
                         item.name = form[index].value;
                         index = index + 2;
+                    })
+                }
+                return item;
+            })
+
+            this.setState({
+                data: {boards},
+                edit: null
+            })
+        }else if(this.state.menuTarget === 'Task'){
+            const boards = oldData.boards.map((item, index) =>{
+                if(String(index) === this.state.currentBoard){
+                    item.columns.forEach(item => {
+                        item.tasks = item.tasks.filter(item => {
+                            if(item.title === this.state.shownTask.title){
+                                item.title = form[0].value;
+                                item.description = form[1].value;
+                                item.subtasks[0].title = form[2].value;
+                                item.subtasks[1].title = form[4].value;
+                            }
+                            return item;
+                        })
                     })
                 }
                 return item;
