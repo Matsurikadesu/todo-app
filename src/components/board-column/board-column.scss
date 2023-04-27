@@ -3,6 +3,7 @@
 .board__column{
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
     gap: 24px;
     width: 280px;
     

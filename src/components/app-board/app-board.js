@@ -2,7 +2,7 @@ import './app-board.scss';
 import Button from "../app-button/app-button";
 import BoardColumn from '../board-column/board-column';
 
-const Board = ({boards, currentBoard, onSelectTask}) =>{
+const Board = ({boards, currentBoard, onSelectTask, onAddMenuOpen}) =>{
     const current = boards[currentBoard].columns; 
 
     const elements = current
@@ -28,6 +28,9 @@ const Board = ({boards, currentBoard, onSelectTask}) =>{
         return (
             <section className="board">
                 {elements}
+                <div className='board__column'>
+                    <button className='board__column-btn' data-add='column' onClick={onAddMenuOpen}>+ New Column</button>
+                </div>
             </section>
         );
     }; 

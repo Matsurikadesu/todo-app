@@ -7,6 +7,8 @@
     text-align: center;
     column-gap: 24px;
     padding: 24px;
+    overflow: scroll;
+    scrollbar-width: none;
 
     &_empty{
         flex-direction: column;
@@ -27,5 +29,24 @@
         @media screen and (min-width: 1440px) {
             margin-top: 364px;
         }
+    }
+}
+
+.board__column:last-child{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 280px;
+    background-color: #E9EFFA;
+    margin-top: 39px;
+    border-radius: 6px;
+
+    .board__column-btn{
+        @include heading-xl;
+
+        color: $medium-grey;
+        background-color: transparent;
+        border: none;
     }
 }

@@ -1,6 +1,6 @@
 import BoardBtn from "../app-board-button/app-board-button";
 
-const SidebarButtons = ({boards, onBoardSelect, currentBoard}) =>{
+const SidebarButtons = ({boards, onBoardSelect, currentBoard, onAddMenuOpen}) =>{
     
     const elements = boards.map((item, index) => {
         let isActive = false;
@@ -17,7 +17,11 @@ const SidebarButtons = ({boards, onBoardSelect, currentBoard}) =>{
     return (
         <div className="sidebar__boards-container">
             {elements}
-            <BoardBtn name='+Create New Board' key='-1' />
+            <BoardBtn
+                onAddMenuOpen={(e) => onAddMenuOpen(e)}
+                name='+Create New Board' 
+                key='-1'
+                id='-1' />
         </div>
     )
 }

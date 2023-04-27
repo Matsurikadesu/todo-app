@@ -17,6 +17,7 @@ class App extends Component{
             shownTask: null,
             menuTarget: null,
             currentColumn: '0',
+            add: null,
             edit: null,
             data: data 
         }
@@ -157,8 +158,12 @@ class App extends Component{
                             if(item.title === this.state.shownTask.title){
                                 item.title = form[0].value;
                                 item.description = form[1].value;
-                                item.subtasks[0].title = form[2].value;
-                                item.subtasks[1].title = form[4].value;
+                                let index = 2;
+                                
+                                item.subtasks.forEach((item) => {
+                                    item.title = form[index].value;
+                                    index += 2;
+                                })
                             }
                             return item;
                         })
@@ -172,7 +177,28 @@ class App extends Component{
                 edit: null
             })
         }
+    }
 
+    onAddMenuOpen = (e) => {
+        const add = e.target.getAttribute('data-add');
+        const oldData = this.state.data;
+        let boards ={};
+
+        if(add === 'column'){
+            boards = oldData.boards.map((item,index) => {
+                if(String(index) === this.state.currentBoard){
+                    item.columns.push({name: 'New Column', tasks: []})
+                }
+                return item;
+            })
+        }else if(add === 'board'){
+            boards = JSON.parse(JSON.stringify(oldData)).boards;
+            boards.push({name: "New Board", columns: []});
+        }
+        this.setState({
+            add: add,
+            data: {boards}
+        })
     }
 
     render(){
@@ -205,8 +231,10 @@ class App extends Component{
                     currentBoard={this.state.currentBoard} 
                     onBoardSelect={this.onBoardSelect} 
                     onThemeChange={this.onThemeChange}
+                    onAddMenuOpen={this.onAddMenuOpen}
                     onSelectTask={this.onSelectTask}/>
                 <EditPopup
+                    add={this.state.add}
                     onEditSubmit={this.onEditSubmit}
                     onEdit={this.onEdit}
                     edit={this.state.edit}

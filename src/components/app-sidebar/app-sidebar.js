@@ -20,7 +20,7 @@ class Sidebar extends Component{
     }
 
     render(){
-        const {boards, onBoardSelect, currentBoard, onThemeChange} = this.props;
+        const {boards, onBoardSelect, currentBoard, onThemeChange, onAddMenuOpen} = this.props;
         const boardCount = boards.length;
 
         if(this.state.isHidden){
@@ -36,6 +36,7 @@ class Sidebar extends Component{
                     <p className="sidebar__boards-count">All Boards ({boardCount})</p>
                     <SidebarButtons 
                         boards={boards}
+                        onAddMenuOpen={(e) => onAddMenuOpen(e)}
                         currentBoard={currentBoard}
                         onBoardSelect={onBoardSelect}/>
                     <SidebarTools 
