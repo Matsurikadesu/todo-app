@@ -1,140 +1,102 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
 import data from '../../data';
 import TaskPopup from '../task-popup/task-popup';
 import EditPopup from '../edit-popup/edit-popup';
 import './App.scss';
+import dataContext from '../../context';
 
-class App extends Component{
-    constructor(props){
-        super(props)
+const {Provider} = dataContext;
+const initialData = data;
 
-        this.state = {
-            currentBoard: '0',
-            darkTheme: false,
-            isEditMenuOpened: false,
-            shownTask: null,
-            menuTarget: null,
-            currentColumn: '0',
-            add: null,
-            edit: null,
-            data: data 
-        }
+const App = () => {
+    const [currentBoard, setCurrentBoard] = useState('0');
+    const [darkTheme, setDarkTheme] = useState(false);
+    const [isEditMenuOpened, setEditMenuStatus] = useState(false);
+    const [shownTask, setShownTask] = useState(null);
+    const [menuTarget, setMenuTarget] = useState(null);
+    const [add, setAdd] = useState(null);
+    const [edit, setEdit] = useState(null);
+    const [data, setData] = useState(initialData);
+    
+
+    const onThemeChange = () => {
+        setDarkTheme(!darkTheme);
     }
 
-    onThemeChange = () => {
-        const theme = this.state.darkTheme;
-
-        this.setState({
-            darkTheme: !theme
-        })
+    const onBoardSelect = (e) => {
+        setCurrentBoard(e.target.id);
     }
 
-    onBoardSelect = (e) => {
-        this.setState({
-            currentBoard: e.target.id
-        })
-    }
-
-    onSelectTask = (e) => {
+    const onSelectTask = (e) => {
         const title = e.target.closest('.column__task').children[0].textContent;
         const column = e.target.closest('.board__column').getAttribute('data-id')
-        const columnTasks = this.state.data.boards[this.state.currentBoard].columns[column].tasks;
+        const columnTasks = data.boards[currentBoard].columns[column].tasks;
 
-        const task = columnTasks.filter(element => {
-            if(element.title === title){
-                return element;
-            }else{
-                return null;
-            }
-        })[0];
+        const task = columnTasks.filter(element => (element.title === title))[0];
 
-        this.setState({
-            shownTask: task,
-            isEditMenuOpened: false
-        })
+        setShownTask(task);
+        setEditMenuStatus(false);
     }
 
-    onPopupExit = (e) => {
+    const onPopupExit = (e) => {
         if(e.target.classList.contains('popup')){
-            this.setState({
-                shownTask: null,
-                edit: null,
-                menuTarget: null,
-                isEditMenuOpened: false
-            })
+            setShownTask(null);
+            setEdit(null);
+            setMenuTarget(null);
+            setEditMenuStatus(false);
         }
     }
     
-    onEditMenuOpen = (e) => {
-        const current = this.state.isEditMenuOpened;
+    const onEditMenuOpen = (e) => {
         const openMenuTarget = e.target.closest('button[data-menu-target]').getAttribute('data-menu-target');
-
-        this.setState({
-            isEditMenuOpened: !current,
-            menuTarget: openMenuTarget
-        })
+        setEditMenuStatus(!isEditMenuOpened);
+        setMenuTarget(openMenuTarget);
     }
 
-    onOpenEdit = () =>{
-        this.setState({
-            edit: this.state.menuTarget,
-            isEditMenuOpened: false
-        })
+    const onOpenEdit = () =>{
+        setEdit(menuTarget);
+        setEditMenuStatus(false);
     }
 
-    onDelete = () =>{
-        const oldData = this.state.data;
+    const onDelete = () =>{
+        const oldData = data;
         let boards = oldData;
 
-        if(this.state.menuTarget === 'Board'){
+        if(menuTarget === 'Board'){
             if(oldData.boards.length === 1){
                 return;
             }
     
-            boards.boards = oldData.boards.filter((item) =>{
-                if(item === oldData.boards[this.state.currentBoard]){
-                    return null;
-                }
-                return item;
-            })
-        }else if (this.state.menuTarget === 'Task'){
+            boards.boards = oldData.boards.filter((item) => (item !== oldData.boards[currentBoard]))
+        }else if (menuTarget === 'Task'){
             boards = {
                 boards: []
             }
 
             oldData.boards.forEach((item, index)=>{
-                if(String(index) === this.state.currentBoard){
+                if(String(index) === currentBoard){
                     item.columns.forEach((item) => {
-                        item.tasks = item.tasks.filter(item => {
-                            if(item.title === this.state.shownTask.title){
-                                return null;
-                            }
-                            return item;
-                        })
+                        item.tasks = item.tasks.filter(item => (item.title !== shownTask.title))
                     })
                 }
 
                 boards.boards.push(item);
             })
         }
-
-        this.setState({
-            data: boards,
-            isEditMenuOpened: false,
-            shownTask: null
-        })
+        setData(boards);
+        setEditMenuStatus(false);
+        setShownTask(null);
     }   
 
-    onEditSubmit = (e) => {
+    const onEditSubmit = (e) => {
         e.preventDefault();
         const form = e.target;
-        console.log(form)
-        const oldData = this.state.data;
-        if(this.state.menuTarget === 'Board'){
+        const oldData = data;
+        if(menuTarget === 'Board'){
             const boards = oldData.boards.map((item, index) => {
-                if(String(index) === this.state.currentBoard){
+                if(String(index) === currentBoard){
                     item.name = form[0].value;
 
                     let index = 1;
@@ -145,17 +107,14 @@ class App extends Component{
                 }
                 return item;
             })
-
-            this.setState({
-                data: {boards},
-                edit: null
-            })
-        }else if(this.state.menuTarget === 'Task'){
+            setData({boards});
+            setEdit(null);
+        }else if(menuTarget === 'Task'){
             const boards = oldData.boards.map((item, index) =>{
-                if(String(index) === this.state.currentBoard){
+                if(String(index) === currentBoard){
                     item.columns.forEach(item => {
                         item.tasks = item.tasks.filter(item => {
-                            if(item.title === this.state.shownTask.title){
+                            if(item.title === shownTask.title){
                                 item.title = form[0].value;
                                 item.description = form[1].value;
                                 let index = 2;
@@ -171,22 +130,19 @@ class App extends Component{
                 }
                 return item;
             })
-
-            this.setState({
-                data: {boards},
-                edit: null
-            })
+            setData({boards});
+            setEdit(null);
         }
     }
 
-    onAddMenuOpen = (e) => {
+    const onAddMenuOpen = (e) => {
         const add = e.target.getAttribute('data-add');
-        const oldData = this.state.data;
+        const oldData = data;
         let boards ={};
 
         if(add === 'column'){
             boards = oldData.boards.map((item,index) => {
-                if(String(index) === this.state.currentBoard){
+                if(String(index) === currentBoard){
                     item.columns.push({name: 'New Column', tasks: []})
                 }
                 return item;
@@ -195,62 +151,39 @@ class App extends Component{
             boards = JSON.parse(JSON.stringify(oldData)).boards;
             boards.push({name: "New Board", columns: []});
         }
-        this.setState({
-            add: add,
-            data: {boards}
-        })
+        setAdd(add);
+        setData({boards});
     }
 
-    render(){
-        let classNames = 'body';
-        if(this.state.darkTheme){
-            classNames += ' dark'; 
-        }
-
-        const EditMenu = ({menuTarget}) => {
-            if(this.state.isEditMenuOpened){
-                return(
-                    <div className={`edit-menu edit-menu_${menuTarget}`}>
-                        <button className='edit-btn' onClick={this.onOpenEdit}>Edit {menuTarget}</button>
-                        <button className='edit-btn' onClick={this.onDelete}>Delete {menuTarget}</button>
-                    </div>
-                )
-            }else{
-                return <></>;
-            }
-        }
-
-        return(
-            <div className={classNames}>
+    return(
+        <div className={darkTheme ? 'body dark' : 'body'}>
+            <Provider value = {{menuTarget, isEditMenuOpened, onDelete, onOpenEdit}}>
                 <AppHeader 
-                    {...this.state.data} 
-                    onEditMenuOpen={this.onEditMenuOpen}
-                    currentBoard={this.state.currentBoard}/>
+                    {...data} 
+                    onEditMenuOpen={onEditMenuOpen}
+                    currentBoard={currentBoard}/>
                 <Main 
-                    data={this.state.data} 
-                    currentBoard={this.state.currentBoard} 
-                    onBoardSelect={this.onBoardSelect} 
-                    onThemeChange={this.onThemeChange}
-                    onAddMenuOpen={this.onAddMenuOpen}
-                    onSelectTask={this.onSelectTask}/>
-                <EditPopup
-                    add={this.state.add}
-                    onEditSubmit={this.onEditSubmit}
-                    onEdit={this.onEdit}
-                    edit={this.state.edit}
-                    onPopupExit={this.onPopupExit}
-                    shownTask={this.state.shownTask}
-                    currentBoard={this.state.data.boards[this.state.currentBoard]}/>
-                <TaskPopup 
-                    shownTask={this.state.shownTask}
-                    onEditMenuOpen={this.onEditMenuOpen}
-                    onOpenEdit={this.onOpenEdit}
-                    onPopupExit={this.onPopupExit}/>
-                <EditMenu 
-                    menuTarget={this.state.menuTarget}/>
-            </div>
-        )
-    }
+                    data={data} 
+                    currentBoard={currentBoard} 
+                    onBoardSelect={onBoardSelect} 
+                    onThemeChange={onThemeChange}
+                    onAddMenuOpen={onAddMenuOpen}
+                    onSelectTask={onSelectTask}/>
+                {edit ? <EditPopup
+                    add={add}
+                    onEditSubmit={onEditSubmit}
+                    edit={edit}
+                    onPopupExit={onPopupExit}
+                    shownTask={shownTask}
+                    currentBoard={data.boards[currentBoard]}/> : null}
+                {shownTask ? <TaskPopup 
+                    shownTask={shownTask}
+                    onEditMenuOpen={onEditMenuOpen}
+                    onOpenEdit={onOpenEdit}
+                    onPopupExit={onPopupExit}/> : null}
+            </Provider>
+        </div>
+    )
 }
 
 export default App;

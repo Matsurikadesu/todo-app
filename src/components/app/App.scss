@@ -24,41 +24,6 @@
     flex-shrink: 0;
 }
 
-.edit-menu{
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    top: 74px;
-    right: 24px;
-    width: 192px;
-    border-radius: 8px;
-    background-color: white;
-    padding: 16px;
-    transition: background-color .4s;
-
-    @media screen and (max-width: 767px) {
-        top: 56px;
-    }
-}
-
-.edit-btn{
-    @include text-l;
-    border: none;
-    background-color: transparent;
-    text-align: left;
-
-    cursor: pointer;
-
-    &:first-child{
-        color: $medium-grey;
-    }
-
-    &:last-child{
-        color: $red;
-    }
-}
-
 .body.dark{
     background-color: $dark-grey-bg;
 

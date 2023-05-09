@@ -83,8 +83,6 @@ const EditPopup = ({onEditSubmit, edit, onPopupExit, shownTask, currentBoard}) =
                 </form>
             </div>
         )
-    } else{
-        return <></>
     }
 }
 

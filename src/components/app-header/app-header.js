@@ -1,7 +1,12 @@
+import { useContext } from 'react';
 import Button from '../app-button/app-button';
+import EditMenu from '../edit-menu/EditMenu';
 import './app-header.scss';
+import dataContext from '../../context';
 
 const AppHeader = ({boards, currentBoard, onEditMenuOpen}) => {
+    const {isEditMenuOpened} = useContext(dataContext);
+
     return (
         <header className="header">
             <div className="header__logo">
@@ -46,6 +51,7 @@ const AppHeader = ({boards, currentBoard, onEditMenuOpen}) => {
                         <div className="header__btn-menu-comp"></div>
                     </button>
                 </div>
+                {isEditMenuOpened ? <EditMenu/> : null}
             </div>
         </header>
     );
