@@ -1,7 +1,7 @@
 import './board-column.scss';
 import Task from '../board__task/board-task';
 
-const BoardColumn = ({column, onSelectTask, id}) => {
+const BoardColumn = ({column, id}) => {
     let count = 0;
 
     const elements = column.tasks.map((item, index) => {
@@ -10,8 +10,7 @@ const BoardColumn = ({column, onSelectTask, id}) => {
         return(
             <Task 
                 data={item} 
-                key={index}
-                onSelectTask={onSelectTask}/>
+                key={index}/>
         );
     });
 

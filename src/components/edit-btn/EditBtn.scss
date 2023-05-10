@@ -1,0 +1,17 @@
+@import '../abstracts/variables.scss';
+
+.btn-menu{
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 2.4px;
+    border: none;
+    background-color: transparent;
+
+    &-comp{
+        width: 4.6px;
+        height: 4.6px;
+        background-color: $medium-grey;
+        border-radius: 50%;
+    }
+}

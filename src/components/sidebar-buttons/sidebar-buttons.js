@@ -1,7 +1,10 @@
+import { useContext } from "react";
 import BoardBtn from "../app-board-button/app-board-button";
+import dataContext from "../../context";
 
-const SidebarButtons = ({boards, onBoardSelect, currentBoard, onAddMenuOpen}) =>{
-    
+const SidebarButtons = ({boards, onAddMenuOpen}) =>{
+    const {state} = useContext(dataContext);
+    const {currentBoard} = state;
     const elements = boards.map((item, index) => {
         let isActive = false;
 
@@ -10,7 +13,11 @@ const SidebarButtons = ({boards, onBoardSelect, currentBoard, onAddMenuOpen}) =>
         }
 
         return(
-            <BoardBtn {...item} onBoardSelect={(e) => onBoardSelect(e)} state={isActive} key={index} id={index}/>
+            <BoardBtn 
+                {...item}
+                state1={isActive} 
+                key={index} 
+                id={index}/>
         )
     })
 

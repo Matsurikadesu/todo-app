@@ -1,52 +1,46 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import './app-sidebar.scss';
 import SidebarTools from "../sidebar-tools/sidebar-tools";
 import SidebarButtons from "../sidebar-buttons/sidebar-buttons";
 import HideSidebarBtn from '../sidebar-hide-btn/sidebar-hide';
 
-class Sidebar extends Component{
-    constructor(props){
-        super(props);
+const Sidebar = ({boards, currentBoard, onAddMenuOpen}) => {
+    const [isHidden, setIsHidden] = useState(false);
 
-        this.state = {
-            isHidden: false
-        }
+    const onToggleState = () => {
+        setIsHidden(!isHidden);
     }
 
-    onToggleState = () => {
-        this.setState({
-            isHidden: !this.state.isHidden
-        })
+    const HiddenSidebar = () => {
+        return(
+            <div className='sidebar_hidden'>
+                <HideSidebarBtn
+                    onToggleState={onToggleState} 
+                    hidden={true}/>
+            </div>
+        )
     }
 
-    render(){
-        const {boards, onBoardSelect, currentBoard, onThemeChange, onAddMenuOpen} = this.props;
-        const boardCount = boards.length;
-
-        if(this.state.isHidden){
-            return(
-                <div className='sidebar_hidden'>
-                    <HideSidebarBtn
-                        onToggleState={this.onToggleState} hidden={true}/>
-                </div>
-            )
-        }else{
-            return(
-                <div className="sidebar">
-                    <p className="sidebar__boards-count">All Boards ({boardCount})</p>
-                    <SidebarButtons 
-                        boards={boards}
-                        onAddMenuOpen={(e) => onAddMenuOpen(e)}
-                        currentBoard={currentBoard}
-                        onBoardSelect={onBoardSelect}/>
-                    <SidebarTools 
-                        hidden={false} 
-                        onToggleState={this.onToggleState}
-                        onThemeChange={onThemeChange}/>
-                </div>
-            );
-        }
+    const VisibleSidebar = () => {
+        return(
+            <div className="sidebar">
+                <p className="sidebar__boards-count">All Boards ({boards.length})</p>
+                <SidebarButtons 
+                    boards={boards}
+                    onAddMenuOpen={(e) => onAddMenuOpen(e)}
+                    currentBoard={currentBoard}/>
+                <SidebarTools 
+                    hidden={false} 
+                    onToggleState={onToggleState}/>
+            </div>
+        );
     }
+
+    return(
+        <>
+            {isHidden ? <HiddenSidebar/> : <VisibleSidebar/>}
+        </>
+    )
 }
 
 export default Sidebar;

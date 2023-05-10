@@ -1,5 +1,10 @@
 @import '../abstracts/mixins.scss';
-
+.popup{
+    .edit-menu{
+        right: 20px;
+        top: 55px;
+    }
+}
 .edit-menu{
     position: absolute;
     display: flex;

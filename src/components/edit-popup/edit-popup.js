@@ -1,7 +1,85 @@
-import '../task-popup/task-popup.scss';
+import { useContext } from 'react';
+import Select from '../select/select';
+import dataContext from '../../context';
+import '../task-popup/taskPopup.scss';
 import './edit-popup.scss';
 
-const EditPopup = ({onEditSubmit, edit, onPopupExit, shownTask, currentBoard}) => {
+const EditPopup = ({onPopupExit}) => {
+    const {state, setState} = useContext(dataContext);
+    const {data, menuTarget, edit, shownTask, currentBoard} = state;
+    const currentBoardNew = data.boards[currentBoard];
+
+    const onEditSubmit = (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const oldData = data;
+        let boards = {};
+        if(menuTarget === 'Board'){
+            boards = oldData.boards.map((item, index) => {
+                if(index === currentBoard){
+                    item.name = form[0].value;
+
+                    let index = 1;
+                    item.columns.forEach((item) => {
+                        item.name = form[index].value;
+                        index = index + 2;
+                    })
+                }
+                return item;
+            })
+        }else if(menuTarget === 'Task'){
+            boards = oldData.boards.map((item, index) =>{
+                if(index === currentBoard){
+                    item.columns.forEach(item => {
+                        item.tasks.map(item => {
+                            if(item.title === shownTask.title){
+                                item.title = form[0].value;
+                                item.description = form[1].value;
+                                let index = 2;
+                                
+                                item.subtasks.forEach((item) => {
+                                    item.title = form[index].value;
+                                    index += 2;
+                                })
+                            }
+                            return item;
+                        })
+                    })
+                }
+                return item;
+            })
+        }
+        setState({
+            ...state,
+            data: {boards},
+            edit: null
+        })
+    }
+
+    const addNewSubtask = (e) => {
+        e.preventDefault();
+        const oldData = data;
+        let boards = {};
+
+        boards = oldData.boards.map((item, index) =>{
+            if(index === currentBoard){
+                item.columns.forEach(item => {
+                    item.tasks.forEach(item => {
+                        if(item.title === shownTask.title){
+                            item.subtasks.push({title: 'New subtask', isCompleted: false})
+                        }
+                    })
+                })
+            }
+            return item;
+        })
+
+        setState({
+            ...state,
+            data: {boards}
+        })
+    }
+
     if(edit === 'Task'){
         const {title, description, subtasks} = shownTask;
 
@@ -36,22 +114,18 @@ const EditPopup = ({onEditSubmit, edit, onPopupExit, shownTask, currentBoard}) =
                         <div className='card__subtasks'>
                             {elements}
                         </div>
-                        <button className='popup__btn'>+ Add New Subtask</button>
+                        <button className='popup__btn' onClick={addNewSubtask}>+ Add New Subtask</button>
                     </div>
                     <div className='popup__input'>
                         <p className='text-m'>Status</p>
-                        <select className='card__status-select' name="" id="">
-                            <option value="1">Todo</option>
-                            <option value="2">Doing</option>
-                            <option value="3">Done</option>
-                        </select>
+                        <Select/>
                     </div>
                     <button type='submit' className='popup__btn submit-btn' onSubmit={onEditSubmit}>Save Changes</button>
                 </form>
             </div>
         )
     } else if(edit === 'Board'){
-        const {name, columns} = currentBoard;
+        const {name, columns} = currentBoardNew;
         
         const elements = columns.map((item, index) =>{
             return (
