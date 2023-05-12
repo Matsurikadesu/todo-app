@@ -12,8 +12,6 @@ const Button = () => {
         })
     }
 
-    console.log('render');
-
     return (
         <button className="btn" onClick={onAddTaskPopupOpen} disabled={(state.data.boards[state.currentBoard].columns.length === 0)}>
             <span className="btn-text">+ Add New Task</span>

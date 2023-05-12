@@ -30,8 +30,8 @@ const EditPopupBoard = ({onPopupExit}) =>{
         const form = e.target;
         const oldData = data;
         const boards = oldData.boards.map((item, index) => {
-            if(index === currentBoard){
-                item.name = form[0].value;
+            if(index === +currentBoard){
+                item.name = form.title.value;
 
                 let index = 1;
                 item.columns.forEach((item) => {
@@ -41,7 +41,6 @@ const EditPopupBoard = ({onPopupExit}) =>{
             }
             return item;
         })
-    
         setState({
             ...state,
             data: {boards},
@@ -54,12 +53,12 @@ const EditPopupBoard = ({onPopupExit}) =>{
         const target = +e.target.closest('button').getAttribute('id');
         const oldData = data;
         const boards = oldData.boards.map((item, index) => {
-            if(index === currentBoard){
+            if(index === +currentBoard){
                 item.columns = item.columns.filter((item, index) => index !== target);
             }
             return item;
         })
-        console.log(boards)
+
         setState({
             ...state,
             data: {boards}

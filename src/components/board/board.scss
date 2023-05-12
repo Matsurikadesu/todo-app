@@ -1,7 +1,6 @@
 @import '../abstracts/mixins.scss';
 
 .board{
-    height: 100%;
     flex-grow: 1;
     display: flex;
     text-align: center;
@@ -9,10 +8,17 @@
     padding: 24px;
     overflow: scroll;
     scrollbar-width: none;
+    user-select: none;
+    max-height: calc(100vh - 80px);
 
+    @media screen and (max-width: 767px) {
+        max-height: calc(100vh - 63px);
+    }
+    
     &_empty{
         flex-direction: column;
         align-items: center;
+        gap: 25px;
         margin: 0 auto;
     }
 
@@ -33,13 +39,10 @@
 }
 
 .board__column:last-child{
-    display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
     width: 280px;
     background-color: #E9EFFA;
-    margin-top: 39px;
     border-radius: 6px;
     transition: background-color .4s;
 

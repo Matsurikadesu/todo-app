@@ -7,7 +7,7 @@ import dataContext from '../../context';
 
 const AppHeader = ({boards}) => {
     const {state} = useContext(dataContext);
-    const {isEditMenuOpened, currentBoard, menuTarget} = state;
+    const {isEditMenuOpened, currentBoard} = state;
     return (
         <header className="header">
             <div className="header__logo">
@@ -48,7 +48,7 @@ const AppHeader = ({boards}) => {
                     <Button/>
                     <EditBtn target='Board'/>
                 </div>
-                {isEditMenuOpened && menuTarget === 'Board' ? <EditMenu/> : null}
+                {isEditMenuOpened === 'Board' && !state.delete ? <EditMenu target={isEditMenuOpened}/> : null}
             </div>
         </header>
     );

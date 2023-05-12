@@ -3,9 +3,9 @@
 .body{
     position: relative;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    height: 1024px;
+    min-height: 100vh;
     min-width: 375px;
-    max-width: 1440px;
+    max-width: 1920px;
     background-color: $light-grey-bg;
     margin: 0 auto;
     display: flex;

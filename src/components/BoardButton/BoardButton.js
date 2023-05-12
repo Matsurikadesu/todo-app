@@ -12,17 +12,24 @@ const BoardBtn = ({name, state1, id}) =>{
         });
     }
 
-    const onAddMenuOpen = () => {
-        const oldData = state.data;
-        const boards = JSON.parse(JSON.stringify(oldData)).boards;
-        boards.push({name: "New Board", columns: []});
+    // const onAddMenuOpen = () => {
+    //     const oldData = state.data;
+    //     const boards = JSON.parse(JSON.stringify(oldData)).boards;
+    //     boards.push({name: "New Board", columns: []});
 
+    //     setState({
+    //         ...state,
+    //         data: {boards}
+    //     })
+    // }
+
+    const onAddMenuOpen = () => {
         setState({
             ...state,
-            data: {boards}
+            add: 'Board'
         })
     }
-    
+
     let classNames = 'board-btn';
     if(state1) classNames += ' board-btn_active';
     if(name === '+Create New Board') {

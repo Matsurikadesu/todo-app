@@ -7,7 +7,8 @@ const dataContext = createContext({
     shownTask: null,
     menuTarget: null,
     edit: null,
-    data: {}
+    data: {},
+    delete: false
 });
 
 export default dataContext;

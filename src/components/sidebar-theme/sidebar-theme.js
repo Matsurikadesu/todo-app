@@ -6,10 +6,12 @@ const ChooseThemeElement = () =>{
     const {state, setState} = useContext(dataContext);
 
     const onThemeChange = () => {
+        localStorage.theme = !state.darkTheme;
         setState({
             ...state,
             darkTheme: !state.darkTheme
         });
+
     }
 
     return(

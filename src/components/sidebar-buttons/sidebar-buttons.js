@@ -27,7 +27,7 @@ const SidebarButtons = ({boards}) =>{
             <BoardBtn
                 name='+Create New Board' 
                 key='-1'
-                id='-1' />
+                id={-1}/>
         </div>
     )
 }

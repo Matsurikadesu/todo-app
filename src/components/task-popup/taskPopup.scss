@@ -35,6 +35,9 @@
         border-radius: 6px;
         gap: 24px;
         width: min(91.5%, 480px);
+        max-height: 90vh;
+        overflow: scroll;
+        scrollbar-width: none;
         padding: 24px;
     }
 

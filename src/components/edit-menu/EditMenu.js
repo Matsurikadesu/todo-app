@@ -2,53 +2,28 @@ import dataContext from "../../context";
 import { useContext } from "react";
 import './EditMenu.scss';
 
-const EditMenu = () => {
+const EditMenu = ({target}) => {
     const {state, setState} = useContext(dataContext);
 
     const onOpenEdit = () =>{
         setState({
             ...state,
-            edit: state.menuTarget,
+            edit: target,
             isEditMenuOpened: false
         });
     }
-    
-    const onDeleteBoard = () => {
-        const oldData = state.data;
-        if(oldData.length <= 1) return;
-        const boards = oldData.boards.filter((item, index) => (index !== +state.currentBoard))
-        
+
+    const onDelete = () => {
         setState({
             ...state,
-            data: {boards},
-            isEditMenuOpened: false,
-            currentBoard: 0
-        })
-    }
-
-    const onDeleteTask = () => {
-        const boards = [];
-        state.data.boards.forEach((item, index) => {
-            if(index === state.currentBoard){
-                item.columns.forEach((item) => {
-                    item.tasks = item.tasks.filter(item => (item.title !== state.shownTask.title));
-                })
-            }
-            boards.push(item);
-        })
-
-        setState({
-            ...state,
-            data: {boards},
-            isEditMenuOpened: false,
-            shownTask: null
+            delete: true
         })
     }
 
     return(
-        <div className={`edit-menu edit-menu_${state.menuTarget}`}>
-            <button className='edit-btn' onClick={onOpenEdit}>Edit {state.menuTarget}</button>
-            <button className='edit-btn' onClick={state.menuTarget === 'Board' ? onDeleteBoard : onDeleteTask}>Delete {state.menuTarget}</button>
+        <div className={`edit-menu edit-menu_${target}`}>
+            <button className='edit-btn' onClick={onOpenEdit}>Edit {target}</button>
+            <button className='edit-btn' onClick={onDelete}>Delete {target}</button>
         </div>
     )
 }

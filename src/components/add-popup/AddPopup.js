@@ -7,9 +7,11 @@ import dataContext from '../../context';
 const AddPopup = ({onPopupExit}) => {
     const [placeholders, setPlaceholders] = useState([{placeholder: 'e.g. Make coffee'},{placeholder: 'e.g. Drink coffee & smile'}]); 
     const {state, setState} = useContext(dataContext);
+
     const onDeleteSubtask = (e) => {
-        const subtask = e.target.closest('.card__subtask-input');
-        subtask.remove();
+        const subtask = e.target.closest('.card__subtask-input').getAttribute('index');
+        const newPlaceholders = placeholders.splice(0, subtask).concat(placeholders.splice(subtask))
+        setPlaceholders(newPlaceholders);
     }
 
     const onAddSubtask = (e) => {
@@ -61,7 +63,7 @@ const AddPopup = ({onPopupExit}) => {
 
     const subtasksElements = placeholders.map((item, index) => {
                 return(
-                    <div className='card__subtask-input' key={index}>
+                    <div className='card__subtask-input' key={index} index={index}>
                         <input className='popup__input-field' type="text" name={`subtask${index}`} placeholder={item.placeholder}/>
                         <button className='card__subtask-delete' onClick={onDeleteSubtask}>
                             <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">

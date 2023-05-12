@@ -3,7 +3,7 @@ import EditBtn from '../edit-btn/EditBtn';
 import EditMenu from '../edit-menu/EditMenu';
 import Select from '../select/select';
 
-const TaskPopup = ({shownTask, onPopupExit, isEditMenuOpened, menuTarget}) => {
+const TaskPopup = ({shownTask, onPopupExit, isEditMenuOpened}) => {
     const {title, description, subtasks} = shownTask;
     let completedSubtasksCount = 0;
 
@@ -44,7 +44,7 @@ const TaskPopup = ({shownTask, onPopupExit, isEditMenuOpened, menuTarget}) => {
                     <h4 className='card__status-text'>Current Status</h4>
                     <Select/>
                 </div>
-                {isEditMenuOpened && menuTarget === 'Task' ? <EditMenu/> : null}
+                {isEditMenuOpened === 'Task' ? <EditMenu target={isEditMenuOpened}/> : null}
             </div>
         </div>
     );
