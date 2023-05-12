@@ -1,5 +1,5 @@
 import './board-column.scss';
-import Task from '../board__task/board-task';
+import Task from '../BoardTask/BoardTask';
 
 const BoardColumn = ({column, id}) => {
     let count = 0;

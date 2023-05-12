@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import './app-sidebar.scss';
+import { useCallback, useState } from 'react';
+import './sidebar.scss';
 import SidebarTools from "../sidebar-tools/sidebar-tools";
 import SidebarButtons from "../sidebar-buttons/sidebar-buttons";
 import HideSidebarBtn from '../sidebar-hide-btn/sidebar-hide';
 
-const Sidebar = ({boards, currentBoard, onAddMenuOpen}) => {
+const Sidebar = ({boards}) => {
     const [isHidden, setIsHidden] = useState(false);
 
     const onToggleState = () => {
@@ -20,21 +20,19 @@ const Sidebar = ({boards, currentBoard, onAddMenuOpen}) => {
             </div>
         )
     }
-
-    const VisibleSidebar = () => {
+    
+    const VisibleSidebar = useCallback(() => {
         return(
             <div className="sidebar">
                 <p className="sidebar__boards-count">All Boards ({boards.length})</p>
                 <SidebarButtons 
-                    boards={boards}
-                    onAddMenuOpen={(e) => onAddMenuOpen(e)}
-                    currentBoard={currentBoard}/>
-                <SidebarTools 
-                    hidden={false} 
+                    boards={boards}/>
+                <SidebarTools
                     onToggleState={onToggleState}/>
             </div>
         );
-    }
+        // eslint-disable-next-line
+    }, [boards])
 
     return(
         <>

@@ -4,14 +4,17 @@ import dataContext from '../../context';
 const Select = () => {
     const {state} = useContext(dataContext);
     const {data, currentBoard, shownTask} = state;
-    let currentColumn = null;
-    data.boards[currentBoard].columns.forEach((item, index) => {
-        item.tasks.forEach(item => {
-            if(item.title === shownTask.title){
-                currentColumn = index;
-            }
-        })
-    });
+
+    let currentColumn = 0;
+    if(shownTask){
+        data.boards[currentBoard].columns.forEach((item, index) => {
+            item.tasks.forEach(item => {
+                if(item.title === shownTask.title){
+                    currentColumn = index;
+                }
+            })
+        });
+    }
 
     const options = data.boards[currentBoard].columns.map((item, index) => {
         return(

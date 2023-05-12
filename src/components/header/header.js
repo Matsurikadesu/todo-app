@@ -1,14 +1,13 @@
 import { useContext } from 'react';
-import Button from '../app-button/app-button';
+import Button from '../button/button';
 import EditBtn from '../edit-btn/EditBtn';
 import EditMenu from '../edit-menu/EditMenu';
-import './app-header.scss';
+import './header.scss';
 import dataContext from '../../context';
 
 const AppHeader = ({boards}) => {
     const {state} = useContext(dataContext);
     const {isEditMenuOpened, currentBoard, menuTarget} = state;
-
     return (
         <header className="header">
             <div className="header__logo">
@@ -46,7 +45,7 @@ const AppHeader = ({boards}) => {
             <div className="header__container">
                 <h2 className="header__info">{boards[currentBoard].name}</h2>
                 <div className="header__buttons">
-                    <Button></Button>
+                    <Button/>
                     <EditBtn target='Board'/>
                 </div>
                 {isEditMenuOpened && menuTarget === 'Board' ? <EditMenu/> : null}

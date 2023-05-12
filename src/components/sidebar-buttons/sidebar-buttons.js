@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import BoardBtn from "../app-board-button/app-board-button";
+import BoardBtn from "../BoardButton/BoardButton";
 import dataContext from "../../context";
 
-const SidebarButtons = ({boards, onAddMenuOpen}) =>{
+const SidebarButtons = ({boards}) =>{
     const {state} = useContext(dataContext);
     const {currentBoard} = state;
     const elements = boards.map((item, index) => {
@@ -25,7 +25,6 @@ const SidebarButtons = ({boards, onAddMenuOpen}) =>{
         <div className="sidebar__boards-container">
             {elements}
             <BoardBtn
-                onAddMenuOpen={(e) => onAddMenuOpen(e)}
                 name='+Create New Board' 
                 key='-1'
                 id='-1' />

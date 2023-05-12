@@ -1,9 +1,12 @@
 import { useState } from 'react';
-import AppHeader from '../app-header/app-header';
-import Main from '../main/main';
+import AppHeader from '../header/header';
+import Board from '../board/Board';
+import Sidebar from '../sidebar/sidebar';
 import data from '../../data';
 import TaskPopup from '../task-popup/taskPopup';
-import EditPopup from '../edit-popup/edit-popup';
+import EditPopupTask from '../EditPopup/EditPopupTask';
+import EditPopupBoard from '../EditPopup/EditPopupBoard';
+import AddPopup from '../add-popup/AddPopup';
 import './App.scss';
 import dataContext from '../../context';
 
@@ -18,12 +21,12 @@ const App = () => {
         isEditMenuOpened: false,
         shownTask: null,
         menuTarget: null,
-        add: null,
         edit: null,
-        data: initialData
+        data: initialData,
+        add: null
     });
 
-    const {currentBoard, darkTheme, shownTask, edit, data, menuTarget, isEditMenuOpened} = state;
+    const {currentBoard, darkTheme, shownTask, edit, data, menuTarget, isEditMenuOpened, add} = state;
 
     const onPopupExit = (e) => {
         if(e.target.classList.contains('popup')){
@@ -32,8 +35,22 @@ const App = () => {
                 shownTask: null,
                 edit: null,
                 menuTarget: null,
-                isEditMenuOpened: false
+                isEditMenuOpened: false,
+                add: null
             });
+        }
+    }
+    const EditPopup = () => {
+        if(state.edit === 'Task'){
+            return(
+                <EditPopupTask 
+                    onPopupExit={onPopupExit}/>
+            )
+        } else if(state.edit === 'Board'){
+            return(
+                <EditPopupBoard 
+                    onPopupExit={onPopupExit}/>
+            )
         }
     }
 
@@ -41,21 +58,27 @@ const App = () => {
         <div className={darkTheme ? 'body dark' : 'body'}>
             <Provider value = {{state, setState}}>
                 <AppHeader 
-                    {...data} 
-                    currentBoard={currentBoard}/>
-                <Main 
-                    data={data} 
-                    currentBoard={currentBoard}/>
-                {edit ? <EditPopup
-                    onPopupExit={onPopupExit}
-                    currentBoard={data.boards[currentBoard]}/> 
-                    : null}
+                    {...data}/>
+
+                <main className='main'>
+                    <Sidebar 
+                        {...data}/>
+                    <Board 
+                        {...data}
+                        currentBoard={currentBoard}/>
+                </main>
+
+                {edit ? <EditPopup/> : null}
+
                 {shownTask ? <TaskPopup 
                     onPopupExit={onPopupExit}
                     shownTask={shownTask}
                     isEditMenuOpened={isEditMenuOpened}
                     menuTarget={menuTarget}/> 
                     : null}
+
+                {add === 'Task' ? <AddPopup
+                        onPopupExit={onPopupExit}/> : null}
             </Provider>
         </div>
     )

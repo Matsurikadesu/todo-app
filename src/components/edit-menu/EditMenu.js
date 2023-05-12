@@ -12,44 +12,43 @@ const EditMenu = () => {
             isEditMenuOpened: false
         });
     }
-
-    const onDelete = () =>{
-        const oldData = state.data;
-        let boards = oldData;
-
-        if(state.menuTarget === 'Board'){
-            if(oldData.boards.length === 1){
-                return;
-            }
     
-            boards.boards = oldData.boards.filter((item) => (item !== oldData.boards[state.currentBoard]))
-        }else if (state.menuTarget === 'Task'){
-            boards = {
-                boards: []
-            }
-
-            oldData.boards.forEach((item, index)=>{
-                if(index === state.currentBoard){
-                    item.columns.forEach((item) => {
-                        item.tasks = item.tasks.filter(item => (item.title !== state.shownTask.title))
-                    })
-                }
-
-                boards.boards.push(item);
-            })
-        }
+    const onDeleteBoard = () => {
+        const oldData = state.data;
+        if(oldData.length <= 1) return;
+        const boards = oldData.boards.filter((item, index) => (index !== +state.currentBoard))
+        
         setState({
             ...state,
-            data: boards,
+            data: {boards},
+            isEditMenuOpened: false,
+            currentBoard: 0
+        })
+    }
+
+    const onDeleteTask = () => {
+        const boards = [];
+        state.data.boards.forEach((item, index) => {
+            if(index === state.currentBoard){
+                item.columns.forEach((item) => {
+                    item.tasks = item.tasks.filter(item => (item.title !== state.shownTask.title));
+                })
+            }
+            boards.push(item);
+        })
+
+        setState({
+            ...state,
+            data: {boards},
             isEditMenuOpened: false,
             shownTask: null
         })
-    }   
+    }
 
     return(
         <div className={`edit-menu edit-menu_${state.menuTarget}`}>
             <button className='edit-btn' onClick={onOpenEdit}>Edit {state.menuTarget}</button>
-            <button className='edit-btn' onClick={onDelete}>Delete {state.menuTarget}</button>
+            <button className='edit-btn' onClick={state.menuTarget === 'Board' ? onDeleteBoard : onDeleteTask}>Delete {state.menuTarget}</button>
         </div>
     )
 }

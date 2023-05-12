@@ -3,8 +3,12 @@
 .btn{
     @include button-light-l;
     cursor: pointer;
-
     padding: 10px 18px;
+    transition: all .4s;
+    
+    &:hover{
+        background-color: $main-purple-hover;
+    }
     
     &-text{
         @include heading-m;

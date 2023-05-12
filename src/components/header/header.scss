@@ -100,10 +100,12 @@
     }
 
     .btn{
-        opacity: .25;
-
-        .btn:hover{
-            opacity: .5;
+        &:disabled{
+            opacity: .25;
+    
+            .btn:hover{
+                opacity: .5;
+            }
         }
     }
 

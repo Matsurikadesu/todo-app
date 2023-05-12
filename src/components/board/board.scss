@@ -41,12 +41,19 @@
     background-color: #E9EFFA;
     margin-top: 39px;
     border-radius: 6px;
+    transition: background-color .4s;
 
     .board__column-btn{
         @include heading-xl;
-
+        cursor: pointer;
         color: $medium-grey;
         background-color: transparent;
         border: none;
+    }
+}
+
+.dark{
+    .board__column:last-child{
+        background-color: #2B2C37;
     }
 }
