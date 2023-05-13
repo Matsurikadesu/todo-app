@@ -125,3 +125,32 @@
 .popup + .popup{
     display: none;
 }
+
+.dark{
+    .popup__card{
+        background-color: $dark-grey;
+        color: white;
+    }
+
+    .card__subtasks-item{
+        background-color: $dark-grey-bg;
+    }
+
+    .card__subtasks-count{
+        color: white;
+    }
+    
+    .card__title{
+        color: white;
+    }
+
+    .card__status-text{
+        color: white;
+    }
+
+    .card__status-select{
+        color: white;
+        
+        background-color: $dark-grey;
+    }
+}

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import dataContext from "../../context";
 import '../task-popup/taskPopup.scss';
 import './edit-popup.scss';
@@ -6,41 +6,40 @@ import './edit-popup.scss';
 const EditPopupBoard = ({onPopupExit}) =>{
     const {state, setState} = useContext(dataContext);
     const {currentBoard, data} = state;
-    const {name, columns} = data.boards[currentBoard];
+    const [board, setBoard] = useState(JSON.parse(JSON.stringify(data.boards[currentBoard])));
 
     const onAddColumn = (e) => {
         e.preventDefault();
-        const oldData = state.data;
-        const boards = oldData.boards.map((item,index) => {
-            if(index === +currentBoard){
-                item.columns.push({name: 'New Column', tasks: []})
-            }
-            return item;
-        })
-        
-        setState({
-            ...state,
-            data: {boards}
-        })
+        const newBoard = JSON.parse(JSON.stringify(board));
+        newBoard.columns.push({name: 'New Board', tasks: []})
+        setBoard(newBoard);
+    }
+
+    const onColumnDelete = (e) => {
+        e.preventDefault();
+        const target = +e.target.closest('button').getAttribute('id');
+        const newBoard = JSON.parse(JSON.stringify(board))
+        newBoard.columns = newBoard.columns.filter((item, index) => index !== target)
+        setBoard(newBoard);
     }
 
     const onBoardEditSubmit = (e) => {
         e.preventDefault();
-
         const form = e.target;
-        const oldData = data;
-        const boards = oldData.boards.map((item, index) => {
-            if(index === +currentBoard){
-                item.name = form.title.value;
+        const oldData = JSON.parse(JSON.stringify(data)).boards;
+        let index = 1;
+        const newBoard = JSON.parse(JSON.stringify(board));
+        newBoard.name = form.title.value;
+        newBoard.columns.forEach((item) => {
+            item.name = form[index].value;
+            index = index + 2;
+        });
 
-                let index = 1;
-                item.columns.forEach((item) => {
-                    item.name = form[index].value;
-                    index = index + 2;
-                })
-            }
-            return item;
-        })
+        const boards = [];
+        oldData.forEach((item, index) => index === +currentBoard 
+            ? boards.push(newBoard) 
+            : boards.push(item))
+
         setState({
             ...state,
             data: {boards},
@@ -48,24 +47,7 @@ const EditPopupBoard = ({onPopupExit}) =>{
         })
     }
 
-    const onColumnDelete = (e) => {
-        e.preventDefault();
-        const target = +e.target.closest('button').getAttribute('id');
-        const oldData = data;
-        const boards = oldData.boards.map((item, index) => {
-            if(index === +currentBoard){
-                item.columns = item.columns.filter((item, index) => index !== target);
-            }
-            return item;
-        })
-
-        setState({
-            ...state,
-            data: {boards}
-        })
-    }
-
-    const columnsElements = columns.map((item, index) =>{
+    const columnsElements = board.columns.map((item, index) =>{
         return (
             <div className='card__subtask-input' key={index}>
                 <input className='popup__input-field' type="text" defaultValue={item.name}/>
@@ -85,7 +67,7 @@ const EditPopupBoard = ({onPopupExit}) =>{
                 <h3 className='popup__title'>Edit Board</h3>
                 <div className='popup__input'>
                     <label htmlFor="title" className='text-m'>Title</label>
-                    <input className='popup__input-field' id='title' type="text" name='title' required defaultValue={name}/>
+                    <input className='popup__input-field' id='title' type="text" name='title' required defaultValue={board.name}/>
                 </div>
                 <div className='popup__input'>
                     {columnsElements}

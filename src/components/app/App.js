@@ -74,9 +74,7 @@ const App = () => {
 
                 {edit ? <EditPopup/> : null}
 
-                {shownTask && !state.delete ? <TaskPopup 
-                    onPopupExit={onPopupExit}
-                    shownTask={shownTask}
+                {shownTask && !state.delete ? <TaskPopup
                     isEditMenuOpened={isEditMenuOpened}/> 
                     : null}
 

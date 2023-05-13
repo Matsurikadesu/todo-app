@@ -24,11 +24,13 @@ const Sidebar = ({boards}) => {
     const VisibleSidebar = useCallback(() => {
         return(
             <div className="sidebar">
-                <p className="sidebar__boards-count">All Boards ({boards.length})</p>
-                <SidebarButtons 
-                    boards={boards}/>
-                <SidebarTools
-                    onToggleState={onToggleState}/>
+                <div className='sidebar-content'>
+                    <p className="sidebar__boards-count">All Boards ({boards.length})</p>
+                    <SidebarButtons 
+                        boards={boards}/>
+                    <SidebarTools
+                        onToggleState={onToggleState}/>
+                </div>
             </div>
         );
         // eslint-disable-next-line

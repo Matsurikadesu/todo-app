@@ -68,3 +68,30 @@
     background-color: $main-purple;
     color: white;
 }
+
+.dark{
+    .popup__card{
+        color: white;
+    }
+
+    .popup__input-field{
+        color: white;
+        background-color: $dark-grey;
+    }
+
+    .popup__title{
+        color: white;
+    }
+
+    .text-m{
+        color: white;
+    }
+
+    .popup__btn.submit-btn{
+        background-color: $main-purple;
+
+        &:hover{
+            background-color: $main-purple-hover;
+        }
+    }
+}

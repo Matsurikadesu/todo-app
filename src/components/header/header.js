@@ -8,6 +8,12 @@ import dataContext from '../../context';
 const AppHeader = ({boards}) => {
     const {state} = useContext(dataContext);
     const {isEditMenuOpened, currentBoard} = state;
+
+    const onSidebarOpen = (e) =>{
+        e.target.classList.toggle('sidebar_open');
+        document.querySelector('.sidebar').classList.toggle('sidebar_active');
+    }
+
     return (
         <header className="header">
             <div className="header__logo">
@@ -43,7 +49,7 @@ const AppHeader = ({boards}) => {
                 </div>
             </div>
             <div className="header__container">
-                <h2 className="header__info">{boards[currentBoard].name}</h2>
+                <h2 className="header__info">{boards[currentBoard].name} <img onClick={onSidebarOpen} src="./selectArrow.svg" alt="arrow"/></h2>
                 <div className="header__buttons">
                     <Button/>
                     <EditBtn target='Board'/>

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import dataContext from "../../context";
 import Select from "../select/select";
 import '../task-popup/taskPopup.scss';
@@ -6,87 +6,76 @@ import './edit-popup.scss';
 
 const EditPopupTask = ({onPopupExit}) =>{
     const {state, setState} = useContext(dataContext);
-    const {data, currentBoard, shownTask } = state;
-    const {title, description, subtasks} = state.shownTask;
+    const {currentBoard, shownTask } = state;
+    const {title, description} = state.shownTask;
+    const [task, setTask] = useState(JSON.parse(JSON.stringify(shownTask)));
+    const newTask = JSON.parse(JSON.stringify(task));
+
+    const onColumnSelect = (e) =>{
+        newTask.status = e.target.value;
+        console.log(newTask.status)
+    }
 
     const addNewSubtask = (e) => {
         e.preventDefault();
-        const oldData = data;
-        const boards = oldData.boards.map((item, index) =>{
-            if(index === +currentBoard){
-                item.columns.forEach(item => {
-                    item.tasks.forEach(item => {
-                        if(item.title === shownTask.title){
-                            item.subtasks.push({title: 'New subtask', isCompleted: false})
-                        }
-                    })
-                })
-            }
-            return item;
-        })
+        newTask.subtasks.push({title: 'New subtask', isCompleted: false});
 
-        setState({
-            ...state,
-            data: {boards}
-        })
+        setTask(newTask);
     }
 
     const onSubtaskDelete = (e) => {
         e.preventDefault();
         const target = +e.target.closest('button').getAttribute('id');
-        const oldData = data;
-        const boards = oldData.boards.map((item, index) => {
-            if(index === +currentBoard){
-                item.columns.forEach(item => {
-                    item.tasks.forEach(item => {
-                        if(item.title === shownTask.title){
-                            item.subtasks = item.subtasks.filter((item, index) => index !== target)
-                        }
-                    })
-                })
-            }
-            return item;
-        })
+        const newTask = JSON.parse(JSON.stringify(task));
+        newTask.subtasks = newTask.subtasks.filter((item, index) => index !== target);
 
-        setState({
-            ...state,
-            data: {boards}
-        })
+        setTask(newTask);
     }
 
     const onTaskEditSubmit = (e) => {
         e.preventDefault();
         const form = e.target;
-        const oldData = state.data.boards;
-        const boards = oldData.map((item, index) =>{
-            if(index === currentBoard){
+        const oldData = JSON.parse(JSON.stringify(state.data)).boards;
+        newTask.title = form.title.value;
+        newTask.description = form.description.value;
+        let index = 2;
+        
+        newTask.subtasks.forEach((item) => {
+            item.title = form[index].value;
+            index += 2;
+        })
+        
+        const boards = [];
+        oldData.forEach((item, index) => {
+            if(index === +currentBoard){
                 item.columns.forEach(item => {
-                    item.tasks.map(item => {
-                        if(item.title === shownTask.title){
-                            item.title = form[0].value;
-                            item.description = form[1].value;
-                            let index = 2;
-                            
-                            item.subtasks.forEach((item) => {
-                                item.title = form[index].value;
-                                index += 2;
-                            })
-                        }
+                    if(item.name === shownTask.status && item.name === newTask.status){
+                        item.tasks = item.tasks.map(item => {
+                            if(item.title === shownTask.title) {
+                                item = newTask;
+                            }
+                            return item;
+                        })
+                    }else if(item.name === newTask.status && item.name !== shownTask.status){
+                        item.tasks.push(newTask);
+                    }else{
+                        item.tasks = item.tasks.filter(item => item.title !== shownTask.title)
                         return item;
-                    })
+                    }
                 })
             }
-            return item;
+            boards.push(item);
         })
         
         setState({
             ...state,
             data: {boards},
+            shownTask: null,
             edit: null
         })
     }
 
-    const subtasksElements = subtasks.map((item, index) => {
+    const subtasksElements = task.subtasks.map((item, index) => {
         return(
             <div className='card__subtask-input' key={index}>
                 <input className='popup__input-field' type="text" defaultValue={item.title}/>
@@ -121,7 +110,7 @@ const EditPopupTask = ({onPopupExit}) =>{
                 </div>
                 <div className='popup__input'>
                     <p className='text-m'>Status</p>
-                    <Select/>
+                    <Select onColumnSelect={onColumnSelect}/>
                 </div>
                 <button type='submit' className='popup__btn submit-btn'>Save Changes</button>
             </form>

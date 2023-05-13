@@ -2,19 +2,41 @@
 
 .sidebar{
     display: flex;
-    flex-direction: column;
-    background-color: white;
     width: 261px;
     flex-shrink: 0;
-    border-right: 1px solid $lines-light;
-    transition: background-color .4s, border-color .4s;
-
+    
     @media screen and (max-width: 767px) {
+        position: fixed;
+        top: 64px;
         display: none;
+        width: 100vw;
+        height: calc(100vh - 64px);
+        background-color: rgba(#000000, .5);
+        justify-content: center;
+        
+        &.sidebar_active{
+            display: flex;
+        }
     }
-
+    
     @media screen and (min-width: 1440px) {
         width: 301px;
+    }
+    
+    &-content{
+        border-right: 1px solid $lines-light;
+        background-color: white;
+        transition: background-color .4s, border-color .4s;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        
+        @media screen and (max-width: 767px) {
+            width: 264px;
+            margin-top: 16px;
+            border-radius: 8px;
+            height: fit-content;
+        }
     }
 
     &_hidden{
@@ -40,7 +62,7 @@
 //dark theme
 
 .body.dark{
-    .sidebar{
+    .sidebar-content{
         background-color: $dark-grey;
         border-color: $lines-dark;
     }

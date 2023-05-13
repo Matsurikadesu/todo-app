@@ -28,7 +28,6 @@
 
         @media screen and (min-width: 768px) {
             border-left: 1px solid $lines-light;
-            border-bottom: 1px solid $lines-light;
             padding-left: 24px;
         }
     }
@@ -37,9 +36,24 @@
         @include heading-l;
 
         transition: color .4s;
-
         @media screen and (min-width: 768px) {
             @include heading-xl;
+            img{
+                display: none;
+            }
+        }
+
+        @media screen and (max-width: 767px) {
+            display: flex;
+            
+            img{
+                transition: all .8s;
+                padding: 8px;
+            }
+
+            .sidebar_open{
+                transform: rotate(-180deg);
+            }
         }
     }
 

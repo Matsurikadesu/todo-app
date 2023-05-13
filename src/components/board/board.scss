@@ -9,7 +9,9 @@
     overflow: scroll;
     scrollbar-width: none;
     user-select: none;
+    transition: border-color .4s;
     max-height: calc(100vh - 80px);
+    border-top: 1px solid $lines-light;
 
     @media screen and (max-width: 767px) {
         max-height: calc(100vh - 63px);
@@ -56,6 +58,10 @@
 }
 
 .dark{
+    .board{
+        border-color: $lines-dark;
+    }
+
     .board__column:last-child{
         background-color: #2B2C37;
     }

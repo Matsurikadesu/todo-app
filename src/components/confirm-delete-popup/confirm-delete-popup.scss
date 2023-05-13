@@ -58,3 +58,13 @@
         }
     }
 }
+
+.dark{
+    .popup__body{
+        background-color: $dark-grey;
+    }
+
+    .popup__btn{
+        background-color: white;
+    }
+}

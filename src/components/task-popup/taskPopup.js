@@ -2,9 +2,62 @@ import './taskPopup.scss';
 import EditBtn from '../edit-btn/EditBtn';
 import EditMenu from '../edit-menu/EditMenu';
 import Select from '../select/select';
+import { useContext } from 'react';
+import dataContext from '../../context';
 
-const TaskPopup = ({shownTask, onPopupExit, isEditMenuOpened}) => {
+const TaskPopup = ({isEditMenuOpened}) => {
+    const {state, setState} = useContext(dataContext);
+    const {currentBoard, shownTask} = state;
     const {title, description, subtasks} = shownTask;
+    const newTask = JSON.parse(JSON.stringify(shownTask));
+    
+    const onSubtaskStatusChange = (e) => {
+        const index = e.target.getAttribute('index');
+        newTask.subtasks[index].isCompleted = !newTask.subtasks[index].isCompleted
+    }
+
+    const onColumnSelect = (e) =>{
+        newTask.status = e.target.value;
+
+    }
+
+    const handleChange = (e) => {
+        
+        const boards = [];
+        const oldData = JSON.parse(JSON.stringify(state.data)).boards;
+        oldData.forEach((item, index) => {
+            if(index === +currentBoard){
+                item.columns.forEach(item => {
+                    if(item.name === shownTask.status && item.name === newTask.status){
+                        item.tasks = item.tasks.map(item => {
+                            if(item.title === shownTask.title) {
+                                item = newTask;
+                            }
+                            return item;
+                        })
+                    }else if(item.name === newTask.status && item.name !== shownTask.status){
+                        item.tasks.push(newTask);
+                    }else{
+                        item.tasks = item.tasks.filter(item => item.title !== shownTask.title)
+                    }
+                })
+            }
+            boards.push(item);
+        })
+
+        if(e.target.classList.contains('popup')){
+            setState({
+                ...state,
+                shownTask: null,
+                edit: null,
+                isEditMenuOpened: false,
+                add: null,
+                delete: false,
+                data: {boards}
+            });
+        }
+    }
+
     let completedSubtasksCount = 0;
 
     const subtasksList = subtasks
@@ -15,7 +68,7 @@ const TaskPopup = ({shownTask, onPopupExit, isEditMenuOpened}) => {
 
             return(
                 <li className='card__subtasks-item' key={index}>
-                    <input className='card__subtasks-checkbox' type="checkbox" defaultChecked={item.isCompleted}/>
+                    <input className='card__subtasks-checkbox' index={index} onChange={onSubtaskStatusChange} type="checkbox" defaultChecked={item.isCompleted}/>
                     <span className='card__subtasks-label'>{item.title}</span>
                 </li>
             )
@@ -27,7 +80,7 @@ const TaskPopup = ({shownTask, onPopupExit, isEditMenuOpened}) => {
     }
 
     return(
-        <div className='popup' onClick={onPopupExit}>
+        <div className='popup' onClick={handleChange}>
             <div className="popup__card">
                 <div className='card__header'>
                     <h3 className='card__title'>{title}</h3>
@@ -42,7 +95,7 @@ const TaskPopup = ({shownTask, onPopupExit, isEditMenuOpened}) => {
                 </div>
                 <div className='card__status'>
                     <h4 className='card__status-text'>Current Status</h4>
-                    <Select/>
+                    <Select onColumnSelect={onColumnSelect}/>
                 </div>
                 {isEditMenuOpened === 'Task' ? <EditMenu target={isEditMenuOpened}/> : null}
             </div>
