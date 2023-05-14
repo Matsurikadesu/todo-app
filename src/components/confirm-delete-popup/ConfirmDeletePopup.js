@@ -22,7 +22,7 @@ const ConfirmDeletePopup = ({onPopupExit}) => {
     const onDeleteTask = () => {
         const boards = [];
         state.data.boards.forEach((item, index) => {
-            if(index === state.currentBoard){
+            if(index === +state.currentBoard){
                 item.columns.forEach((item) => {
                     item.tasks = item.tasks.filter(item => (item.title !== state.shownTask.title));
                 })
