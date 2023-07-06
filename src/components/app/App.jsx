@@ -1,17 +1,17 @@
 import { useContext, useState } from 'react';
-import AppHeader from '../header/header';
+import AppHeader from '../Header/Header';
 import Board from '../Board/Board';
-import Sidebar from '../sidebar/sidebar';
+import Sidebar from '../Sidebar/Sidebar';
 import data from '../../data';
-import TaskPopup from '../task-popup/taskPopup';
+import TaskPopup from '../TaskPopup/TaskPopup';
 import EditPopupTask from '../EditPopup/EditPopupTask';
 import EditPopupBoard from '../EditPopup/EditPopupBoard';
-import ConfirmDeletePopup from '../confirm-delete-popup/ConfirmDeletePopup';
-import AddPopup from '../add-popup/AddPopup';
-import AddBoardPopup from '../add-popup/AddBoardPopup';
+import ConfirmDeletePopup from '../ConfirmDeletePopup/ConfirmDeletePopup';
+import AddPopup from '../Add-popup/AddPopup';
+import AddBoardPopup from '../Add-popup/AddBoardPopup';
 import './App.scss';
 import { DataProvider } from '../../context';
-
+import Main from '../Main/Main';
 // const initialData = data;
 // let theme = localStorage.theme === 'true' ? true : false;
 
@@ -51,11 +51,7 @@ const App = () => {
         <div className={darkTheme ? 'body dark' : 'body'}>
             <DataProvider setTheme={setDarkTheme} theme={darkTheme}>
                 <AppHeader/>
-
-                <main className='main'>
-                    <Sidebar />
-                    <Board />
-                </main>
+                <Main/>
 
                 {/* {edit ? <EditPopup/> : null}
 

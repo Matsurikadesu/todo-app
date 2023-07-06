@@ -1,6 +1,6 @@
 import './sidebar-tools.scss';
-import ChooseThemeElement from "../sidebar-theme/sidebar-theme";
-import HideSidebarBtn from '../sidebar-hide-btn/sidebar-hide';
+import ChooseThemeElement from "../SidebarTheme/SidebarTheme";
+import HideSidebarBtn from '../SidebarHideButton/SidebarHideButton';
 
 const SidebarTools = ({onToggleState}) => {
 

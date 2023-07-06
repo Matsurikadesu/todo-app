@@ -1,8 +1,8 @@
 import { useCallback, useContext, useState } from 'react';
 import './sidebar.scss';
-import SidebarTools from "../sidebar-tools/sidebar-tools";
-import SidebarButtons from "../sidebar-buttons/sidebar-buttons";
-import HideSidebarBtn from '../sidebar-hide-btn/sidebar-hide';
+import SidebarTools from "../SidebarTools/SidebarTools";
+import SidebarButtons from "../SidebarButtons/SidebarButtons";
+import HideSidebarBtn from '../SidebarHideButton/SidebarHideButton';
 import DataContext from '../../context';
 
 const Sidebar = () => {
@@ -22,7 +22,7 @@ const Sidebar = () => {
             </div>
         )
     }
-    
+
     const VisibleSidebar = useCallback(() => {
         return(
             <div className="sidebar">
@@ -35,7 +35,7 @@ const Sidebar = () => {
             </div>
         );
         // eslint-disable-next-line
-    }, [])
+    }, [boards])
 
     return(
         <>

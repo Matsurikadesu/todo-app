@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import dataContext from "../../context";
-import Select from "../select/select";
-import '../task-popup/taskPopup.scss';
+import Select from "../Select/Select";
+import '../TaskPopup/taskPopup.scss';
 import './edit-popup.scss';
 
 const EditPopupTask = ({onPopupExit}) =>{

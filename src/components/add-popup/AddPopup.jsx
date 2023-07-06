@@ -1,6 +1,6 @@
-import '../task-popup/taskPopup.scss';
+import '../TaskPopup/taskPopup.scss';
 import '../EditPopup/edit-popup.scss';
-import Select from '../select/select';
+import Select from '../Select/Select';
 import { useContext, useState } from 'react';
 import dataContext from '../../context';
 

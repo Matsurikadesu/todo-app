@@ -1,15 +1,11 @@
-import Board from '../app-board/app-board';
-import Sidebar from '../app-sidebar/app-sidebar';
+import Sidebar from "../Sidebar/Sidebar";
+import Board from "../Board/Board";
 
-
-const Main = ({data, currentBoard}) => {
+const Main = () => {
     return(
         <main className='main'>
-            <Sidebar 
-                {...data}/>
-            <Board 
-                {...data}
-                currentBoard={currentBoard}/>
+            <Sidebar/>
+            <Board />
         </main>
     )
 }

@@ -1,4 +1,4 @@
-import '../task-popup/taskPopup.scss';
+import '../TaskPopup/taskPopup.scss';
 import '../EditPopup/edit-popup.scss';
 import { useContext } from 'react';
 import { useState } from 'react';

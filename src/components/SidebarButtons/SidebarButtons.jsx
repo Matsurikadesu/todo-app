@@ -4,8 +4,8 @@ import dataContext from "../../context";
 
 const SidebarButtons = () =>{
     const { boards } = useContext(dataContext);
-
-    const elements = boards.map((board) => {
+    /**Генерация кнопок исходя из пришедшего массива boards */
+    const buttons = boards.map((board) => {
         return(
             <BoardBtn
                 name={board.name}
@@ -16,7 +16,7 @@ const SidebarButtons = () =>{
 
     return (
         <div className="sidebar__boards-container">
-            {elements}
+            {buttons}
             <BoardBtn
                 name='+Create New Board' 
                 key='-1'

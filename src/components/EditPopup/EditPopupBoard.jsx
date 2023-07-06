@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import dataContext from "../../context";
-import '../task-popup/taskPopup.scss';
+import '../TaskPopup/taskPopup.scss';
 import './edit-popup.scss';
 
 const EditPopupBoard = ({onPopupExit}) =>{

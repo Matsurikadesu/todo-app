@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
-import Button from '../button/button';
-import EditBtn from '../edit-btn/EditBtn';
-import EditMenu from '../edit-menu/EditMenu';
+import Button from '../Button/Button';
+import EditBtn from '../EditButton/EditBtn';
+import EditMenu from '../EditMenu/EditMenu';
 import './header.scss';
 import dataContext from '../../context';
 
