@@ -59,7 +59,7 @@
 
             &-count{
                 @include text-m;
-
+                text-align: left;
                 color: $medium-grey;
             }
 
@@ -99,7 +99,8 @@
 
             &-text{
                 @include text-m;
-
+                
+                text-align: left;
                 color: $medium-grey;
             }
 

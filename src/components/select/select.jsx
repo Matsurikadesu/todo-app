@@ -1,29 +1,17 @@
 import { useContext } from "react";
-import dataContext from '../../context';
+import DataContext from "../../context";
 
-const Select = ({onColumnSelect = false}) => {
-    const {state} = useContext(dataContext);
-    const {data, currentBoard, shownTask} = state;
+const Select = ({onColumnSelect = false, name}) => {
+    const {currentBoard} = useContext(DataContext);
 
-    let currentColumn = 0;
-    if(shownTask){
-        data.boards[currentBoard].columns.forEach((item, index) => {
-            item.tasks.forEach(item => {
-                if(item.title === shownTask.title){
-                    currentColumn = index;
-                }
-            })
-        });
-    }
-
-    const options = data.boards[currentBoard].columns.map((item, index) => {
+    const options = currentBoard.columns.map((column, index) => {
         return(
-            <option defaultValue={item.name} key={index}>{item.name}</option>
+            <option defaultValue={column.name} key={index}>{column.name}</option>
         )
     })
 
     return(
-        <select onChange={onColumnSelect} className='card__status-select' name="column" defaultValue={data.boards[currentBoard].columns[currentColumn].name}>
+        <select onChange={onColumnSelect} className='card__status-select' name="column" defaultValue={name}>
             {options}
         </select>
     )

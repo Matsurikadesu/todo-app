@@ -3,21 +3,12 @@ import { useContext } from "react";
 import './EditMenu.scss';
 
 const EditMenu = ({target}) => {
-    const {state, setState} = useContext(dataContext);
-
     const onOpenEdit = () =>{
-        setState({
-            ...state,
-            edit: target,
-            isEditMenuOpened: false
-        });
+        console.log('edit opened')
     }
 
     const onDelete = () => {
-        setState({
-            ...state,
-            delete: true
-        })
+        console.log('tasks deleted')
     }
 
     return(

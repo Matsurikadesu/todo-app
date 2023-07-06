@@ -26,7 +26,8 @@ const Task = ({name, id, description, subtasks}) => {
                     name={name}
                     id={id}
                     description={description}
-                    subtasks={subtasks}/> 
+                    subtasks={subtasks}
+                    setIsOpened={setIsOpened}/> 
                 : null}
         </>
     );
