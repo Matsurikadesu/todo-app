@@ -1,10 +1,12 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import './sidebar.scss';
 import SidebarTools from "../sidebar-tools/sidebar-tools";
 import SidebarButtons from "../sidebar-buttons/sidebar-buttons";
 import HideSidebarBtn from '../sidebar-hide-btn/sidebar-hide';
+import DataContext from '../../context';
 
-const Sidebar = ({boards}) => {
+const Sidebar = () => {
+    const { boards } = useContext(DataContext);
     const [isHidden, setIsHidden] = useState(false);
 
     const onToggleState = () => {
@@ -26,15 +28,14 @@ const Sidebar = ({boards}) => {
             <div className="sidebar">
                 <div className='sidebar-content'>
                     <p className="sidebar__boards-count">All Boards ({boards.length})</p>
-                    <SidebarButtons 
-                        boards={boards}/>
+                    <SidebarButtons/>
                     <SidebarTools
                         onToggleState={onToggleState}/>
                 </div>
             </div>
         );
         // eslint-disable-next-line
-    }, [boards])
+    }, [])
 
     return(
         <>

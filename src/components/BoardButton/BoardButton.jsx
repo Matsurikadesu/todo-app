@@ -1,15 +1,12 @@
-import { useContext } from 'react';
 import './board-button.scss';
-import dataContext from '../../context';
+import DataContext from '../../context';
+import { useContext } from 'react';
 
-const BoardBtn = ({name, state1, id}) =>{
-    const {state, setState} = useContext(dataContext);
+const BoardBtn = ({name, id}) =>{
+    const { boardId, setBoardId } = useContext(DataContext);
 
-    const onBoardSelect = (e) => {
-        setState({
-            ...state,
-            currentBoard: e.target.id
-        });
+    const onBoardSelect = () => {
+        if(boardId !== id) setBoardId(id);
     }
 
     // const onAddMenuOpen = () => {
@@ -24,14 +21,14 @@ const BoardBtn = ({name, state1, id}) =>{
     // }
 
     const onAddMenuOpen = () => {
-        setState({
-            ...state,
-            add: 'Board'
-        })
+        // setState({
+        //     ...state,
+        //     add: 'Board'
+        // })
     }
 
     let classNames = 'board-btn';
-    if(state1) classNames += ' board-btn_active';
+    if(boardId === id) classNames += ' board-btn_active';
     if(name === '+Create New Board') {
         classNames += ' board-btn_add';
         return(

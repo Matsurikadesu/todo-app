@@ -1,13 +1,13 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import Button from '../button/button';
 import EditBtn from '../edit-btn/EditBtn';
 import EditMenu from '../edit-menu/EditMenu';
 import './header.scss';
 import dataContext from '../../context';
 
-const AppHeader = ({boards}) => {
-    const {state} = useContext(dataContext);
-    const {isEditMenuOpened, currentBoard} = state;
+const AppHeader = () => {
+    const { currentBoard } = useContext(dataContext);
+    const [isEditMenuOpened, setIsEditMenuOpened] = useState(false);
 
     const onSidebarOpen = (e) =>{
         e.target.classList.toggle('sidebar_open');
@@ -49,12 +49,12 @@ const AppHeader = ({boards}) => {
                 </div>
             </div>
             <div className="header__container">
-                <h2 className="header__info">{boards[currentBoard].name} <img onClick={onSidebarOpen} src="./selectArrow.svg" alt="arrow"/></h2>
+                <h2 className="header__info">{currentBoard.name} <img onClick={onSidebarOpen} src="./selectArrow.svg" alt="arrow"/></h2>
                 <div className="header__buttons">
                     <Button/>
                     <EditBtn target='Board'/>
                 </div>
-                {isEditMenuOpened === 'Board' && !state.delete ? <EditMenu target={isEditMenuOpened}/> : null}
+                {isEditMenuOpened === 'Board' ? <EditMenu target={isEditMenuOpened}/> : null}
             </div>
         </header>
     );

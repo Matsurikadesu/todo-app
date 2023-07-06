@@ -2,22 +2,15 @@ import { useContext } from "react";
 import BoardBtn from "../BoardButton/BoardButton";
 import dataContext from "../../context";
 
-const SidebarButtons = ({boards}) =>{
-    const {state} = useContext(dataContext);
-    const {currentBoard} = state;
-    const elements = boards.map((item, index) => {
-        let isActive = false;
+const SidebarButtons = () =>{
+    const { boards } = useContext(dataContext);
 
-        if (index === +currentBoard){
-            isActive = true;
-        }
-
+    const elements = boards.map((board) => {
         return(
-            <BoardBtn 
-                {...item}
-                state1={isActive} 
-                key={index} 
-                id={index}/>
+            <BoardBtn
+                name={board.name}
+                key={board.id} 
+                id={board.id}/>
         )
     })
 
