@@ -2,9 +2,10 @@ import dataContext from "../../context";
 import { useContext } from "react";
 import './EditMenu.scss';
 
-const EditMenu = ({target}) => {
+const EditMenu = ({target, setIsEditing, setIsOpened}) => {
     const onOpenEdit = () =>{
-        console.log('edit opened')
+        setIsEditing(true);
+        setIsOpened(false);
     }
 
     const onDelete = () => {

@@ -4,13 +4,11 @@ import EditMenu from '../EditMenu/EditMenu';
 import Select from '../Select/Select';
 import { useState } from 'react';
 
-const TaskPopup = ({name, description, id, subtasks, setIsOpened}) => {
-    const [isEditing, setIsEditing] = useState(false);
+const TaskPopup = ({name, description, id, subtasks, setIsOpened, setIsEditing}) => {
+    const [isEditMenuOpened, setIsEditMenuOpened] = useState(false);
 
     const onSubtaskStatusChange = (e) => {
         console.log('subtask status changed')
-        // const index = e.target.getAttribute('index');
-        // newTask.subtasks[index].isCompleted = !newTask.subtasks[index].isCompleted
     }
 
     const onColumnSelect = (e) =>{
@@ -18,7 +16,13 @@ const TaskPopup = ({name, description, id, subtasks, setIsOpened}) => {
     }
 
     const handleChange = (e) => {
+        if(!e.target.classList.contains('popup')) return;
+
         setIsOpened(false);
+    }
+
+    const handleEditButtonClick = () => {
+        setIsEditMenuOpened(true);
     }
 
     let completedSubtasksCount = 0;
@@ -45,7 +49,9 @@ const TaskPopup = ({name, description, id, subtasks, setIsOpened}) => {
             <div className="popup__card" data-id={id}>
                 <div className='card__header'>
                     <h3 className='card__title'>{name}</h3>
-                    <EditBtn target='Task'/>
+                    <EditBtn 
+                        target='Task'
+                        handleEditButtonClick={handleEditButtonClick}/>
                 </div>
                 <h4 className='card__subtitle' hidden={isDescriptionHidden}>{description}</h4>
                 <div className='card__subtasks'>
@@ -60,7 +66,7 @@ const TaskPopup = ({name, description, id, subtasks, setIsOpened}) => {
                         onColumnSelect={onColumnSelect}
                         columnName={name}/>
                 </div>
-                {isEditing ? <EditMenu target={'task'}/> : null}
+                {isEditMenuOpened ? <EditMenu target={'task'} setIsEditing={setIsEditing} setIsOpened={setIsOpened}/> : null}
             </div>
         </div>
     );
