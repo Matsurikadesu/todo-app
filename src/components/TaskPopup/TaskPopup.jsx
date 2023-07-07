@@ -22,7 +22,7 @@ const TaskPopup = ({name, description, id, subtasks, setIsOpened, setIsEditing, 
     }
 
     const handleEditButtonClick = () => {
-        setIsEditMenuOpened(true);
+        setIsEditMenuOpened(!isEditMenuOpened);
     }
 
     let completedSubtasksCount = 0;
@@ -66,7 +66,7 @@ const TaskPopup = ({name, description, id, subtasks, setIsOpened, setIsEditing, 
                         onColumnSelect={onColumnSelect}
                         currentColumn={status}/>
                 </div>
-                {isEditMenuOpened ? <EditMenu target={'task'} setIsEditing={setIsEditing} setIsOpened={setIsOpened}/> : null}
+                {isEditMenuOpened ? <EditMenu target={'Task'} setIsEditing={setIsEditing} setIsOpened={setIsOpened}/> : null}
             </div>
         </div>
     );

@@ -1,11 +1,10 @@
-import dataContext from "../../context";
-import { useContext } from "react";
 import './EditMenu.scss';
 
-const EditMenu = ({target, setIsEditing, setIsOpened}) => {
+const EditMenu = ({target, setIsEditing, setIsOpened, setIsEditMenuOpened}) => {
     const onOpenEdit = () =>{
+        if(target === 'Task') setIsOpened(false);
+        if(target === 'Board') setIsEditMenuOpened(false);
         setIsEditing(true);
-        setIsOpened(false);
     }
 
     const onDelete = () => {

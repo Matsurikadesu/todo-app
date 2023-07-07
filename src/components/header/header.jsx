@@ -2,16 +2,27 @@ import { useContext, useState } from 'react';
 import Button from '../Button/Button';
 import EditBtn from '../EditButton/EditBtn';
 import EditMenu from '../EditMenu/EditMenu';
+import DataContext from '../../context';
+import BoardEditPopup from '../EditPopup/EditPopupBoard';
 import './header.scss';
-import dataContext from '../../context';
 
 const AppHeader = () => {
-    const { currentBoard } = useContext(dataContext);
+    const { currentBoard } = useContext(DataContext);
     const [isEditMenuOpened, setIsEditMenuOpened] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
 
     const onSidebarOpen = (e) =>{
         e.target.classList.toggle('sidebar_open');
+
         document.querySelector('.sidebar').classList.toggle('sidebar_active');
+    }
+
+    const handleEditButtonClick = () => {
+        setIsEditMenuOpened(!isEditMenuOpened);
+    }
+
+    const closeEditPopup = () => {
+        setIsEditing(false);
     }
 
     return (
@@ -49,12 +60,25 @@ const AppHeader = () => {
                 </div>
             </div>
             <div className="header__container">
-                <h2 className="header__info">{currentBoard.name} <img onClick={onSidebarOpen} src="./selectArrow.svg" alt="arrow"/></h2>
+                <h2 className="header__info">{currentBoard.name} <img onClick={onSidebarOpen} src="./images/selectArrow.svg" alt="arrow"/></h2>
                 <div className="header__buttons">
                     <Button/>
-                    <EditBtn target='Board'/>
+                    <EditBtn handleEditButtonClick={handleEditButtonClick}/>
                 </div>
-                {isEditMenuOpened === 'Board' ? <EditMenu target={isEditMenuOpened}/> : null}
+
+                {isEditMenuOpened
+                    ? <EditMenu 
+                        target={'Board'}
+                        setIsEditing={setIsEditing}
+                        setIsEditMenuOpened={setIsEditMenuOpened}/> 
+                    : null
+                }
+
+                {isEditing 
+                    ? <BoardEditPopup
+                        closeEditPopup={closeEditPopup}/>
+                    : null
+                }
             </div>
         </header>
     );

@@ -24,6 +24,7 @@ export const DataProvider = ({ theme, setTheme, children }) => {
         await getDoc((doc(db, 'boards', boardId)))
         .then((querySnapshot) => {
             const board = querySnapshot.data();
+            board.id = querySnapshot.id;
             setCurrentBoard(board);
         });
     }
