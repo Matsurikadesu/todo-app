@@ -1,56 +1,34 @@
 import '../TaskPopup/taskPopup.scss';
 import '../EditPopup/edit-popup.scss';
-import { useContext } from 'react';
 import { useState } from 'react';
-import dataContext from '../../context';
 
-const AddBoardPopup = ({onPopupExit}) => {
-    const {state, setState} = useContext(dataContext); 
-    const [columns, setColumns] = useState([{name: 'Todo'}, {name: 'Doing'}])
+const AddBoardPopup = ({setIsEditPopupOpen}) => {
+    const [ columns ] = useState([{name: 'Todo'}, {name: 'Doing'}])
     
     const onBoardAddSubmit = (e) =>{
         e.preventDefault();
-        const form = e.target;
-        const boardColumns = [];
-        columns.forEach((item, index) => {
-            boardColumns.push({
-                name: form[`column${index}`].value,
-                tasks: []
-            })
-        })
-        const board = {
-            name: form.title.value,
-            columns: boardColumns,
-        }
-        
-        const boards = state.data.boards.splice(0);
-        boards.push(board)
-        
-        setState({
-            ...state,
-            data: {boards},
-            add: null
-        })
+        console.log('board added');
     }
 
     const onAddColumn = (e) => {
         e.preventDefault();
-        const newColumns = columns.splice(0);
-        newColumns.push({name: 'New column', tasks: []})
-        setColumns(newColumns)
+        console.log('collumn added');
     }
 
     const onColumnDelete = (e) => {
         e.preventDefault();
-        const columnToDelete = +e.target.closest('.card__subtask-delete').getAttribute('index');
-        const newColumns = columns.splice(0, columnToDelete).concat(columns.splice(columnToDelete))
-        setColumns(newColumns);
+        console.log('column deleted');
+    }
+
+    const handlePopupExit = (e) => {
+        if(!e.target.classList.contains('popup')) return;
+        setIsEditPopupOpen(false);
     }
     
-    const columnsElements = columns.map((item, index) =>{
+    const columnsElements = columns.map((column, index) =>{
         return (
             <div className='card__subtask-input' key={index}>
-                <input className='popup__input-field' name={`column${index}`} type="text" placeholder='Column name' defaultValue={item.name}/>
+                <input className='popup__input-field' name={`column${index}`} type="text" placeholder='Column name' defaultValue={column.name}/>
                 <button className='card__subtask-delete' index={index} onClick={onColumnDelete}>
                     <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="12.7275" width="3" height="18" transform="rotate(45 12.7275 0)" fill="#828FA3"/>
@@ -62,7 +40,7 @@ const AddBoardPopup = ({onPopupExit}) => {
     })
     
     return (
-        <div className='popup' onClick={onPopupExit}>
+        <div className='popup' onClick={handlePopupExit}>
             <form className='popup__card' onSubmit={onBoardAddSubmit}>
                 <h3 className='popup__title'>Add Board</h3>
                 <div className='popup__input'>

@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import BoardBtn from "../BoardButton/BoardButton";
 import dataContext from "../../context";
+import AddBoardButton from "../BoardButton/AddNewBoardButton";
 
 const SidebarButtons = () =>{
     const { boards } = useContext(dataContext);
@@ -17,10 +18,8 @@ const SidebarButtons = () =>{
     return (
         <div className="sidebar__boards-container">
             {buttons}
-            <BoardBtn
-                name='+Create New Board' 
-                key='-1'
-                id={-1}/>
+
+            <AddBoardButton/>
         </div>
     )
 }

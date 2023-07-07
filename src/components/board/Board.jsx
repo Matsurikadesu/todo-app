@@ -36,6 +36,7 @@ const Board = () =>{
 
     useEffect(() => {
         fetchTasks();
+        // eslint-disable-next-line
     }, [boardId])
     
 
