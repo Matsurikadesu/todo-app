@@ -3,7 +3,7 @@ import BoardColumn from '../BoardColumn/BoardColumn';
 import {  useEffect, useState } from 'react';
 import { handleGrab } from './handleGrab';
 import { db } from '../../firebase';
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { useContext } from 'react';
 import dataContext from '../../context';
 
@@ -27,8 +27,8 @@ const Board = () =>{
     /** Функция получает от сервера  массив с именами колонок и массив tasks, формирует из этих массивов обьект и помещает его в state*/
     async function fetchTasks(){
         const ref = query(collection(db, 'boards', boardId, 'tasks'), orderBy('timestamp'));
-        await getDocs(ref)
-        .then((querySnapshot) => {
+
+        await onSnapshot(ref, (querySnapshot) => {
             const newTasks = querySnapshot.docs.map((item) => ({...item.data(), id: item.id}));
             setTasks(newTasks);
         });
@@ -42,18 +42,6 @@ const Board = () =>{
 
     const onAddMenuOpen = () => {
         console.log('adding chto-to')
-        // const oldData = state.data;
-        // const boards = oldData.boards.map((item,index) => {
-        //     if(index === +currentBoard){
-        //         item.columns.push({name: 'New Column', tasks: []})
-        //     }
-        //     return item;
-        // })
-        
-        // setState({
-        //     ...state,
-        //     data: {boards}
-        // })
     }
 
     if(currentBoard.columns.length === 0){

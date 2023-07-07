@@ -3,10 +3,10 @@ import './sidebar-theme.scss';
 import DataContext from '../../context';
 /** Компонент отвечающий за смену цветовой темы */
 const ChooseThemeElement = () =>{
-    const { theme, setTheme} = useContext(DataContext);
+    const { theme, changeTheme} = useContext(DataContext);
 
     const onThemeChange = () => {
-        setTheme(!theme);
+        changeTheme();
     }
 
     return(

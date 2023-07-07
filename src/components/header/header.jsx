@@ -3,7 +3,7 @@ import Button from '../Button/Button';
 import EditBtn from '../EditButton/EditBtn';
 import EditMenu from '../EditMenu/EditMenu';
 import DataContext from '../../context';
-import BoardEditPopup from '../EditPopup/EditPopupBoard';
+import BoardEditPopup from '../EditPopup/BoardEditPopup';
 import './header.scss';
 
 const AppHeader = () => {

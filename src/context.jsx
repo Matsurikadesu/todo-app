@@ -9,6 +9,11 @@ export const DataProvider = ({ theme, setTheme, children }) => {
     const [boards, setBoards] = useState([]);
     const [currentBoard, setCurrentBoard] = useState({columns: [], name: ''});
 
+    const changeTheme = () => {
+        localStorage.theme = !theme;
+        setTheme(!theme);
+    }
+
     async function fetchBoards(){
         const ref = query(collection(db, 'boards'), orderBy('timestamp'));
 
@@ -20,6 +25,7 @@ export const DataProvider = ({ theme, setTheme, children }) => {
             setBoardId(newBoards[0].id);         
         })
     }
+
     async function fetchBoard(){
         await getDoc((doc(db, 'boards', boardId)))
         .then((querySnapshot) => {
@@ -44,23 +50,10 @@ export const DataProvider = ({ theme, setTheme, children }) => {
     return (
         <DataContext.Provider value={{
             boardId, setBoardId, boards,
-            currentBoard, setTheme, theme
+            currentBoard, changeTheme, theme
         }}>
             {children}
         </DataContext.Provider>
     )
 }
 export default DataContext;
-
-//  const [state, setState] = useState({
-//         currentBoard: 0,
-//         currentColumn: 0,
-//         darkTheme: theme,
-//         isEditMenuOpened: false,
-//         shownTask: null,
-//         edit: null,
-//         data: initialData,
-//         add: null,
-//         delete: false,
-//         boardId: 'jL3QeXE40knniuDHghVI'
-//     });

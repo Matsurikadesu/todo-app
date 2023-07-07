@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import TaskPopup from '../TaskPopup/TaskPopup';
 import './board-task.scss';
-import TaskEditPopup from '../EditPopup/EditPopupTask';
+import TaskEditPopup from '../EditPopup/TaskEditPopup';
 
-const Task = ({name, id, description, subtasks, status}) => {
+const Task = ({name, id, description, subtasks, status, setTasks}) => {
     const [isOpened, setIsOpened] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
 
@@ -41,9 +41,10 @@ const Task = ({name, id, description, subtasks, status}) => {
                     name={name}
                     id={id}
                     description={description}
-                    subtasks={subtasks}
+                    dataSubtasks={subtasks}
                     setIsEditing={setIsEditing}
-                    status={status}/>
+                    status={status}
+                    setTasks={setTasks}/>
                 : null
             }
         </>
