@@ -3,7 +3,7 @@ import TaskPopup from '../TaskPopup/TaskPopup';
 import './board-task.scss';
 import TaskEditPopup from '../EditPopup/EditPopupTask';
 
-const Task = ({name, id, description, subtasks}) => {
+const Task = ({name, id, description, subtasks, status}) => {
     const [isOpened, setIsOpened] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
 
@@ -31,7 +31,8 @@ const Task = ({name, id, description, subtasks}) => {
                     description={description}
                     subtasks={subtasks}
                     setIsOpened={setIsOpened}
-                    setIsEditing={setIsEditing}/> 
+                    setIsEditing={setIsEditing}
+                    status={status}/> 
                 : null
             }
 
@@ -41,7 +42,8 @@ const Task = ({name, id, description, subtasks}) => {
                     id={id}
                     description={description}
                     subtasks={subtasks}
-                    setIsEditing={setIsEditing}/>
+                    setIsEditing={setIsEditing}
+                    status={status}/>
                 : null
             }
         </>

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import DataContext from "../../context";
 
-const Select = ({onColumnSelect = false, name}) => {
+const Select = ({onColumnSelect = false, currentColumn}) => {
     const {currentBoard} = useContext(DataContext);
 
     const options = currentBoard.columns.map((column, index) => {
@@ -11,7 +11,7 @@ const Select = ({onColumnSelect = false, name}) => {
     })
 
     return(
-        <select onChange={onColumnSelect} className='card__status-select' name="column" defaultValue={name}>
+        <select onChange={onColumnSelect} className='card__status-select' name="column" defaultValue={currentColumn}>
             {options}
         </select>
     )

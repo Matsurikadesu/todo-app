@@ -1,7 +1,7 @@
 import './board-column.scss';
 import Task from '../BoardTask/BoardTask';
 
-const BoardColumn = ({name, id, tasks}) => {
+const BoardColumn = ({name, tasks}) => {
     const tasksElements = tasks.map((task) => {
         return(
             <Task 
@@ -9,7 +9,8 @@ const BoardColumn = ({name, id, tasks}) => {
                 description={task.description}
                 id={task.id}
                 subtasks={task.subtasks}
-                key={task.id}/>
+                key={task.id}
+                status={task.status}/>
         );
     });
 

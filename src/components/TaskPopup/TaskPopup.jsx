@@ -4,7 +4,7 @@ import EditMenu from '../EditMenu/EditMenu';
 import Select from '../Select/Select';
 import { useState } from 'react';
 
-const TaskPopup = ({name, description, id, subtasks, setIsOpened, setIsEditing}) => {
+const TaskPopup = ({name, description, id, subtasks, setIsOpened, setIsEditing, status}) => {
     const [isEditMenuOpened, setIsEditMenuOpened] = useState(false);
 
     const onSubtaskStatusChange = (e) => {
@@ -64,7 +64,7 @@ const TaskPopup = ({name, description, id, subtasks, setIsOpened, setIsEditing})
                     <h4 className='card__status-text'>Current Status</h4>
                     <Select 
                         onColumnSelect={onColumnSelect}
-                        columnName={name}/>
+                        currentColumn={status}/>
                 </div>
                 {isEditMenuOpened ? <EditMenu target={'task'} setIsEditing={setIsEditing} setIsOpened={setIsOpened}/> : null}
             </div>

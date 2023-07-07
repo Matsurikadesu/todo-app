@@ -1,17 +1,21 @@
-import { useContext, useState } from "react";
-import dataContext from "../../context";
+import { useContext } from "react";
 import Select from "../Select/Select";
 import '../TaskPopup/taskPopup.scss';
 import './edit-popup.scss';
+import DataContext from "../../context";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase";
 
-const TaskEditPopup = ({name, description, id, subtasks, setIsEditing}) =>{
+const TaskEditPopup = ({name, description, id, subtasks, status, setIsEditing}) =>{
+    const { boardId } = useContext(DataContext);
 
     const onColumnSelect = (e) =>{
 
     }
 
-    const addNewSubtask = (e) => {
-
+    const addNewSubtask = async (e) => {
+        e.preventDefault();
+        await updateDoc(doc(db, 'boards', boardId, ));
     }
 
     const onSubtaskDelete = (e) => {
@@ -63,7 +67,9 @@ const TaskEditPopup = ({name, description, id, subtasks, setIsEditing}) =>{
                 </div>
                 <div className='popup__input'>
                     <p className='text-m'>Status</p>
-                    <Select onColumnSelect={onColumnSelect}/>
+                    <Select 
+                        onColumnSelect={onColumnSelect}
+                        currentColumn={status}/>
                 </div>
                 <button type='submit' className='popup__btn submit-btn'>Save Changes</button>
             </form>
