@@ -1,66 +1,38 @@
 import { useContext } from 'react';
 import './confirm-delete-popup.scss';
-import dataContext from '../../context';
+import DataContext from '../../context';
 
-const ConfirmDeletePopup = ({onPopupExit}) => {
-    const {state, setState} = useContext(dataContext);
+const ConfirmDeletePopup = ({setIsDeletePopupOpen, target, task}) => {
+    const { currentBoard } = useContext(DataContext);
 
     const onDeleteBoard = () => {
-        const oldData = state.data;
-        if(oldData.length <= 1) return;
-        const boards = oldData.boards.filter((item, index) => (index !== +state.currentBoard))
-        
-        setState({
-            ...state,
-            data: {boards},
-            isEditMenuOpened: false,
-            currentBoard: 0, 
-            delete: false
-        })
+        console.log('board deleted')
     }
 
     const onDeleteTask = () => {
-        const boards = [];
-        state.data.boards.forEach((item, index) => {
-            if(index === +state.currentBoard){
-                item.columns.forEach((item) => {
-                    item.tasks = item.tasks.filter(item => (item.title !== state.shownTask.title));
-                })
-            }
-            boards.push(item);
-        })
-
-        setState({
-            ...state,
-            data: {boards},
-            isEditMenuOpened: false,
-            shownTask: null, 
-            delete: false
-        })
+        console.log(`task with id - ${task.id} deleted`)
     }
 
-    const onCancel = () => {
-        setState({
-            ...state,
-            delete: false,
-            isEditMenuOpened: false
-        })
+    const handlePopupExit = (e) => {
+        const query = e.target.classList.contains('popup') || e.target.classList.contains('popup__btn');
+
+        if(query) setIsDeletePopupOpen(false);
     }
 
     let popupText = 'Something went wrong'
-    if(state.isEditMenuOpened === 'Task'){
-        popupText = `Are you sure you want to delete the ‘${state.shownTask.title}’ task and its subtasks? This action cannot be reversed.`
+    if(target === 'Task'){
+        popupText = `Are you sure you want to delete the ‘${task.name}’ task and its subtasks? This action cannot be reversed.`
     }else{
-        popupText = `Are you sure you want to delete the ‘${state.data.boards[+state.currentBoard].name}’ board? This action will remove all columns and tasks and cannot be reversed.`
+        popupText = `Are you sure you want to delete the ‘${currentBoard.name}’ board? This action will remove all columns and tasks and cannot be reversed.`
     }
     return(
-        <div className='confirm-popup' onClick={onPopupExit}>
+        <div className='confirm-popup' onClick={handlePopupExit}>
             <div className='popup__body'>
-                <h2 className='popup__title'>Delete this {state.isEditMenuOpened.toLowerCase()}?</h2>
+                <h2 className='popup__title'>Delete this {target.toLowerCase()}?</h2>
                 <p className='popup__text'>{popupText}</p>
                 <div className='popup__buttons'>
-                    <button className='popup__btn popup__btn_delete' onClick={state.isEditMenuOpened === 'Task' ? onDeleteTask : onDeleteBoard}>Delete</button>
-                    <button className='popup__btn' onClick={onCancel}>Cancel</button>
+                    <button className='popup__btn popup__btn_delete' onClick={target === 'Task' ? onDeleteTask : onDeleteBoard}>Delete</button>
+                    <button className='popup__btn' onClick={handlePopupExit}>Cancel</button>
                 </div>
             </div>
         </div>

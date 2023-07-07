@@ -39,11 +39,6 @@ const TaskPopup = ({name, description, id, subtasks, setIsOpened, setIsEditing, 
             )
         })
 
-    let isDescriptionHidden = false;
-    if (!description){
-        isDescriptionHidden = true;
-    }
-
     return(
         <div className='popup' onClick={handleChange}>
             <div className="popup__card" data-id={id}>
@@ -53,7 +48,7 @@ const TaskPopup = ({name, description, id, subtasks, setIsOpened, setIsEditing, 
                         target='Task'
                         handleEditButtonClick={handleEditButtonClick}/>
                 </div>
-                <h4 className='card__subtitle' hidden={isDescriptionHidden}>{description}</h4>
+                <h4 className='card__subtitle' hidden={!description}>{description}</h4>
                 <div className='card__subtasks'>
                     <p className='card__subtasks-count'>Subtasks ({completedSubtasksCount} of {subtasks.length})</p>
                     <ul className='card__subtasks-list'>
@@ -66,7 +61,14 @@ const TaskPopup = ({name, description, id, subtasks, setIsOpened, setIsEditing, 
                         onColumnSelect={onColumnSelect}
                         currentColumn={status}/>
                 </div>
-                {isEditMenuOpened ? <EditMenu target={'Task'} setIsEditing={setIsEditing} setIsOpened={setIsOpened}/> : null}
+
+                {isEditMenuOpened 
+                    ? <EditMenu 
+                        target={'Task'} 
+                        setIsEditing={setIsEditing} 
+                        setIsOpened={setIsOpened}
+                        task={{name, id}}/> 
+                    : null}
             </div>
         </div>
     );
