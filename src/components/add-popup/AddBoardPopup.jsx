@@ -1,23 +1,51 @@
 import '../TaskPopup/taskPopup.scss';
 import '../EditPopup/edit-popup.scss';
-import { useState } from 'react';
+import { useForm, useFieldArray } from 'react-hook-form';
+import { useEffect } from 'react';
+import { addDoc, collection } from 'firebase/firestore';
+import { db } from '../../firebase';
 
 const AddBoardPopup = ({setIsEditPopupOpen}) => {
-    const [ columns ] = useState([{name: 'Todo'}, {name: 'Doing'}])
+    const methods = useForm();
+    const { fields, append, remove } = useFieldArray({
+        control: methods.control,
+        name: 'columns'
+    });
     
-    const onBoardAddSubmit = (e) =>{
-        e.preventDefault();
-        console.log('board added');
+    useEffect(() => {
+        const columns = [{name: 'Todo'}, {name: 'Doing'}];
+        columns.forEach(item => append(item));
+
+        //eslint-disable-next-line
+    }, [])
+
+    useEffect(() => {
+        remove(3);
+        remove(2)
+
+    }, [remove])
+
+    const handleBoardSubmit = (data) =>{
+        addDoc(collection(db, 'boards'), {
+            name: data.name,
+            columns: data.columns.map((item, index) => {
+                return {
+                    ...item,
+                    id: index
+                } 
+            }),
+            timestamp: new Date().getTime()
+        })
+
+        setIsEditPopupOpen(false);
     }
 
-    const onAddColumn = (e) => {
-        e.preventDefault();
-        console.log('collumn added');
+    const handleColumnAdd = () => {
+        append({name: 'new column'});
     }
 
-    const onColumnDelete = (e) => {
-        e.preventDefault();
-        console.log('column deleted');
+    const handleColumnDelete = (index) => {
+        remove(index);
     }
 
     const handlePopupExit = (e) => {
@@ -25,15 +53,12 @@ const AddBoardPopup = ({setIsEditPopupOpen}) => {
         setIsEditPopupOpen(false);
     }
     
-    const columnsElements = columns.map((column, index) =>{
+    const columnsElements = fields.map((column, index) =>{
         return (
-            <div className='card__subtask-input' key={index}>
-                <input className='popup__input-field' name={`column${index}`} type="text" placeholder='Column name' defaultValue={column.name}/>
-                <button className='card__subtask-delete' index={index} onClick={onColumnDelete}>
-                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="12.7275" width="3" height="18" transform="rotate(45 12.7275 0)" fill="#828FA3"/>
-                        <rect y="2.12132" width="3" height="18" transform="rotate(-45 0 2.12132)" fill="#828FA3"/>
-                    </svg>
+            <div className='card__subtask-input' key={column.id}>
+                <input className='popup__input-field' {...methods.register(`columns.${index}.name`)} type="text" placeholder='Column name' defaultValue={column.name}/>
+                <button type='button' className='card__subtask-delete' onClick={handleColumnDelete}>
+                    <img src="images/cross.svg" alt="cross" />
                 </button>
             </div>
         )
@@ -41,15 +66,15 @@ const AddBoardPopup = ({setIsEditPopupOpen}) => {
     
     return (
         <div className='popup' onClick={handlePopupExit}>
-            <form className='popup__card' onSubmit={onBoardAddSubmit}>
+            <form className='popup__card' onSubmit={methods.handleSubmit(handleBoardSubmit)}>
                 <h3 className='popup__title'>Add Board</h3>
                 <div className='popup__input'>
                     <label htmlFor="title" className='text-m'>Title</label>
-                    <input className='popup__input-field' id='title' type="text" name='title' placeholder='e.g. Web Design' required/>
+                    <input className='popup__input-field' id='title' type="text" {...methods.register('name')} placeholder='e.g. Web Design' required/>
                 </div>
                 <div className='popup__input'>
                     {columnsElements}
-                    <button className='popup__btn' onClick={onAddColumn}>+ Add New Column</button>
+                    <button type='button' className='popup__btn' onClick={handleColumnAdd}>+ Add New Column</button>
                 </div>
                 <button type='submit' className='popup__btn submit-btn'>Add Board</button>
             </form>

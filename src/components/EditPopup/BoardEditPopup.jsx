@@ -1,24 +1,37 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import '../TaskPopup/taskPopup.scss';
 import './edit-popup.scss';
 import DataContext from "../../context";
+import { useForm, useFieldArray } from "react-hook-form";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase";
 
 const BoardEditPopup = ({closeEditPopup}) =>{
     const {currentBoard} = useContext(DataContext);
+    const methods = useForm();
+    const { fields, append, remove } = useFieldArray({
+        control: methods.control,
+        name: 'columns'
+    });
 
-    const onAddColumn = (e) => {
-        e.preventDefault();
-        console.log('column added');
+    useEffect(() => {
+        currentBoard.columns.forEach((item) => append({name: item.name}));
+        //eslint-disable-next-line
+    }, [])
+
+    const handleAddColumnButtonClick = () => {
+        append({name: 'new column'});
     }
 
-    const onColumnDelete = (e) => {
-        e.preventDefault();
-        console.log('column deleted');
+    const handleDeleteColumnButtonClick = (index) => {
+        remove(index);
     }
 
-    const onBoardEditSubmit = (e) => {
-        e.preventDefault();
-        console.log('submit board edit');
+    const handleEditBoardFormSubmit = (data) => {
+        updateDoc(doc(db, 'boards', currentBoard.id), {
+            name: data.name,
+            columns: data.columns
+        })
     }
 
     const handlePopupExit = (e) => {
@@ -26,15 +39,12 @@ const BoardEditPopup = ({closeEditPopup}) =>{
         closeEditPopup();
     }
 
-    const columnsElements = currentBoard.columns.map((column, index) =>{
+    const columnsElements = fields.map((column, index) =>{
         return (
-            <div className='card__subtask-input' key={index}>
-                <input className='popup__input-field' type="text" defaultValue={column.name}/>
-                <button className='card__subtask-delete' id={index} onClick={onColumnDelete}>
-                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="12.7275" width="3" height="18" transform="rotate(45 12.7275 0)" fill="#828FA3"/>
-                        <rect y="2.12132" width="3" height="18" transform="rotate(-45 0 2.12132)" fill="#828FA3"/>
-                    </svg>
+            <div className='card__subtask-input' key={column.id}>
+                <input className='popup__input-field' {...methods.register(`columns.${index}.name`)} type="text" defaultValue={column.name}/>
+                <button type="button" className='card__subtask-delete' onClick={() => handleDeleteColumnButtonClick(index)}>
+                    <img src="images/cross.svg" alt="cross" />
                 </button>
             </div>
         )
@@ -42,15 +52,15 @@ const BoardEditPopup = ({closeEditPopup}) =>{
     
     return (
         <div className='popup' onClick={handlePopupExit}>
-            <form className='popup__card' onSubmit={onBoardEditSubmit}>
+            <form className='popup__card' onSubmit={methods.handleSubmit(handleEditBoardFormSubmit)}>
                 <h3 className='popup__title'>Edit Board</h3>
                 <div className='popup__input'>
                     <label htmlFor="title" className='text-m'>Title</label>
-                    <input className='popup__input-field' id='title' type="text" name='title' required defaultValue={currentBoard.name}/>
+                    <input className='popup__input-field' type="text" {...methods.register('name')} required defaultValue={currentBoard.name}/>
                 </div>
                 <div className='popup__input'>
                     {columnsElements}
-                    <button className='popup__btn' onClick={onAddColumn}>+ Add New Column</button>
+                    <button className='popup__btn' onClick={handleAddColumnButtonClick}>+ Add New Column</button>
                 </div>
                 <button type='submit' className='popup__btn submit-btn'>Save Changes?</button>
             </form>

@@ -1,16 +1,18 @@
 import { useContext } from 'react';
 import './confirm-delete-popup.scss';
 import DataContext from '../../context';
+import { deleteDoc, doc } from 'firebase/firestore';
+import { db } from '../../firebase';
 
 const ConfirmDeletePopup = ({setIsDeletePopupOpen, target, task}) => {
     const { currentBoard } = useContext(DataContext);
 
     const onDeleteBoard = () => {
-        console.log('board deleted')
+        deleteDoc(doc(db, 'boards', currentBoard.id));
     }
 
-    const onDeleteTask = () => {
-        console.log(`task with id - ${task.id} deleted`)
+    const handleTaskDelete = () => {
+        deleteDoc(doc(db, 'boards', currentBoard.id, 'tasks', task.id));
     }
 
     const handlePopupExit = (e) => {
@@ -31,7 +33,7 @@ const ConfirmDeletePopup = ({setIsDeletePopupOpen, target, task}) => {
                 <h2 className='popup__title'>Delete this {target.toLowerCase()}?</h2>
                 <p className='popup__text'>{popupText}</p>
                 <div className='popup__buttons'>
-                    <button className='popup__btn popup__btn_delete' onClick={target === 'Task' ? onDeleteTask : onDeleteBoard}>Delete</button>
+                    <button className='popup__btn popup__btn_delete' onClick={target === 'Task' ? handleTaskDelete : onDeleteBoard}>Delete</button>
                     <button className='popup__btn' onClick={handlePopupExit}>Cancel</button>
                 </div>
             </div>

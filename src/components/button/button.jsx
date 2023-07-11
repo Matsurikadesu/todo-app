@@ -1,20 +1,23 @@
-import { useContext} from 'react';
-import dataContext from '../../context';
+import { useContext, useState } from 'react';
 import './button.scss';
+import AddTaskPopup from '../Add-popup/AddTaskPopup';
+import DataContext from '../../context';
 
 const Button = () => {
+    const { currentBoard } = useContext(DataContext);
+    const [ isAdding, setIsAdding ] = useState(false);
+
     const onAddTaskPopupOpen = () => {
-        // setState({
-        //     ...state,
-        //     add: 'Task'
-        // })
-        console.log('button clicked')
+        setIsAdding(true);
     }
 
     return (
-        <button className="btn" onClick={onAddTaskPopupOpen} disabled={(1 === 0)}>
-            <span className="btn-text">+ Add New Task</span>
-        </button>
+        <>
+            <button className="btn" onClick={onAddTaskPopupOpen} disabled={!currentBoard.columns.length}>
+                <span className="btn-text">+ Add New Task</span>
+            </button>
+            {isAdding ? <AddTaskPopup setIsAdding={setIsAdding}/> : null}
+        </>
     )
 }
 
