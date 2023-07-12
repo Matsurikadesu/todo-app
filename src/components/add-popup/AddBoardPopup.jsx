@@ -4,12 +4,13 @@ import { useForm, useFieldArray } from 'react-hook-form';
 import { useEffect } from 'react';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../../firebase';
+import InputListItemEditable from '../InputListItem/InputListItemEditable';
 
 const AddBoardPopup = ({setIsEditPopupOpen}) => {
     const methods = useForm();
     const { fields, append, remove } = useFieldArray({
         control: methods.control,
-        name: 'columns'
+        name: 'elements'
     });
     
     useEffect(() => {
@@ -28,7 +29,7 @@ const AddBoardPopup = ({setIsEditPopupOpen}) => {
     const handleBoardSubmit = (data) =>{
         addDoc(collection(db, 'boards'), {
             name: data.name,
-            columns: data.columns.map((item, index) => {
+            columns: data.elements.map((item, index) => {
                 return {
                     ...item,
                     id: index
@@ -53,16 +54,15 @@ const AddBoardPopup = ({setIsEditPopupOpen}) => {
         setIsEditPopupOpen(false);
     }
     
-    const columnsElements = fields.map((column, index) =>{
-        return (
-            <div className='card__subtask-input' key={column.id}>
-                <input className='popup__input-field' {...methods.register(`columns.${index}.name`)} type="text" placeholder='Column name' defaultValue={column.name}/>
-                <button type='button' className='card__subtask-delete' onClick={handleColumnDelete}>
-                    <img src="images/cross.svg" alt="cross" />
-                </button>
-            </div>
-        )
-    })
+    const columnsElements = fields
+        .map((column, index) => 
+            <InputListItemEditable 
+                key={column.id} 
+                element={column} 
+                index={index} 
+                handleInputDelete={handleColumnDelete}
+                isColumn={true}/>
+            )
     
     return (
         <div className='popup' onClick={handlePopupExit}>

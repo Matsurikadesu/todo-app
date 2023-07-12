@@ -6,6 +6,7 @@ import DataContext from "../../context";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useForm, useFieldArray, FormProvider } from "react-hook-form";
+import InputListItemEditable from "../InputListItem/InputListItemEditable";
 
 
 const TaskEditPopup = ({name, description, id, subtasks, status, setIsEditing}) =>{
@@ -26,7 +27,7 @@ const TaskEditPopup = ({name, description, id, subtasks, status, setIsEditing}) 
         //eslint-disable-next-line
     }, [])
 
-    const handleSubtaskAdd = async () => {
+    const handleSubtaskAdd = () => {
         append({name: 'new subtask', iscompleted: false});
     }
 
@@ -50,16 +51,14 @@ const TaskEditPopup = ({name, description, id, subtasks, status, setIsEditing}) 
         setIsEditing(false);
     }
 
-    const subtasksElements = fields.map((subtask, index) => {
-        return(
-            <div className='card__subtask-input' key={subtask.id}>
-                <input className='popup__input-field' {...methods.register(`subtasks.${index}.name`)} type="text" defaultValue={subtask.name}/>
-                <button className='card__subtask-delete'  onClick={() => handleSubtaskDelete(index)}>
-                    <img src="images/cross.svg" alt="cross" />
-                </button>
-            </div>
-        )
-    })
+    const subtasksElements = fields
+        .map((subtask, index) => 
+            <InputListItemEditable
+                key={subtask.id}
+                subtask={subtask} 
+                index={index} 
+                handleSubtaskDelete={handleSubtaskDelete}/>
+            )
 
     return(
         <div className='popup' onClick={handlePopupExit}>

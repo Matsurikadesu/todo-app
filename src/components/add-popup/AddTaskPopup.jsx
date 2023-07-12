@@ -6,13 +6,14 @@ import { useForm, useFieldArray, FormProvider } from 'react-hook-form';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../../firebase';
 import DataContext from '../../context';
+import InputListItemEditable from '../InputListItem/InputListItemEditable';
 
 const AddTaskPopup = ({setIsAdding}) => {
     const {currentBoard} = useContext(DataContext);
     const methods = useForm();
     const { fields, append, remove } = useFieldArray({
         control: methods.control,
-        name: 'subtasks'
+        name: 'elements'
     });
     
     useEffect(() => {
@@ -37,7 +38,7 @@ const AddTaskPopup = ({setIsAdding}) => {
     }
 
     const handleTaskSubmit = (data) => {
-        const subtasks = data.subtasks.map(item => {
+        const subtasks = data.elements.map(item => {
             return {
                 name: item.name,
                 iscompleted: false
@@ -60,15 +61,14 @@ const AddTaskPopup = ({setIsAdding}) => {
         setIsAdding(false);
     }
 
-    const subtasksElements = fields.map((subtask, index) => {
-                return(
-                    <div className='card__subtask-input' key={subtask.id}>
-                        <input className='popup__input-field' type="text" {...methods.register(`subtasks.${index}.name`)} placeholder={subtask.placeholder}/>
-                        <button className='card__subtask-delete' onClick={() => handleSubtaskDelete(index)}>
-                            <img src="images/cross.svg" alt="cross" />
-                        </button>
-                    </div>
-                )})
+    const subtasksElements = 
+        fields.map((subtask, index) => 
+            <InputListItemEditable 
+                key={subtask.id} 
+                element={subtask} 
+                index={index} 
+                handleInputkDelete={handleSubtaskDelete}/>
+            );
 
     return (
         <div className='popup' onClick={handlePopupExit}>

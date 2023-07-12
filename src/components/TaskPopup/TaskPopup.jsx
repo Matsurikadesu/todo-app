@@ -7,6 +7,7 @@ import { useFieldArray, useForm, FormProvider } from 'react-hook-form';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import DataContext from '../../context';
+import InputListItem from '../InputListItem/InputListItem';
 
 const TaskPopup = ({name, description, id, subtasks, setIsOpened, setIsEditing, status}) => {
     const {currentBoard} = useContext(DataContext);
@@ -53,13 +54,7 @@ const TaskPopup = ({name, description, id, subtasks, setIsOpened, setIsEditing, 
     const subtasksElements = fields
         .map((subtask, index) => {
             if(subtask.iscompleted) completedSubtasksCount++
-
-            return(
-                <li className='card__subtasks-item' key={subtask.id}>
-                    <input className='card__subtasks-checkbox' {...methods.register(`subtasks.${index}.iscompleted`)} type="checkbox" defaultChecked={subtask.iscompleted}/>
-                    <span className='card__subtasks-label'>{subtask.name}</span>
-                </li>
-            )
+            return <InputListItem key={subtask.id} subtask={subtask} index={index}/>
         })
 
     return(
