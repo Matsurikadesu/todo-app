@@ -5,7 +5,7 @@ const InputListItemEditable = ({element, index, handleInputDelete, isColumn = fa
 
     return(
         <div className='card__subtask-input'>
-            <input className='popup__input-field' type="text" {...register(`elements.${index}.name`)} placeholder={isColumn ? 'column name' : element.placeholder} defaultValue={isColumn ? element.name : ''}/>
+            <input className='popup__input-field' data-testid='elementinput' type="text" {...register(`elements.${index}.name`)} placeholder={isColumn ? 'column name' : element.placeholder} defaultValue={isColumn ? element.name : ''}/>
             <button type="button" className='card__subtask-delete' onClick={() => handleInputDelete(index)}>
                 <img src="images/cross.svg" alt="cross" />
             </button>

@@ -1,10 +1,8 @@
-import { useContext, useMemo } from "react";
+import { useMemo } from "react";
 import BoardBtn from "../BoardButton/BoardButton";
-import dataContext from "../../context/context";
 import AddBoardButton from "../BoardButton/AddNewBoardButton";
 
-const SidebarButtons = () =>{
-    const { boards } = useContext(dataContext);
+const SidebarButtons = ({boards}) =>{
     /**Генерация кнопок исходя из пришедшего массива boards */
     const buttons = useMemo(() => boards.map((board) => {
         return(

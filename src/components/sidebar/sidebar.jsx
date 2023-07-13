@@ -28,7 +28,7 @@ const Sidebar = () => {
             <div className="sidebar">
                 <div className='sidebar-content'>
                     <p className="sidebar__boards-count">All Boards ({boards.length})</p>
-                    <SidebarButtons/>
+                    <SidebarButtons boards={boards}/>
                     <SidebarTools
                         onToggleState={onToggleState}/>
                 </div>

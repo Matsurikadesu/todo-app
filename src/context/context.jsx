@@ -6,9 +6,10 @@ const DataContext = createContext({});
 
 export const DataProvider = ({setTheme, children }) => {
     const [boardId, setBoardId] = useState('placeholder');
-    const [boards, setBoards] = useState([{columns: [], name: 'Loading...', id: 'placeholder'}]);
-    const [currentBoard, setCurrentBoard] = useState({columns: [], name: 'Loading,', id: 'placeholder'});
+    const [boards, setBoards] = useState([]);
+    const [currentBoard, setCurrentBoard] = useState({columns: [], name: 'Loading...', id: 'placeholder'});
 
+    /**Меняет тему основываясь на значении из локального хранилища */
     const changeTheme = () => {
         const oldTheme = localStorage.theme === 'true' ? true : false;
         localStorage.theme = !oldTheme;

@@ -3,7 +3,7 @@ import './sidebar-hide.scss';
 const HideSidebarBtn = ({onToggleState, hidden = false}) => {
     const HideSidebarButtonHidden = () => {
         return(
-            <button className='hide-sidebar-btn_hidden' onClick={onToggleState}>
+            <button data-testid='sidebarhidden' className='hide-sidebar-btn_hidden' onClick={onToggleState}>
                 <img src="./images/sidebarHidden.svg" alt="crossed eye icon" />
             </button>
         )

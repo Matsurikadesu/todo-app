@@ -19,6 +19,7 @@ const TaskPopup = ({name, description, id, subtasks, setIsOpened, setIsEditing, 
     });
 
     useEffect(() => {
+        remove();
         subtasks.forEach(subtask => {
             append({
                 name: subtask.name,
@@ -27,12 +28,6 @@ const TaskPopup = ({name, description, id, subtasks, setIsOpened, setIsEditing, 
         })
         //eslint-disable-next-line
     }, [])
-
-    useEffect(() => {
-        remove(3);
-        remove(2)
-        //eslint-disable-next-line
-    }, [remove])
 
     const handlePopupExit = (e) => {
         if(!e.target.classList.contains('popup')) return;

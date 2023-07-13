@@ -16,6 +16,7 @@ const BoardEditPopup = ({closeEditPopup}) =>{
     });
 
     useEffect(() => {
+        remove();
         currentBoard.columns.forEach((item) => append({name: item.name}));
         //eslint-disable-next-line
     }, [])

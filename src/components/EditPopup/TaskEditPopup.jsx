@@ -18,6 +18,7 @@ const TaskEditPopup = ({name, description, id, subtasks, status, setIsEditing}) 
     });
 
     useEffect(() => {
+        remove();
         subtasks.forEach(subtask => {
             append({
                 name: subtask.name,
@@ -26,7 +27,7 @@ const TaskEditPopup = ({name, description, id, subtasks, status, setIsEditing}) 
         })
         //eslint-disable-next-line
     }, [])
-
+    
     const handleSubtaskAdd = () => {
         append({name: 'new subtask', iscompleted: false});
     }
