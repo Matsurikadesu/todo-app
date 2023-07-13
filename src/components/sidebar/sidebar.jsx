@@ -3,7 +3,7 @@ import './sidebar.scss';
 import SidebarTools from "../SidebarTools/SidebarTools";
 import SidebarButtons from "../SidebarButtons/SidebarButtons";
 import HideSidebarBtn from '../SidebarHideButton/SidebarHideButton';
-import DataContext from '../../context';
+import DataContext from '../../context/context';
 
 const Sidebar = () => {
     const { boards } = useContext(DataContext);

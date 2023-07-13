@@ -1,12 +1,14 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import './sidebar-theme.scss';
-import DataContext from '../../context';
+import DataContext from '../../context/context';
 /** Компонент отвечающий за смену цветовой темы */
 const ChooseThemeElement = () =>{
-    const { theme, changeTheme} = useContext(DataContext);
+    const { changeTheme } = useContext(DataContext);
+    const [theme, setTheme] = useState(localStorage.theme === 'true' ? true : false);
 
     const onThemeChange = () => {
         changeTheme();
+        setTheme(!theme);
     }
 
     return(

@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useFieldArray, useForm, FormProvider } from 'react-hook-form';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
-import DataContext from '../../context';
+import DataContext from '../../context/context';
 import InputListItem from '../InputListItem/InputListItem';
 
 const TaskPopup = ({name, description, id, subtasks, setIsOpened, setIsEditing, status}) => {

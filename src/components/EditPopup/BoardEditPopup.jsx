@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import '../TaskPopup/taskPopup.scss';
 import './edit-popup.scss';
-import DataContext from "../../context";
+import DataContext from "../../context/context";
 import { useForm, useFieldArray, FormProvider } from "react-hook-form";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
@@ -31,8 +31,11 @@ const BoardEditPopup = ({closeEditPopup}) =>{
     const handleEditBoardFormSubmit = (data) => {
         updateDoc(doc(db, 'boards', currentBoard.id), {
             name: data.name,
-            columns: data.columns
+            columns: data.elements.map((item, index) => {
+                return {...item, id: index}; 
+            })
         })
+        closeEditPopup();
     }
 
     const handlePopupExit = (e) => {

@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import ConfirmDeletePopup from '../ConfirmDeletePopup/ConfirmDeletePopup';
 import './EditMenu.scss';
 
-const EditMenu = ({target, setIsEditing, setIsOpened, setIsEditMenuOpened, task}) => {
+const EditMenu = memo(({target, setIsEditing, setIsOpened, setIsEditMenuOpened, task}) => {
     const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
 
     const onOpenEdit = () =>{
@@ -32,6 +32,6 @@ const EditMenu = ({target, setIsEditing, setIsOpened, setIsEditMenuOpened, task}
             }
         </>
     )
-}
+})
 
 export default EditMenu;

@@ -1,9 +1,9 @@
 import './sidebar-tools.scss';
 import ChooseThemeElement from "../SidebarTheme/SidebarTheme";
 import HideSidebarBtn from '../SidebarHideButton/SidebarHideButton';
+import { memo } from 'react';
 
-const SidebarTools = ({onToggleState}) => {
-
+const SidebarTools = memo(({onToggleState}) => {
     return(
         <div className='sidebar__tools'>
             <ChooseThemeElement/>
@@ -11,6 +11,6 @@ const SidebarTools = ({onToggleState}) => {
                 onToggleState={() => onToggleState()}/>
         </div>
     );
-}
+})
 
 export default SidebarTools;

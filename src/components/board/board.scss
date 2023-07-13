@@ -13,6 +13,7 @@
     max-height: calc(100vh - 80px);
     border-top: 1px solid $lines-light;
 
+    
     @media screen and (max-width: 767px) {
         max-height: calc(100vh - 63px);
     }
@@ -23,21 +24,25 @@
         gap: 25px;
         margin: 0 auto;
     }
-
+    
     &__empty-text{
         @include heading-l;
         
         margin-top: 211px;
         color: $medium-grey;
-
+        
         @media screen and (min-width: 768px) {
             margin-top: 328px;
         }
-
+        
         @media screen and (min-width: 1440px) {
             margin-top: 364px;
         }
     }
+}
+
+::-webkit-scrollbar{
+    width: 0;
 }
 
 .board__column:last-child{

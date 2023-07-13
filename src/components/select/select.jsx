@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import DataContext from "../../context";
+import DataContext from "../../context/context";
 import { useFormContext } from "react-hook-form";
 
 const Select = ({handleStatusChange = () => {}, currentColumn}) => {

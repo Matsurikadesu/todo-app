@@ -5,7 +5,7 @@ import { useContext, useEffect } from 'react';
 import { useForm, useFieldArray, FormProvider } from 'react-hook-form';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../../firebase';
-import DataContext from '../../context';
+import DataContext from '../../context/context';
 import InputListItemEditable from '../InputListItem/InputListItemEditable';
 
 const AddTaskPopup = ({setIsAdding}) => {
@@ -67,7 +67,7 @@ const AddTaskPopup = ({setIsAdding}) => {
                 key={subtask.id} 
                 element={subtask} 
                 index={index} 
-                handleInputkDelete={handleSubtaskDelete}/>
+                handleInputDelete={handleSubtaskDelete}/>
             );
 
     return (

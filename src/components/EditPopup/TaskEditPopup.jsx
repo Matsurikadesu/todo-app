@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import Select from "../Select/Select";
 import '../TaskPopup/taskPopup.scss';
 import './edit-popup.scss';
-import DataContext from "../../context";
+import DataContext from "../../context/context";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useForm, useFieldArray, FormProvider } from "react-hook-form";
@@ -14,7 +14,7 @@ const TaskEditPopup = ({name, description, id, subtasks, status, setIsEditing}) 
     const methods = useForm();
     const { fields, append, remove } = useFieldArray({
         control: methods.control,
-        name: 'subtasks'
+        name: 'elements'
     });
 
     useEffect(() => {
@@ -39,7 +39,7 @@ const TaskEditPopup = ({name, description, id, subtasks, status, setIsEditing}) 
         updateDoc(doc(db, 'boards', boardId, 'tasks', id), {
             name: data.name,
             description: data.description,
-            subtasks: data.subtasks,
+            subtasks: data.elements,
             status: data.status
         });
         setIsEditing(false);
@@ -55,9 +55,9 @@ const TaskEditPopup = ({name, description, id, subtasks, status, setIsEditing}) 
         .map((subtask, index) => 
             <InputListItemEditable
                 key={subtask.id}
-                subtask={subtask} 
+                element={subtask} 
                 index={index} 
-                handleSubtaskDelete={handleSubtaskDelete}/>
+                handleInputDelete={handleSubtaskDelete}/>
             )
 
     return(

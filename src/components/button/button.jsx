@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import './button.scss';
 import AddTaskPopup from '../Add-popup/AddTaskPopup';
-import DataContext from '../../context';
+import DataContext from '../../context/context';
 
 const Button = () => {
     const { currentBoard } = useContext(DataContext);

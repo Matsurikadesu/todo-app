@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import Button from '../Button/Button';
 import EditBtn from '../EditButton/EditBtn';
 import EditMenu from '../EditMenu/EditMenu';
-import DataContext from '../../context';
+import DataContext from '../../context/context';
 import BoardEditPopup from '../EditPopup/BoardEditPopup';
 import './header.scss';
 

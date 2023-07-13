@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import './confirm-delete-popup.scss';
-import DataContext from '../../context';
+import DataContext from '../../context/context';
 import { deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../../firebase';
 

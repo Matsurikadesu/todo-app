@@ -1,6 +1,6 @@
 import '../TaskPopup/taskPopup.scss';
 import '../EditPopup/edit-popup.scss';
-import { useForm, useFieldArray } from 'react-hook-form';
+import { useForm, useFieldArray, FormProvider } from 'react-hook-form';
 import { useEffect } from 'react';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../../firebase';
@@ -66,18 +66,20 @@ const AddBoardPopup = ({setIsEditPopupOpen}) => {
     
     return (
         <div className='popup' onClick={handlePopupExit}>
-            <form className='popup__card' onSubmit={methods.handleSubmit(handleBoardSubmit)}>
-                <h3 className='popup__title'>Add Board</h3>
-                <div className='popup__input'>
-                    <label htmlFor="title" className='text-m'>Title</label>
-                    <input className='popup__input-field' id='title' type="text" {...methods.register('name')} placeholder='e.g. Web Design' required/>
-                </div>
-                <div className='popup__input'>
-                    {columnsElements}
-                    <button type='button' className='popup__btn' onClick={handleColumnAdd}>+ Add New Column</button>
-                </div>
-                <button type='submit' className='popup__btn submit-btn'>Add Board</button>
-            </form>
+            <FormProvider {...methods}>
+                <form className='popup__card' onSubmit={methods.handleSubmit(handleBoardSubmit)}>
+                    <h3 className='popup__title'>Add Board</h3>
+                    <div className='popup__input'>
+                        <label htmlFor="title" className='text-m'>Title</label>
+                        <input className='popup__input-field' id='title' type="text" {...methods.register('name')} placeholder='e.g. Web Design' required/>
+                    </div>
+                    <div className='popup__input'>
+                        {columnsElements}
+                        <button type='button' className='popup__btn' onClick={handleColumnAdd}>+ Add New Column</button>
+                    </div>
+                    <button type='submit' className='popup__btn submit-btn'>Add Board</button>
+                </form>
+            </FormProvider>
         </div>
     )
 }
