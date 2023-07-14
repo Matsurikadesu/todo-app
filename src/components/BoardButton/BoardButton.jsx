@@ -3,10 +3,10 @@ import DataContext from '../../context/context';
 import { useContext } from 'react';
 
 const BoardBtn = ({name, id}) =>{
-    const { boardId, setBoardId } = useContext(DataContext);
+    const { boardId, changeBoardId } = useContext(DataContext);
 
     const onBoardSelect = () => {
-        if(boardId !== id) setBoardId(id);
+        if(boardId !== id) changeBoardId(id);
     }
 
     let classNames = 'board-btn';

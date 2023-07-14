@@ -4,11 +4,15 @@ import DataContext from '../../context/context';
 import { deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../../firebase';
 
-const ConfirmDeletePopup = ({setIsDeletePopupOpen, target, task}) => {
-    const { currentBoard } = useContext(DataContext);
-
+const ConfirmDeletePopup = ({setIsDeletePopupOpen, target, task, setIsEditMenuOpened}) => {
+    const { currentBoard, changeBoardId, boards } = useContext(DataContext);
+    /**Удаляет текущую board и выбирает новую */
     const onDeleteBoard = () => {
+        if(boards.length === 1) return;
+
+        changeBoardId(currentBoard.id !== boards[0].id ? boards[0].id : boards[1].id);
         deleteDoc(doc(db, 'boards', currentBoard.id));
+        setIsEditMenuOpened(false);
     }
 
     const handleTaskDelete = () => {
@@ -21,12 +25,12 @@ const ConfirmDeletePopup = ({setIsDeletePopupOpen, target, task}) => {
         if(query) setIsDeletePopupOpen(false);
     }
 
-    let popupText = 'Something went wrong'
-    if(target === 'Task'){
-        popupText = `Are you sure you want to delete the ‘${task.name}’ task and its subtasks? This action cannot be reversed.`
-    }else{
-        popupText = `Are you sure you want to delete the ‘${currentBoard.name}’ board? This action will remove all columns and tasks and cannot be reversed.`
-    }
+    let popupText = 'Are you sure you want to delete the';
+
+    target === 'Task' 
+        ? popupText +=`‘${task.name}’ task and its subtasks? This action cannot be reversed.`
+        : popupText += `‘${currentBoard.name}’ board? This action will remove all columns and tasks and cannot be reversed.`
+
     return(
         <div className='confirm-popup' onClick={handlePopupExit}>
             <div className='popup__body'>

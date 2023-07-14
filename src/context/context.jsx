@@ -1,13 +1,39 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useReducer } from "react";
 import { db } from "../firebase";
 import { collection, onSnapshot, orderBy, query} from "firebase/firestore";
+import reducer, { initialState } from "./reducer";
 
-const DataContext = createContext({});
+const DataContext = createContext(initialState);
 
 export const DataProvider = ({setTheme, children }) => {
-    const [boardId, setBoardId] = useState('placeholder');
-    const [boards, setBoards] = useState([]);
-    const [currentBoard, setCurrentBoard] = useState({columns: [], name: 'Loading...', id: 'placeholder'});
+    const [state, dispatch] = useReducer(reducer, initialState);
+
+    const changeBoardId = (id) => {
+        dispatch({
+            type: 'CHANGE_BOARDID',
+            payload: {
+                boardId: id
+            }
+        })
+    }
+
+    const changeCurrentBoard = (currentBoard) => {
+        dispatch({
+            type: 'CHANGE_CURRENTBOARD',
+            payload: {
+                currentBoard
+            }
+        })
+    }
+
+    const changeBoards = (boards) => {
+        dispatch({
+            type: 'CHANGE_BOARDS',
+            payload: {
+                boards
+            }
+        })
+    }
 
     /**Меняет тему основываясь на значении из локального хранилища */
     const changeTheme = () => {
@@ -19,14 +45,15 @@ export const DataProvider = ({setTheme, children }) => {
     /**Получает данные о boards от бд и следит за изменениями этих данных */
     function fetchBoards(){
         const ref = query(collection(db, 'boards'), orderBy('timestamp'));
-
+        let count = 0;
         onSnapshot(ref, (querySnapshot) => {
             const newBoards = querySnapshot.docs
                 .filter(doc => doc.data().name !== 'Loading...')
                 .map(doc => ({...doc.data(), id: doc.id}));
-            setBoards(newBoards);
-            /**Устанавливает boardId при первом получении данных*/
-            if(boardId === 'placeholder') setBoardId(newBoards[0].id);
+            
+            changeBoards(newBoards);
+            //Устанавливает boardId при первом получении данных
+            if(!(count++ > 0)) changeBoardId(newBoards[0].id);
         })
     }
     
@@ -40,14 +67,19 @@ export const DataProvider = ({setTheme, children }) => {
      *  меняет текущую доску, что вызывает ререндер компонента и обновление данных на стороне пользователя 
      * */
     useEffect(() => {
-        if(boardId !== 'placeholder') setCurrentBoard(boards.find(board => board.id === boardId))
-    }, [boardId, boards])
+        if(state.boardId !== 'placeholder') changeCurrentBoard(state.boards.find(board => board.id === state.boardId));
+    }, [state.boardId, state.boards])
+
+    const value = {
+        boardId: state.boardId,
+        currentBoard: state.currentBoard,
+        changeBoardId,
+        boards: state.boards,
+        changeTheme
+    }
 
     return (
-        <DataContext.Provider value={{
-            boardId, setBoardId, boards,
-            currentBoard, changeTheme
-        }}>
+        <DataContext.Provider value={value}>
             {children}
         </DataContext.Provider>
     )

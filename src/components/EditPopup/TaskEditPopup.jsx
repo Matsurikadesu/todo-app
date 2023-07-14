@@ -23,13 +23,13 @@ const TaskEditPopup = ({name, description, id, subtasks, status, setIsEditing}) 
             append({
                 name: subtask.name,
                 iscompleted: subtask.iscompleted
-            })
+            }, {shouldFocus: false})
         })
         //eslint-disable-next-line
     }, [])
     
     const handleSubtaskAdd = () => {
-        append({name: 'new subtask', iscompleted: false});
+        append({name: 'new subtask', iscompleted: false}, {shouldFocus: false});
     }
 
     const handleSubtaskDelete = (index) => {

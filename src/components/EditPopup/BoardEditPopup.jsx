@@ -17,12 +17,12 @@ const BoardEditPopup = ({closeEditPopup}) =>{
 
     useEffect(() => {
         remove();
-        currentBoard.columns.forEach((item) => append({name: item.name}));
-        //eslint-disable-next-line
+        currentBoard.columns.forEach((item) => append({name: item.name}, {shouldFocus: false}));
+        // eslint-disable-next-line
     }, [])
 
     const handleAddColumnButtonClick = () => {
-        append({name: 'new column'});
+        append({name: 'new column'}, {shouldFocus: false});
     }
 
     const handleColumnDelete = (index) => {
@@ -65,7 +65,7 @@ const BoardEditPopup = ({closeEditPopup}) =>{
                     </div>
                     <div className='popup__input'>
                         {columnsElements}
-                        <button className='popup__btn' onClick={handleAddColumnButtonClick}>+ Add New Column</button>
+                        <button type="button" className='popup__btn' onClick={handleAddColumnButtonClick}>+ Add New Column</button>
                     </div>
                     <button type='submit' className='popup__btn submit-btn'>Save Changes?</button>
                 </form>

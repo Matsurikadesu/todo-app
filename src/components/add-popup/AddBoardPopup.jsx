@@ -15,16 +15,11 @@ const AddBoardPopup = ({setIsEditPopupOpen}) => {
     
     useEffect(() => {
         const columns = [{name: 'Todo'}, {name: 'Doing'}];
-        columns.forEach(item => append(item));
+        remove();
+        columns.forEach(item => append(item, {shouldFocus: false}));
 
         //eslint-disable-next-line
     }, [])
-
-    useEffect(() => {
-        remove(3);
-        remove(2)
-
-    }, [remove])
 
     const handleBoardSubmit = (data) =>{
         addDoc(collection(db, 'boards'), {
@@ -42,7 +37,7 @@ const AddBoardPopup = ({setIsEditPopupOpen}) => {
     }
 
     const handleColumnAdd = () => {
-        append({name: 'new column'});
+        append({name: 'new column'}, {shouldFocus: false});
     }
 
     const handleColumnDelete = (index) => {
@@ -71,7 +66,7 @@ const AddBoardPopup = ({setIsEditPopupOpen}) => {
                     <h3 className='popup__title'>Add Board</h3>
                     <div className='popup__input'>
                         <label htmlFor="title" className='text-m'>Title</label>
-                        <input className='popup__input-field' id='title' type="text" {...methods.register('name')} placeholder='e.g. Web Design' required/>
+                        <input className='popup__input-field' id='title' type="text" {...methods.register('name')} maxLength={50} placeholder='e.g. Web Design' required/>
                     </div>
                     <div className='popup__input'>
                         {columnsElements}

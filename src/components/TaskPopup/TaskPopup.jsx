@@ -21,9 +21,13 @@ const TaskPopup = ({name, description, id, subtasks, setIsOpened, setIsEditing, 
     useEffect(() => {
         remove();
         subtasks.forEach(subtask => {
-            append({
+            append(
+            {
                 name: subtask.name,
                 iscompleted: subtask.iscompleted
+            }, 
+            {
+                shouldFocus: false
             })
         })
         //eslint-disable-next-line

@@ -12,6 +12,7 @@
     transition: border-color .4s;
     max-height: calc(100vh - 80px);
     border-top: 1px solid $lines-light;
+    min-height: 700px;
 
     
     @media screen and (max-width: 767px) {

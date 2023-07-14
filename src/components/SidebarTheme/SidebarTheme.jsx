@@ -1,8 +1,8 @@
-import { useContext, useState } from 'react';
+import { memo, useContext, useState } from 'react';
 import './sidebar-theme.scss';
 import DataContext from '../../context/context';
 /** Компонент отвечающий за смену цветовой темы */
-const ChooseThemeElement = () =>{
+const ChooseThemeElement = memo(() =>{
     const { changeTheme } = useContext(DataContext);
     const [theme, setTheme] = useState(localStorage.theme === 'true' ? true : false);
 
@@ -21,6 +21,6 @@ const ChooseThemeElement = () =>{
             <img src="./images/moon.svg" alt="dark theme" />
         </div>
     );
-}
+})
 
 export default ChooseThemeElement;

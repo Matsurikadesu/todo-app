@@ -18,23 +18,17 @@ const AddTaskPopup = ({setIsAdding}) => {
     
     useEffect(() => {
         const placeholders = [{placeholder: 'e.g. Make coffee'}, {placeholder: 'e.g. Drink coffee & smile'}];
-        placeholders.forEach(item => append(item));
+        remove();
+        placeholders.forEach(item => append(item, {shouldFocus: false}));
         //eslint-disable-next-line
     }, [])
-
-    useEffect(() => {
-        remove(3);
-        remove(2)
-
-    }, [remove])
 
     const handleSubtaskDelete = (indexToDelete) => {
         remove(indexToDelete);
     }
 
-    const handleSubtaskAdd = (e) => {
-        e.preventDefault();
-        append({placeholder: 'new subtask'});
+    const handleSubtaskAdd = () => {
+        append({placeholder: 'new subtask'}, {shouldFocus: false});
     }
 
     const handleTaskSubmit = (data) => {
@@ -77,11 +71,11 @@ const AddTaskPopup = ({setIsAdding}) => {
                     <h3 className='popup__title'>Add Task</h3>
                     <div className='popup__input'>
                         <label htmlFor="title" className='text-m'>Title</label>
-                        <input className='popup__input-field' id='title' type="text" {...methods.register('name')} required  placeholder='e.g. Take coffee break'/>
+                        <input className='popup__input-field' id='title' type="text" {...methods.register('name')} required maxLength={50} placeholder='e.g. Take coffee break'/>
                     </div>
                     <div className='popup__input'>
                         <label htmlFor="description" className='text-m'>Description</label>
-                        <textarea className='popup__input-field' id='description' {...methods.register('description')} type="text" placeholder='e.g. It’s always good to take a break. This 15 minute break will recharge the batteries a little.'/>
+                        <textarea className='popup__input-field' id='description' {...methods.register('description')} type="text" maxLength={200} placeholder='e.g. It’s always good to take a break. This 15 minute break will recharge the batteries a little.'/>
                     </div>
                     <div className='popup__input'>
                         <p className='text-m'>Subtasks</p>
