@@ -8,21 +8,12 @@ This website is a task management app.
 
 User can:
 
-- Create new boards
-- Change boards name
-- Delete boards
-- Add columns to a board
-- Change columns name
-- Delete columns
-- Add new tasks to columns
-- Change tasks name and description
-- Change tasks status
-- Delete tasks
-- Add subtasks to tasks
-- Edit subtasks
-- Mark subtasks as completed
-- Delete subtasks
-- Choose theme between light and dark
+- View the optimal layout for the app depending on their device's screen size
+- See hover states for all interactive elements on the page
+- Create, read, update, and delete boards and tasks
+- Mark subtasks as complete and move tasks between columns
+- Hide/show the board sidebar
+- Toggle the theme between light/dark modes
 
 You can visit website by clicking [this link](https://github.com)
 
