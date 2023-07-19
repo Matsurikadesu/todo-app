@@ -4,7 +4,7 @@ This website is a task management app.
 
 ## Project Functionality
 
-You can structure your tasks by creating columns and boards for your needs. You can add task, edit or delete it. You can add and delete subtask of a task as well as change it's status. You can also choose color theme you like more light or dark. The website is fully adaptive so it looks nice on every device.
+You can structure your tasks by creating columns and boards for your needs. You can add tasks, edit or delete them. You can add and delete subtasks of a task, as well as change their status. You can also choose the color theme you like: light or dark. The site is fully adaptive, so it looks good on any device.
 
 ![Preview](preview.png)
 
