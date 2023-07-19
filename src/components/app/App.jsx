@@ -20,8 +20,10 @@ const App = () => {
     },[])
 
     return(
-        <div className={darkTheme ? 'body dark' : 'body'}>
-            {elements}
+        <div className={darkTheme ? 'body-wrap dark' : 'body-wrap'}>
+            <div className={darkTheme ? 'body dark' : 'body'}>
+                {elements}
+            </div>
         </div>
     )
 }
