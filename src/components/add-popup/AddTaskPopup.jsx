@@ -1,31 +1,18 @@
 import '../TaskPopup/taskPopup.scss';
 import '../EditPopup/edit-popup.scss';
 import Select from '../Select/Select';
-import { useContext, useEffect } from 'react';
-import { useForm, useFieldArray, FormProvider } from 'react-hook-form';
+import { useContext } from 'react';
+import { FormProvider } from 'react-hook-form';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../../firebase';
 import DataContext from '../../context/context';
 import InputListItemEditable from '../InputListItem/InputListItemEditable';
+import { useCustomForm } from '../../useCustomForm';
 
 const AddTaskPopup = ({setIsAdding}) => {
     const {currentBoard} = useContext(DataContext);
-    const methods = useForm();
-    const { fields, append, remove } = useFieldArray({
-        control: methods.control,
-        name: 'elements'
-    });
-    
-    useEffect(() => {
-        const placeholders = [{placeholder: 'e.g. Make coffee'}, {placeholder: 'e.g. Drink coffee & smile'}];
-        remove();
-        placeholders.forEach(item => append(item, {shouldFocus: false}));
-        //eslint-disable-next-line
-    }, [])
-
-    const handleSubtaskDelete = (indexToDelete) => {
-        remove(indexToDelete);
-    }
+    const placeholders = [{placeholder: 'e.g. Make coffee'}, {placeholder: 'e.g. Drink coffee & smile'}];
+    const {methods, append, removeElement, isHidden, fields} = useCustomForm(placeholders, 'new subtasks');
 
     const handleSubtaskAdd = () => {
         append({placeholder: 'new subtask'}, {shouldFocus: false});
@@ -61,11 +48,11 @@ const AddTaskPopup = ({setIsAdding}) => {
                 key={subtask.id} 
                 element={subtask} 
                 index={index} 
-                handleInputDelete={handleSubtaskDelete}/>
+                handleInputDelete={removeElement}/>
             );
 
     return (
-        <div className='popup' onClick={handlePopupExit}>
+        <div className={`popup ${isHidden ? '' : 'popup_active'}`} onClick={handlePopupExit}>
             <FormProvider {...methods}>
                 <form className="popup__card" onSubmit={methods.handleSubmit(handleTaskSubmit)}>
                     <h3 className='popup__title'>Add Task</h3>

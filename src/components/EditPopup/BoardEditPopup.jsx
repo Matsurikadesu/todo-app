@@ -1,32 +1,19 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import '../TaskPopup/taskPopup.scss';
 import './edit-popup.scss';
 import DataContext from "../../context/context";
-import { useForm, useFieldArray, FormProvider } from "react-hook-form";
+import { FormProvider } from "react-hook-form";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import InputListItemEditable from "../InputListItem/InputListItemEditable";
+import { useCustomForm } from "../../useCustomForm";
 
 const BoardEditPopup = ({closeEditPopup}) =>{
     const {currentBoard} = useContext(DataContext);
-    const methods = useForm();
-    const { fields, append, remove } = useFieldArray({
-        control: methods.control,
-        name: 'elements'
-    });
-
-    useEffect(() => {
-        remove();
-        currentBoard.columns.forEach((item) => append({name: item.name}, {shouldFocus: false}));
-        // eslint-disable-next-line
-    }, [])
+    const {methods, append, removeElement, fields, isHidden} = useCustomForm(currentBoard, 'columns');
 
     const handleAddColumnButtonClick = () => {
         append({name: 'new column'}, {shouldFocus: false});
-    }
-
-    const handleColumnDelete = (index) => {
-        remove(index);
     }
 
     const handleEditBoardFormSubmit = (data) => {
@@ -51,11 +38,11 @@ const BoardEditPopup = ({closeEditPopup}) =>{
                 element={column} 
                 index={index} 
                 isColumn={true}
-                handleInputDelete={handleColumnDelete}/>
+                handleInputDelete={removeElement}/>
             )
     
     return (
-        <div className='popup' onClick={handlePopupExit}>
+        <div className={`popup ${isHidden ? '' : 'popup_active'}`} onClick={handlePopupExit}>
             <FormProvider {...methods}>
                 <form className='popup__card' onSubmit={methods.handleSubmit(handleEditBoardFormSubmit)}>
                     <h3 className='popup__title'>Edit Board</h3>

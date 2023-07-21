@@ -158,3 +158,12 @@
         background-color: $dark-grey;
     }
 }
+
+
+.popup{
+    opacity: 0;
+}
+
+.popup_active{
+    opacity: 1;
+}

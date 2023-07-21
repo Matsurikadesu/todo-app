@@ -2,46 +2,29 @@ import './taskPopup.scss';
 import EditBtn from '../EditButton/EditBtn';
 import EditMenu from '../EditMenu/EditMenu';
 import Select from '../Select/Select';
-import { useContext, useEffect, useState } from 'react';
-import { useFieldArray, useForm, FormProvider } from 'react-hook-form';
+import { useContext, useState } from 'react';
+import { FormProvider } from 'react-hook-form';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import DataContext from '../../context/context';
 import InputListItem from '../InputListItem/InputListItem';
+import { useCustomForm } from '../../useCustomForm';
 
 const TaskPopup = ({name, description, id, subtasks, setIsOpened, setIsEditing, status}) => {
     const {currentBoard} = useContext(DataContext);
     const [isEditMenuOpened, setIsEditMenuOpened] = useState(false);
-    const methods = useForm();
-    const { fields, append, remove } = useFieldArray({
-        control: methods.control,
-        name: 'subtasks'
-    });
-
-    useEffect(() => {
-        remove();
-        subtasks.forEach(subtask => {
-            append(
-            {
-                name: subtask.name,
-                iscompleted: subtask.iscompleted
-            }, 
-            {
-                shouldFocus: false
-            })
-        })
-        //eslint-disable-next-line
-    }, [])
+    const { methods, fields, isHidden} = useCustomForm(subtasks, 'subtasks');
 
     const handlePopupExit = (e) => {
-        if(!e.target.classList.contains('popup')) return;
+        const target = e.target;
+        if(!target.classList.contains('popup')) return;
 
-        e.target.querySelector('#testbtn').click();
-        setIsOpened(false);
+        target.querySelector('#tasksubmitbutton').click();
+        setIsOpened(false)
     }
 
     const handleTaskSubmit = (data) => {
-        updateDoc(doc(db, 'boards', currentBoard.id, 'tasks', id), {subtasks: data.subtasks, status: data.status})
+        updateDoc(doc(db, 'boards', currentBoard.id, 'tasks', id), {subtasks: data.elements, status: data.status})
     }
 
     const handleEditButtonClick = () => {
@@ -57,10 +40,10 @@ const TaskPopup = ({name, description, id, subtasks, setIsOpened, setIsEditing, 
         })
 
     return(
-        <div className='popup' onClick={handlePopupExit}>
+        <div className={`popup ${ isHidden ? '' : 'popup_active'}`} onClick={handlePopupExit}>
             <FormProvider {...methods}>
-                <form id='testform' className="popup__card" onSubmit={methods.handleSubmit(handleTaskSubmit)}>
-                    <button id='testbtn' type='submit' hidden={true}></button>
+                <form className="popup__card" onSubmit={methods.handleSubmit(handleTaskSubmit)}>
+                    <button id='tasksubmitbutton' type='submit' hidden={true}></button>
                     <div className='card__header'>
                         <h3 className='card__title'>{name}</h3>
                         <EditBtn 
