@@ -44,7 +44,8 @@ const Task = ({name, id, description, subtasks, status, setTasks}) => {
                     subtasks={subtasks}
                     setIsEditing={setIsEditing}
                     status={status}
-                    setTasks={setTasks}/>
+                    setTasks={setTasks}
+                    setIsOpened={setIsOpened}/>
                 : null
             }
         </>

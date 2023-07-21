@@ -10,9 +10,9 @@ import InputListItemEditable from "../InputListItem/InputListItemEditable";
 import { useCustomForm } from "../../useCustomForm";
 
 
-const TaskEditPopup = ({name, description, id, subtasks, status, setIsEditing}) =>{
+const TaskEditPopup = ({name, description, id, subtasks, status, setIsEditing, setIsOpened}) =>{
     const { boardId } = useContext(DataContext);
-    const {methods, append, fields, removeElement, isHidden} = useCustomForm(subtasks, 'subtasks');
+    const {methods, append, fields, remove, isFeildsCreationComplete} = useCustomForm(subtasks, () => setIsOpened(false));
     
     const handleSubtaskAdd = () => {
         append({name: 'new subtask', iscompleted: false}, {shouldFocus: false});
@@ -40,11 +40,11 @@ const TaskEditPopup = ({name, description, id, subtasks, status, setIsEditing}) 
                 key={subtask.id}
                 element={subtask} 
                 index={index} 
-                handleInputDelete={removeElement}/>
+                handleInputDelete={remove}/>
             )
 
     return(
-        <div className={`popup ${isHidden ? '' : 'popup_active'}`} onClick={handlePopupExit}>
+        <div className={`popup ${isFeildsCreationComplete ? 'popup_active' : ''}`} onClick={handlePopupExit}>
             <FormProvider {...methods}>
                 <form className="popup__card" onSubmit={methods.handleSubmit(handleTaskEditSubmit)}>
                     <h3 className='popup__title'>Edit Task</h3>

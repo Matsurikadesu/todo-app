@@ -2,11 +2,11 @@ import { memo, useState } from 'react';
 import ConfirmDeletePopup from '../ConfirmDeletePopup/ConfirmDeletePopup';
 import './EditMenu.scss';
 
-const EditMenu = memo(({target, setIsEditing, setIsOpened, setIsEditMenuOpened, task}) => {
+const EditMenu = memo(({target, setIsEditing, setIsEditMenuOpened, task}) => {
     const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
 
     const onOpenEdit = () =>{
-        target === 'Task' ? setIsOpened(false) :setIsEditMenuOpened(false);
+        target === 'Task' ? (() => {})() : setIsEditMenuOpened(false);
         setIsEditing(true);
     }
 

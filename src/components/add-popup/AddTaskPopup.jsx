@@ -12,7 +12,7 @@ import { useCustomForm } from '../../useCustomForm';
 const AddTaskPopup = ({setIsAdding}) => {
     const {currentBoard} = useContext(DataContext);
     const placeholders = [{placeholder: 'e.g. Make coffee'}, {placeholder: 'e.g. Drink coffee & smile'}];
-    const {methods, append, removeElement, isHidden, fields} = useCustomForm(placeholders, 'new subtasks');
+    const {methods, append, remove, isFeildsCreationComplete, fields} = useCustomForm(placeholders);
 
     const handleSubtaskAdd = () => {
         append({placeholder: 'new subtask'}, {shouldFocus: false});
@@ -48,11 +48,11 @@ const AddTaskPopup = ({setIsAdding}) => {
                 key={subtask.id} 
                 element={subtask} 
                 index={index} 
-                handleInputDelete={removeElement}/>
+                handleInputDelete={remove}/>
             );
 
     return (
-        <div className={`popup ${isHidden ? '' : 'popup_active'}`} onClick={handlePopupExit}>
+        <div className={`popup ${isFeildsCreationComplete ? 'popup_active' : ''}`} onClick={handlePopupExit}>
             <FormProvider {...methods}>
                 <form className="popup__card" onSubmit={methods.handleSubmit(handleTaskSubmit)}>
                     <h3 className='popup__title'>Add Task</h3>

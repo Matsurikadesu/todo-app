@@ -13,7 +13,7 @@ import { useCustomForm } from '../../useCustomForm';
 const TaskPopup = ({name, description, id, subtasks, setIsOpened, setIsEditing, status}) => {
     const {currentBoard} = useContext(DataContext);
     const [isEditMenuOpened, setIsEditMenuOpened] = useState(false);
-    const { methods, fields, isHidden} = useCustomForm(subtasks, 'subtasks');
+    const { methods, fields, isFeildsCreationComplete} = useCustomForm(subtasks);
 
     const handlePopupExit = (e) => {
         const target = e.target;
@@ -40,7 +40,7 @@ const TaskPopup = ({name, description, id, subtasks, setIsOpened, setIsEditing, 
         })
 
     return(
-        <div className={`popup ${ isHidden ? '' : 'popup_active'}`} onClick={handlePopupExit}>
+        <div className={`popup ${ isFeildsCreationComplete ? 'popup_active' : ''}`} onClick={handlePopupExit}>
             <FormProvider {...methods}>
                 <form className="popup__card" onSubmit={methods.handleSubmit(handleTaskSubmit)}>
                     <button id='tasksubmitbutton' type='submit' hidden={true}></button>
@@ -66,7 +66,6 @@ const TaskPopup = ({name, description, id, subtasks, setIsOpened, setIsEditing, 
                         ? <EditMenu 
                             target={'Task'} 
                             setIsEditing={setIsEditing} 
-                            setIsOpened={setIsOpened}
                             task={{name, id}}/> 
                         : null}
                 </form>

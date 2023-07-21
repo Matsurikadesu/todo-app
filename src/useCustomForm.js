@@ -1,9 +1,18 @@
 import { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
-
-export const useCustomForm = (elements, type) => {
+/**
+ * Хук создает форму из react-hook-form и поля для fieldsArray. 
+ * Поля в fieldsArray создаются не моментально, поэтому хук также создает стейт,
+ * в который помещается булевое значение, false - означает, что поля еще не созданы,
+ * true - поля созданы
+ *  
+ * @param {Array} elements 
+ * @param {Function} callback 
+ * @returns 
+ */
+export const useCustomForm = (elements, callback = () => {}) => {
     const methods = useForm();
-    const [isHidden, setIsHidden] = useState(true);
+    const [isFeildsCreationComplete, setIsFeildsCreationComplete] = useState(false);
     
     const { fields, append, remove } = useFieldArray({
         control: methods.control,
@@ -13,45 +22,19 @@ export const useCustomForm = (elements, type) => {
     useEffect(() => {
         remove();
 
-        // создание fields с нужными именами
-        switch(type){
-            case 'subtasks':
-                elements.forEach(subtask => {
-                    append({
-                        name: subtask.name,
-                        iscompleted: subtask.iscompleted
-                    }, {shouldFocus: false});
-                })
-                break;
-            case 'columns': 
-                elements.columns.forEach(column => {
-                    append({
-                        name: column.name
-                    }, {shouldFocus: false});
-                })
-                break;
-            case 'new subtasks': 
-                elements.forEach(placeholder => {
-                    append(placeholder, {shouldFocus: false});
-                })
-                break;
-            default: 
-                console.log('error', elements, type);
-        }
+        elements.forEach(item => append(item, {shouldFocus: false}))
 
-        setIsHidden(false);
+        setIsFeildsCreationComplete(true);
+
+        callback();
         //eslint-disable-next-line
     }, [])
-
-    const removeElement = (index) => {
-        remove(index);
-    }
 
     return {
         methods,
         fields,
         append,
-        removeElement,
-        isHidden
+        remove,
+        isFeildsCreationComplete
     }
 }

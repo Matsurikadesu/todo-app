@@ -10,7 +10,7 @@ import { useCustomForm } from "../../useCustomForm";
 
 const BoardEditPopup = ({closeEditPopup}) =>{
     const {currentBoard} = useContext(DataContext);
-    const {methods, append, removeElement, fields, isHidden} = useCustomForm(currentBoard, 'columns');
+    const {methods, append, remove, fields, isFeildsCreationComplete} = useCustomForm(currentBoard.columns);
 
     const handleAddColumnButtonClick = () => {
         append({name: 'new column'}, {shouldFocus: false});
@@ -38,11 +38,11 @@ const BoardEditPopup = ({closeEditPopup}) =>{
                 element={column} 
                 index={index} 
                 isColumn={true}
-                handleInputDelete={removeElement}/>
+                handleInputDelete={remove}/>
             )
     
     return (
-        <div className={`popup ${isHidden ? '' : 'popup_active'}`} onClick={handlePopupExit}>
+        <div className={`popup ${isFeildsCreationComplete ? 'popup_active' : ''}`} onClick={handlePopupExit}>
             <FormProvider {...methods}>
                 <form className='popup__card' onSubmit={methods.handleSubmit(handleEditBoardFormSubmit)}>
                     <h3 className='popup__title'>Edit Board</h3>

@@ -7,8 +7,8 @@ import InputListItemEditable from '../InputListItem/InputListItemEditable';
 import { useCustomForm } from '../../useCustomForm';
 
 const AddBoardPopup = ({setIsEditPopupOpen}) => {
-    const initialFields = {columns: [{name: 'Todo'}, {name: 'Doing'}]};
-    const {methods, append, removeElement, isHidden, fields} = useCustomForm(initialFields, 'columns');
+    const initialFields = [{name: 'Todo'}, {name: 'Doing'}];
+    const {methods, append, remove, isFeildsCreationComplete, fields} = useCustomForm(initialFields);
 
     const handleBoardSubmit = (data) =>{
         addDoc(collection(db, 'boards'), {
@@ -40,12 +40,12 @@ const AddBoardPopup = ({setIsEditPopupOpen}) => {
                 key={column.id} 
                 element={column} 
                 index={index} 
-                handleInputDelete={removeElement}
+                handleInputDelete={remove}
                 isColumn={true}/>
             )
     
     return (
-        <div className={`popup ${isHidden ? '' : 'popup_active'}`} onClick={handlePopupExit}>
+        <div className={`popup ${isFeildsCreationComplete ? 'popup_active' : ''}`} onClick={handlePopupExit}>
             <FormProvider {...methods}>
                 <form className='popup__card' onSubmit={methods.handleSubmit(handleBoardSubmit)}>
                     <h3 className='popup__title'>Add Board</h3>
