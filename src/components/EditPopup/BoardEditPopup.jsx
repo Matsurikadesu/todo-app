@@ -48,7 +48,7 @@ const BoardEditPopup = ({closeEditPopup}) =>{
                     <h3 className='popup__title'>Edit Board</h3>
                     <div className='popup__input'>
                         <label htmlFor="title" className='text-m'>Title</label>
-                        <input className='popup__input-field' type="text" {...methods.register('name')} required defaultValue={currentBoard.name}/>
+                        <input className='popup__input-field' type="text" {...methods.register('name')} maxLength={20} required defaultValue={currentBoard.name}/>
                     </div>
                     <div className='popup__input'>
                         {columnsElements}

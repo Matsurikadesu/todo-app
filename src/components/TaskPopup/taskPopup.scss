@@ -46,10 +46,14 @@
     .card{
         &__title{
             @include heading-l;
+            overflow-x: hidden;
+            text-overflow: ellipsis; 
         }
 
         &__subtitle{
             @include text-l;
+            overflow-x: hidden;
+            text-overflow: ellipsis;
 
             color: $medium-grey;
         }
@@ -80,18 +84,20 @@
                 background-color: $light-grey-bg;
                 padding: 13px 16px 13px 12px;
             }
-
+            
             &-checkbox:checked{
                 accent-color: $main-purple;
-
+                
                 & + .card__subtasks-label{
                     text-decoration: line-through;
                     color: $medium-grey;
                 }
             }
-
+            
             &-label{
                 @include text-m;
+                text-overflow: ellipsis;
+                overflow-x: hidden;
             }
         }
 

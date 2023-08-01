@@ -50,11 +50,11 @@ const TaskEditPopup = ({name, description, id, subtasks, status, setIsEditing, s
                     <h3 className='popup__title'>Edit Task</h3>
                     <div className='popup__input'>
                         <label htmlFor="title" className='text-m'>Title</label>
-                        <input className='popup__input-field' id='title' type="text" {...methods.register('name')} required defaultValue={name}/>
+                        <input className='popup__input-field' id='title' type="text" {...methods.register('name')} maxLength={50} required defaultValue={name}/>
                     </div>
                     <div className='popup__input'>
                         <label htmlFor="description" className='text-m'>Description</label>
-                        <textarea className='popup__input-field' id='description' {...methods.register('description')} type="text" placeholder='e.g. It’s always good to take a break. This 15 minute break will recharge the batteries a little.' defaultValue={description}/>
+                        <textarea className='popup__input-field' id='description' {...methods.register('description')} maxLength={200} type="text" placeholder='e.g. It’s always good to take a break. This 15 minute break will recharge the batteries a little.' defaultValue={description}/>
                     </div>
                     <div className='popup__input'>
                         <p className='text-m'>Subtasks</p>

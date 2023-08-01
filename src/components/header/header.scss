@@ -34,8 +34,10 @@
 
     &__info{
         @include heading-l;
-
         transition: color .4s;
+        max-width: 600px;
+        text-overflow: ellipsis;
+
         @media screen and (min-width: 768px) {
             @include heading-xl;
             img{
@@ -106,7 +108,6 @@
         display: flex;
         align-items: center;
         margin-left: auto;
-        gap: 16px;
 
         @media screen and (min-width: 1440px) {
             gap: 24px;
