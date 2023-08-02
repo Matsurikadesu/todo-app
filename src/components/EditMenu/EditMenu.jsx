@@ -6,7 +6,7 @@ const EditMenu = memo(({target, setIsEditing, setIsEditMenuOpened, task}) => {
     const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
 
     const onOpenEdit = () =>{
-        target === 'Task' ? (() => {})() : setIsEditMenuOpened(false);
+        // target === 'Task' ? (() => {})() : setIsEditMenuOpened(false);
         setIsEditing(true);
     }
 

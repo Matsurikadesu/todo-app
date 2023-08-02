@@ -2,10 +2,9 @@ import './board.scss';
 import BoardColumn from '../BoardColumn/BoardColumn';
 import { useEffect, useState } from 'react';
 import { handleGrab } from './handleGrab';
-import { db } from '../../firebase';
-import { collection, doc, onSnapshot, orderBy, query, updateDoc } from "firebase/firestore";
 import { useContext } from 'react';
 import dataContext from '../../context/context';
+import { fetchTasks, updateDocInDatabase } from '../../services';
 
 const Board = () =>{
     const { currentBoard } = useContext(dataContext);
@@ -23,18 +22,8 @@ const Board = () =>{
             )
         })
 
-    /** Функция получает от сервера  массив с именами колонок и массив tasks, формирует из этих массивов обьект и помещает его в state*/
-    function fetchTasks(){
-        const ref = query(collection(db, 'boards', currentBoard.id, 'tasks'), orderBy('timestamp'));
-
-        onSnapshot(ref, (querySnapshot) => {
-            const newTasks = querySnapshot.docs.map((item) => ({...item.data(), id: item.id}));
-            setTasks(newTasks);
-        });
-    }
-
     useEffect(() => {
-        fetchTasks();
+        fetchTasks(`boards/${currentBoard.id}/tasks`, setTasks);
         // eslint-disable-next-line
     }, [currentBoard.id])
     
@@ -42,7 +31,7 @@ const Board = () =>{
     const handleAddNewColumnClick = () => {
         const newColumns = currentBoard.columns.map(item => item);
         newColumns.push({name: 'new column', id: newColumns.length});
-        updateDoc(doc(db, 'boards', currentBoard.id), {columns: newColumns});
+        updateDocInDatabase(`boards/${currentBoard.id}`, {columns: newColumns});
     }
 
     if(currentBoard.columns.length === 0){

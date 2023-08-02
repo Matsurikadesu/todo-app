@@ -1,27 +1,27 @@
 import '../TaskPopup/taskPopup.scss';
 import '../EditPopup/edit-popup.scss';
 import { FormProvider } from 'react-hook-form';
-import { addDoc, collection } from 'firebase/firestore';
-import { db } from '../../firebase';
 import InputListItemEditable from '../InputListItem/InputListItemEditable';
 import { useCustomForm } from '../../useCustomForm';
+import { addDocToDatabase } from '../../services';
 
 const AddBoardPopup = ({setIsEditPopupOpen}) => {
     const initialFields = [{name: 'Todo'}, {name: 'Doing'}];
     const {methods, append, remove, isFeildsCreationComplete, fields} = useCustomForm(initialFields);
 
     const handleBoardSubmit = (data) =>{
-        addDoc(collection(db, 'boards'), {
+        const newBoard = {
             name: data.name,
             columns: data.elements.map((item, index) => {
                 return {
                     ...item,
                     id: index
-                } 
+                }
             }),
             timestamp: new Date().getTime()
-        })
+        }
 
+        addDocToDatabase("boards", newBoard);
         setIsEditPopupOpen(false);
     }
 

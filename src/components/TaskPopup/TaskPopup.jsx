@@ -4,11 +4,10 @@ import EditMenu from '../EditMenu/EditMenu';
 import Select from '../Select/Select';
 import { useContext, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
-import { doc, updateDoc } from 'firebase/firestore';
-import { db } from '../../firebase';
 import DataContext from '../../context/context';
 import InputListItem from '../InputListItem/InputListItem';
 import { useCustomForm } from '../../useCustomForm';
+import { updateDocInDatabase } from '../../services';
 
 const TaskPopup = ({name, description, id, subtasks, setIsOpened, setIsEditing, status}) => {
     const {currentBoard} = useContext(DataContext);
@@ -24,7 +23,7 @@ const TaskPopup = ({name, description, id, subtasks, setIsOpened, setIsEditing, 
     }
 
     const handleTaskSubmit = (data) => {
-        updateDoc(doc(db, 'boards', currentBoard.id, 'tasks', id), {subtasks: data.elements, status: data.status})
+        updateDocInDatabase(`boards/${currentBoard.id}/tasks/${id}`, {subtasks: data.elements, status: data.status})
     }
 
     const handleEditButtonClick = () => {
@@ -63,11 +62,12 @@ const TaskPopup = ({name, description, id, subtasks, setIsOpened, setIsEditing, 
                     </div>
 
                     {isEditMenuOpened 
-                        ? <EditMenu 
+                        && <EditMenu 
                             target={'Task'} 
                             setIsEditing={setIsEditing} 
+                            setIsEditMenuOpened={setIsEditMenuOpened}
                             task={{name, id}}/> 
-                        : null}
+                    }
                 </form>
             </FormProvider>
         </div>

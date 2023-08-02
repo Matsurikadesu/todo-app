@@ -3,11 +3,10 @@ import '../EditPopup/edit-popup.scss';
 import Select from '../Select/Select';
 import { useContext } from 'react';
 import { FormProvider } from 'react-hook-form';
-import { addDoc, collection } from 'firebase/firestore';
-import { db } from '../../firebase';
 import DataContext from '../../context/context';
 import InputListItemEditable from '../InputListItem/InputListItemEditable';
 import { useCustomForm } from '../../useCustomForm';
+import { addDocToDatabase } from '../../services';
 
 const AddTaskPopup = ({setIsAdding}) => {
     const {currentBoard} = useContext(DataContext);
@@ -26,14 +25,15 @@ const AddTaskPopup = ({setIsAdding}) => {
             }
         })
 
-        addDoc(collection(db, 'boards', currentBoard.id, 'tasks'), {
-            name: data.name, 
-            description: data.description, 
+        const newTask = {
+            name: data.name,
+            description: data.description,
             status: data.status,
             subtasks,
             timestamp: new Date().getTime()
-        })
+        }
 
+        addDocToDatabase(`boards/${currentBoard.id}/tasks`, newTask);
         setIsAdding(false);
     }
 

@@ -3,11 +3,10 @@ import Select from "../Select/Select";
 import '../TaskPopup/taskPopup.scss';
 import './edit-popup.scss';
 import DataContext from "../../context/context";
-import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../../firebase";
 import { FormProvider } from "react-hook-form";
 import InputListItemEditable from "../InputListItem/InputListItemEditable";
 import { useCustomForm } from "../../useCustomForm";
+import { updateDocInDatabase } from "../../services";
 
 
 const TaskEditPopup = ({name, description, id, subtasks, status, setIsEditing, setIsOpened}) =>{
@@ -19,12 +18,12 @@ const TaskEditPopup = ({name, description, id, subtasks, status, setIsEditing, s
     }
 
     const handleTaskEditSubmit = (data) => {
-        updateDoc(doc(db, 'boards', boardId, 'tasks', id), {
+        updateDocInDatabase(`boards/${boardId}/tasks/${id}`, {
             name: data.name,
             description: data.description,
             subtasks: data.elements,
             status: data.status
-        });
+        })
         setIsEditing(false);
     }
 

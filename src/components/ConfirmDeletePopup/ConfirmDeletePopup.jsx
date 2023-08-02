@@ -1,8 +1,7 @@
 import { useContext } from 'react';
 import './confirm-delete-popup.scss';
 import DataContext from '../../context/context';
-import { deleteDoc, doc } from 'firebase/firestore';
-import { db } from '../../firebase';
+import { deleteDocInDatabase } from '../../services';
 
 const ConfirmDeletePopup = ({setIsDeletePopupOpen, target, task, setIsEditMenuOpened}) => {
     const { currentBoard, changeBoardId, boards } = useContext(DataContext);
@@ -11,12 +10,12 @@ const ConfirmDeletePopup = ({setIsDeletePopupOpen, target, task, setIsEditMenuOp
         if(boards.length === 1) return;
 
         changeBoardId(currentBoard.id !== boards[0].id ? boards[0].id : boards[1].id);
-        deleteDoc(doc(db, 'boards', currentBoard.id));
+        deleteDocInDatabase(`boards/${currentBoard.id}`);
         setIsEditMenuOpened(false);
     }
 
     const handleTaskDelete = () => {
-        deleteDoc(doc(db, 'boards', currentBoard.id, 'tasks', task.id));
+        deleteDocInDatabase(`boards/${currentBoard.id}/tasks/${task.id}`)
     }
 
     const handlePopupExit = (e) => {

@@ -67,17 +67,15 @@ const AppHeader = () => {
                 </div>
 
                 {isEditMenuOpened
-                    ? <EditMenu 
+                    && <EditMenu 
                         target={'Board'}
                         setIsEditing={setIsEditing}
                         setIsEditMenuOpened={setIsEditMenuOpened}/> 
-                    : null
                 }
 
                 {isEditing 
-                    ? <BoardEditPopup
+                    && <BoardEditPopup
                         closeEditPopup={closeEditPopup}/>
-                    : null
                 }
             </div>
         </header>
