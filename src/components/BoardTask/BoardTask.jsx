@@ -24,20 +24,19 @@ const Task = ({name, id, description, subtasks, status, setTasks}) => {
                 <div className='column__task-subtitle'>{getCompletedSubtasks()} of {subtasks.length} subtask</div>
             </div>
 
-            {isOpened 
-                ? <TaskPopup
+            { isOpened 
+                && <TaskPopup
                     name={name}
                     id={id}
                     description={description}
                     subtasks={subtasks}
                     setIsOpened={setIsOpened}
                     setIsEditing={setIsEditing}
-                    status={status}/> 
-                : null
+                    status={status}/>
             }
 
-            {isEditing 
-                ? <TaskEditPopup
+            { isEditing 
+                && <TaskEditPopup
                     name={name}
                     id={id}
                     description={description}
@@ -46,7 +45,6 @@ const Task = ({name, id, description, subtasks, status, setTasks}) => {
                     status={status}
                     setTasks={setTasks}
                     setIsOpened={setIsOpened}/>
-                : null
             }
         </>
     );

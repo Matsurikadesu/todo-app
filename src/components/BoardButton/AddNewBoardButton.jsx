@@ -18,11 +18,7 @@ const AddBoardButton = () => {
                 <span className="board-btn__text">+Create New Board</span>
             </button>
 
-            { 
-                isAddPopupOpen
-                    ? <AddBoardPopup setIsEditPopupOpen={setIsEditPopupOpen}/>
-                    : null 
-            }
+            { isAddPopupOpen && <AddBoardPopup setIsEditPopupOpen={setIsEditPopupOpen}/> }
         </>
     )
 }

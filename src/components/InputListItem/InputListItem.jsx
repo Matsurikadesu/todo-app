@@ -5,8 +5,8 @@ const InputListItem = ({index, subtask}) => {
 
     return(
         <li className='card__subtasks-item'>
-            <input className='card__subtasks-checkbox' {...register(`elements.${index}.iscompleted`)} type="checkbox" defaultChecked={subtask.iscompleted}/>
-            <span className='card__subtasks-label'>{subtask.name}</span>
+            <input className='card__subtasks-checkbox' {...register(`elements.${index}.iscompleted`)} id={`elements.${index}.iscompleted`} type="checkbox" defaultChecked={subtask.iscompleted}/>
+            <label htmlFor={`elements.${index}.iscompleted`} className='card__subtasks-label'>{subtask.name}</label>
         </li>
     )
 }

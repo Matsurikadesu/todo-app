@@ -10,25 +10,19 @@ const EditMenu = memo(({target, setIsEditing, setIsEditMenuOpened, task}) => {
         setIsEditing(true);
     }
 
-    const onDelete = () => {
-        setIsDeletePopupOpen(true);
-    }
-
     return(
         <>
             <div className={`edit-menu edit-menu_${target}`}>
                 <button className='edit-btn' onClick={onOpenEdit}>Edit {target}</button>
-                <button className='edit-btn' onClick={onDelete}>Delete {target}</button>
+                <button className='edit-btn' onClick={() => setIsDeletePopupOpen(true)}>Delete {target}</button>
             </div>
 
-            {
-                isDeletePopupOpen 
-                    ? <ConfirmDeletePopup 
-                        target={target} 
-                        setIsDeletePopupOpen={setIsDeletePopupOpen}
-                        setIsEditMenuOpened={setIsEditMenuOpened}
-                        task={task}/>
-                    : null
+            { isDeletePopupOpen 
+                && <ConfirmDeletePopup 
+                    target={target} 
+                    setIsDeletePopupOpen={setIsDeletePopupOpen}
+                    setIsEditMenuOpened={setIsEditMenuOpened}
+                    task={task}/>
             }
         </>
     )

@@ -60,7 +60,7 @@ const AppHeader = () => {
                 </div>
             </div>
             <div className="header__container">
-                <h2 className="header__info">{currentBoard.name} <img onClick={onSidebarOpen} src="./images/selectArrow.svg" alt="arrow"/></h2>
+                <h2 className="header__info" onClick={onSidebarOpen}>{currentBoard.name} <img src="./images/selectArrow.svg" alt="arrow"/></h2>
                 <div className="header__buttons">
                     <Button/>
                     <EditBtn handleEditButtonClick={handleEditButtonClick}/>

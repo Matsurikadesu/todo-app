@@ -20,9 +20,12 @@ const ConfirmDeletePopup = ({setIsDeletePopupOpen, target, task, setIsEditMenuOp
     }
 
     const handlePopupExit = (e) => {
-        const query = e.target.classList.contains('popup') || e.target.classList.contains('popup__btn');
+        const isDeletePopup = e.target.classList.contains('confirm-popup') || e.target.classList.contains('popup__btn');
 
-        if(query) setIsDeletePopupOpen(false);
+        if(isDeletePopup) {
+            setIsDeletePopupOpen(false);
+            setIsEditMenuOpened(false);
+        }
     }
 
     let popupText = 'Are you sure you want to delete the';
