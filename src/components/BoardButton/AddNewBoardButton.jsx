@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './board-button.scss';
-import AddBoardPopup from '../Add-popup/AddBoardPopup';
+import AddBoardPopup from '../AddPopup/AddBoardPopup';
 
 const AddBoardButton = () => {
     const [ isAddPopupOpen, setIsEditPopupOpen ] = useState(false);
