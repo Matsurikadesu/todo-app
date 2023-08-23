@@ -38,8 +38,9 @@ You can visit website by clicking [this link](https://github.com)
 
    `npm install`
 
-3. Replace API keys inside public.env with your keys and rename that file to .env
+3. `cp public.env .env`
+4. Enter your values instead of placeholder inside the .env file
 
-4. Run the app:
+5. Run the app:
 
    `npm start`
