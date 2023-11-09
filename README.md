@@ -15,7 +15,7 @@ User can:
 - Hide/show the board sidebar
 - Toggle the theme between light/dark modes
 
-You can visit website by clicking [this link](https://github.com)
+You can visit website by clicking [this link](https://works.pikulinweb.ru/todo-app)
 
 ## Technology used:
 

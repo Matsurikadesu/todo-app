@@ -50,7 +50,7 @@ export const DataProvider = ({setTheme, children }) => {
             const newBoards = querySnapshot.docs
                 .filter(doc => doc.data().name !== 'Loading...')
                 .map(doc => ({...doc.data(), id: doc.id}));
-            
+            console.log(newBoards)
             changeBoards(newBoards);
             //Устанавливает boardId при первом получении данных
             if(!(count++ > 0)) changeBoardId(newBoards[0].id);
